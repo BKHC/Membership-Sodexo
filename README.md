@@ -2,7 +2,7 @@
 This is our final year project!
 
 ## Getting Started
-Things to install...
+
 ### Prerequisites
 https://facebook.github.io/react-native/docs/getting-started
 
