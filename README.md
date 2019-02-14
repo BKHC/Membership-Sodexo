@@ -2,7 +2,6 @@
 This is our final year project!
 
 ## Getting Started
-
 ### Prerequisites
 https://facebook.github.io/react-native/docs/getting-started
 
@@ -14,3 +13,6 @@ When you want to add additional package, use the following code:
 ```
 yarn add [package-name]
 ```
+
+## Database
+https://console.cloud.google.com/sql/instances/sodexo-member/overview?project=graphic-armor-231305&duration=PT12H
