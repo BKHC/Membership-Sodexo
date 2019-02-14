@@ -8,7 +8,8 @@
     if($_POST["email"] == NULL){
         $user_name = mysqli_real_escape_string($db, $_POST["username"]);
         $query = "SELECT * FROM sodexo-member WHERE username = '$user_name'";
-    }else if($_POST["username"] == NULL){
+    }
+	else if($_POST["username"] == NULL){
         $user_email = mysqli_real_escape_string($db, $_POST["email"]);
         $query = "SELECT * FROM sodexo-member WHERE email = '$user_email'";
     }
@@ -28,7 +29,7 @@
 			$user_name = $row["username"];
 			break;
 		case 2:
-            echo json_encode(array("state"=>"fail", "msg"=>"multiple_users_matched"));
+            		echo json_encode(array("state"=>"fail", "msg"=>"multiple_users_matched"));
 			break;
 	}
 	
