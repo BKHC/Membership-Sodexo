@@ -20,10 +20,10 @@
 		{
 			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 			$_SESSION["username"] = $user_name;
-            setcookie("username", $user_name);
+			setcookie("username", $user_name);
 			echo json_encode(array("state"=>"success", "username"=>$user_name));
 			$_SESSION['id'] = $row['id'];
-            $_SESSION['logged'] = true;
+			$_SESSION['logged'] = true;
 		}
 		else
 		{
