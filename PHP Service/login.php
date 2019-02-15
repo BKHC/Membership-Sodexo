@@ -10,7 +10,7 @@
 		
 		$user_password = mysqli_real_escape_string($db, $_POST['password']);
 		
-		$query = "SELECT * FROM sodexo-member WHERE username = '$user_name' and password = '$user_password'";
+		$query = "SELECT * FROM users WHERE username = '$user_name' and password = '$user_password'";
 		
 		$result = mysqli_query($db, $query);
 		
