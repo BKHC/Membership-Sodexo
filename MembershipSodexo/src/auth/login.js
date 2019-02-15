@@ -16,7 +16,7 @@ class SignInScreen extends React.Component{
       .then(response => response.json()); // parses response to JSON
     }
 
-  _signin(){
+  _signin = async (){
     if (this.state.email = '' || this.state.password = ''){
       alert('Email or password cannot be blank!');
     }
@@ -25,7 +25,7 @@ class SignInScreen extends React.Component{
         .then((data) => {
           console.log(JSON.stringify(data));
           if (data.state == 'success'){ // login success
-            AsyncStorage.setItem('userToken', this.state.email);
+            await AsyncStorage.setItem('userToken', this.state.email);
             this.props.navigation.navigate('App');
           } else { // wrong email or password
             alert('Wrong email or password!');
