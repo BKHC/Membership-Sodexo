@@ -1,6 +1,31 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, AsyncStorage} from 'react-native';
 
+// to normalize font size
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 320;
+
+export function normalize(size) {
+  const newSize = size * scale
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
+
+export function getScreenWidth(){
+  return SCREEN_WIDTH
+}
+export function getScreenHeight(){
+  return SCREEN_HEIGHT
+}
+
 class SignInScreen extends React.Component{
   constructor(props) {
     super(props);
