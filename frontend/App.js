@@ -48,12 +48,12 @@ export default class App extends Component<Props> {
   render() {
     return (
       <KeyboardAvoidingView behavior="position" enabled>
-      <ImageBackground source={require('./image/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
+      <ImageBackground source={require('./assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
         <View style={{flex: 0.2}}/>
         <View style={{flex: 0.3}}>
           <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
             <Image
-              source={require('./image/sodexoLogo.png')}
+              source={require('./assets/sodexoLogo.png')}
               style={{
                 width: normalize(170),
                 height: normalize(55),
