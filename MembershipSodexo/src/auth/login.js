@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, AsyncStorage} from 'react-native';
+import {Alert, KeyboardAvoidingView, Platform, StyleSheet, Button, PixelRatio, Dimensions, Text, View, Image, ImageBackground, TextInput, TouchableOpacity, AsyncStorage} from 'react-native';
 
 // to normalize font size
 const {
@@ -41,6 +41,7 @@ class SignInScreen extends React.Component{
       .then(response => response.json()); // parses response to JSON
     }
 
+/***
   _signin = async (){
     if (this.state.email = '' || this.state.password = ''){
       alert('Email or password cannot be blank!');
@@ -59,16 +60,20 @@ class SignInScreen extends React.Component{
         .catch(error => console.error(error));
       }
     }
+  ***/
+  _signin (){
+
+  }
 
   render() {
     return (
       <KeyboardAvoidingView behavior="position" enabled>
-      <ImageBackground source={require('./assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
+      <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
         <View style={{flex: 0.2}}/>
         <View style={{flex: 0.3}}>
           <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
             <Image
-              source={require('./assets/sodexoLogo.png')}
+              source={require('../../assets/sodexoLogo.png')}
               style={{
                 width: normalize(170),
                 height: normalize(55),
