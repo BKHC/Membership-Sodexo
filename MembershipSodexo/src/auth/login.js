@@ -62,19 +62,116 @@ class SignInScreen extends React.Component{
 
   render() {
     return (
-      <ImageBackground source={require('./assets/')} style={{width: '100%', height: '100%'}}>
-      <View>
-        <View>
-          <Text>Membership Sodexo</Text>
-          <Text>Earn Points and Redeem Awards!</Text>
+      <KeyboardAvoidingView behavior="position" enabled>
+      <ImageBackground source={require('./assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
+        <View style={{flex: 0.2}}/>
+        <View style={{flex: 0.3}}>
+          <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
+            <Image
+              source={require('./assets/sodexoLogo.png')}
+              style={{
+                width: normalize(170),
+                height: normalize(55),
+              }}
+            />
+          </View>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize:normalize(46),
+              color:'white',
+              fontFamily:'Helvetica Neue',
+              shadowOffset:{ width: 2, height: 2, },
+              shadowColor: 'black',
+              shadowOpacity: 0.4,
+            }}
+          >食盡HKU</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize:normalize(20),
+              color:'white',
+              fontFamily:'Helvetica Neue',
+              shadowOffset:{ width: 2, height: 2, },
+              shadowColor: 'black',
+              shadowOpacity: 0.6,
+              marginTop: -5,
+            }}
+          >多款菜式 任君選擇</Text>
         </View>
-        <View>
-          <TextInput placeholder='Username' onChangeText={(email) => this.setState({email})}/>
-          <TextInput placeholder='Password' onChangeText={(password) => this.setState({password})}/>
-          <TouchableOpacity onPress= {this._signin.bind(this)} title='Login'/>
+        <View style={{flex: 0.08}}/>
+        <View style={{flex: 0.3}}>
+          <View style={{justifyContent: 'center', alignItems:'center'}}>
+            <TextInput
+              style={{
+                width: normalize(260),
+                backgroundColor: 'rgba(52, 52, 52, 0.8)',
+                borderRadius: normalize(10),
+                padding: normalize(13),
+                color:'white',
+              }}
+              placeholder="電郵"
+              placeholderTextColor="grey"
+              onChangeText={(email) => this.setState({email})}
+            />
+            <TextInput
+              style={{
+                width: normalize(260),
+                backgroundColor: 'rgba(52, 52, 52, 0.8)',
+                borderRadius: normalize(10),
+                padding: normalize(13),
+                marginTop: 10,
+                color:'white',
+              }}
+              placeholder="密碼"
+              placeholderTextColor="grey"
+              secureTextEntry={true}
+              onChangeText={(password) => this.setState({password})}
+            />
+          </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor:'#293896',
+              height: normalize(42),
+              width: normalize(260),
+              borderRadius: normalize(40),
+              padding: normalize(10),
+              marginTop: 15,
+              marginLeft: getScreenWidth()/2 - normalize(260)/2
+            }}
+            onPress= {this._signin.bind(this)}
+          >
+            <Text style={{color:'white',textAlign: 'center', fontFamily:'Helvetica Neue',fontSize:normalize(12), marginTop:3}}>登入</Text>
+          </TouchableOpacity>
         </View>
-      </View>
+        <Text
+          style={{
+            position:'absolute',
+            bottom:getScreenWidth()/2 - normalize(260)/2,
+            left:getScreenWidth()/2 - normalize(260)/2,
+            fontFamily:'Helvetica Neue',
+            color:'white',
+            fontSize:normalize(10),
+            shadowOffset:{ width: 2, height: 2, },
+            shadowColor: 'black',
+            shadowOpacity: 0.4,
+          }}
+        >沒有帳號？立即註冊！</Text>
+        <Text
+          style={{
+            position:'absolute',
+            bottom:getScreenWidth()/2 - normalize(260)/2,
+            right:getScreenWidth()/2 - normalize(260)/2,
+            fontFamily:'Helvetica Neue',
+            color:'white',
+            fontSize:normalize(10),
+            shadowOffset:{ width: 2, height: 2, },
+            shadowColor: 'black',
+            shadowOpacity: 0.4,
+          }}
+        >關於我們</Text>
       </ImageBackground>
+      </KeyboardAvoidingView>
     );
   }
 }
