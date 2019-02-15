@@ -6,7 +6,7 @@ import SignUpScreen from './src/auth/singup'; //not yet created
 import HomeScreen from './src/home/home';
 
 const AppStack = createStackNavigator({ Home: HomeScreen});
-const AuthStack = createStackNavigator({ SignIn: LogInScreen, SignUp: SignUpScreen });
+const AuthStack = createStackNavigator({ SignIn: LogInScreen }); //SignUp: SignUpScreen
 
 // Check if user logged in, aka. loading screen
 class AuthLoadingScreen extends React.Component {

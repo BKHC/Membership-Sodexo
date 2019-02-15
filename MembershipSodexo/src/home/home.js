@@ -5,7 +5,9 @@ class HomeScreen extends React.Component{
   render(){
     return(
       <View>
+        <Text>
         HomeScreen
+        </Text>
       </View>
     );
   }
