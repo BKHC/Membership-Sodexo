@@ -11,6 +11,7 @@ if (isset($_POST['user_reg'])) {
   $password = mysqli_real_escape_string($db, $_POST['password']);
   $first_name = mysqli_real_escape_string($db, $_POST['first_name']);
   $last_name = mysqli_real_escape_string($db, $_POST['last_name']);
+  $phone_number = mysqli_real_escape_string($db, $_POST['phone_number']);
 
   // form validation
   if (empty($username)) { array_push($errors, "Username is required"); }
@@ -18,6 +19,7 @@ if (isset($_POST['user_reg'])) {
   if (empty($password)) { array_push($errors, "Password is required"); }
   if (empty($first_name)) { array_push($errors, "Please fill in your name"); }
   if (empty($last_name)) { array_push($errors, "Please fill in your name"); }
+  if (empty($phone_number)) { array_push($errors, "Phone number is required"); }
 
   $user_check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
   $result = mysqli_query($db, $user_check_query);
@@ -36,8 +38,8 @@ if (isset($_POST['user_reg'])) {
   if (count($errors) == 0) {
   	$password = md5($password);
 
-  	$query = "INSERT INTO users (username, email, password, first_name, last_name) 
-  			  VALUES('$username', '$email', '$password', '$first_name', '$last_name')";
+  	$query = "INSERT INTO users (username, email, password, first_name, last_name, phone_number) 
+  			  VALUES('$username', '$email', '$password', '$first_name', '$last_name', '$phone_number')";
   	mysqli_query($db, $query);
   	$_SESSION['username'] = $username;
   	$_SESSION['success'] = "You are now logged in";
