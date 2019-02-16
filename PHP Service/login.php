@@ -8,7 +8,7 @@
 	{
 		$user_name = mysqli_real_escape_string($db, $_POST['username']);
 		
-		$user_password = mysqli_real_escape_string($db, $_POST['password']);
+		$user_password = md5(mysqli_real_escape_string($db, $_POST['password']));
 		
 		$query = "SELECT * FROM users WHERE username = '$user_name' and password = '$user_password'";
 		
