@@ -46,3 +46,6 @@ if (isset($_POST['user_reg'])) {
   	header('location: homepage.html');
   }
 }
+
+mysqli_close($db);
+?>
