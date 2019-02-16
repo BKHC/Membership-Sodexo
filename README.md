@@ -1,5 +1,5 @@
 # Membership-Sodexo
-This is our final year project!
+This is our final year project! Install Yarn if you do not have yarn installed in your computer!!! Otherwise might not be able to run!
 
 ## Getting Started
 ### Prerequisites
