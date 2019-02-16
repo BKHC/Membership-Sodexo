@@ -47,5 +47,4 @@ if (isset($_POST['user_reg'])) {
   }
 }
 
-mysqli_close($db);
 ?>
