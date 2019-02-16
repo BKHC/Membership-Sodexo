@@ -162,6 +162,7 @@ export default class SignInScreen extends React.Component{
   };
 
   signin = async () => {
+    this.props.navigation.navigate('App');
     if (this.state.email == '' || this.state.password == ''){
       alert('Email or password cannot be blank!');
     }
