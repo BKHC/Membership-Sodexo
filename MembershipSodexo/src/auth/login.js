@@ -37,7 +37,6 @@ export default class SignInScreen extends React.Component{
     return (
       <TouchableOpacity
                 activeOpacity={1.0}
-                //onPress={this.signin.bind(this)}
                 onPress={this.blurTextInput.bind(this)}
                 >
       <KeyboardAvoidingView behavior="position" enabled>
@@ -136,6 +135,7 @@ export default class SignInScreen extends React.Component{
             shadowColor: 'black',
             shadowOpacity: 0.4,
           }}
+          onPress= {() => this.props.navigation.navigate('SignUp')}
         >沒有帳號？立即註冊！</Text>
         <Text
           style={{

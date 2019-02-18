@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, Text, View, Image, ImageBackground, TextInput, TouchableOpacity, AsyncStorage, ActivityIndicator, StatusBar} from 'react-native';
 import { createBottomTabNavigator, createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import SignInScreen from './src/auth/login';
-//import SignUpScreen from './src/auth/signup'; //not yet created
+import SignUpScreen from './src/auth/signup';
 import HomeScreen from './src/home/home';
 
 // Check if user logged in, aka. loading screen
@@ -32,9 +32,10 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
-const HomeStack = createStackNavigator({ Home: HomeScreen});
+const HomeStack = createStackNavigator({ Home: HomeScreen, });
 const AuthStack = createStackNavigator(
-  { SignIn: SignInScreen
+  { SignIn: SignInScreen,
+    SignUp: SignUpScreen
   },
   {
     headerMode: 'none',
@@ -42,7 +43,7 @@ const AuthStack = createStackNavigator(
       headerVisible: false,
     }
   }
-); //SignUp: SignUpScreen
+);
 
 const TabNavigator = createBottomTabNavigator({
   Home: HomeStack,
