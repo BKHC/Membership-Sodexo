@@ -41,46 +41,43 @@ export default class SignInScreen extends React.Component{
                 >
       <KeyboardAvoidingView behavior="position" enabled>
       <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
-        <View style={{flex: 0.2}}></View>
-        <View style={{flex: 0.3}}>
-          <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
-            <Image
-              source={require('../../assets/sodexoLogo.png')}
-              style={{
-                width: normalize(170),
-                height: normalize(55),
-              }}
-            />
-          </View>
-          <Text
+      <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+        <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
+          <Image
+            source={require('../../assets/sodexoLogo.png')}
             style={{
-              textAlign: 'center',
-              fontSize:normalize(46),
-              color:'white',
-              fontFamily:'Helvetica Neue',
-              shadowOffset:{ width: 2, height: 2, },
-              shadowColor: 'black',
-              shadowOpacity: 0.4,
+              width: normalize(170),
+              height: normalize(55),
             }}
-          >食盡HKU</Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize:normalize(20),
-              color:'white',
-              fontFamily:'Helvetica Neue',
-              shadowOffset:{ width: 2, height: 2, },
-              shadowColor: 'black',
-              shadowOpacity: 0.6,
-              marginTop: -5,
-            }}
-          >多款菜式 任君選擇</Text>
+          />
         </View>
-        <View style={{flex: 0.08}}/>
-        <View style={{flex: 0.3}}>
-          <View style={{justifyContent: 'center', alignItems:'center'}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize:normalize(46),
+            color:'white',
+            fontFamily:'Helvetica Neue',
+            shadowOffset:{ width: 2, height: 2, },
+            shadowColor: 'black',
+            shadowOpacity: 0.4,
+          }}
+        >食盡HKU</Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize:normalize(20),
+            color:'white',
+            fontFamily:'Helvetica Neue',
+            shadowOffset:{ width: 2, height: 2, },
+            shadowColor: 'black',
+            shadowOpacity: 0.6,
+            marginTop: -5,
+          }}
+        >多款菜式 任君選擇</Text>
+        <View style={{justifyContent: 'center', alignItems:'center'}}>
             <TextInput
               style={{
+                marginTop: 40,
                 width: normalize(260),
                 backgroundColor: 'rgba(52, 52, 52, 0.8)',
                 borderRadius: normalize(10),
@@ -116,7 +113,6 @@ export default class SignInScreen extends React.Component{
               borderRadius: normalize(40),
               padding: normalize(10),
               marginTop: 15,
-              marginLeft: getScreenWidth()/2 - normalize(260)/2
             }}
             onPress= {this.signin.bind(this)}
           >
