@@ -4,7 +4,7 @@ import Carousel from 'react-native-snap-carousel';
 
 const { height, width } = Dimensions.get('window');
 
-class TeamScroll extends Component {
+class ExploreScreen extends Component {
 
     state = {
         images: [
@@ -57,4 +57,4 @@ const styles = {
     }
 };
 
-export default TeamScroll;
+export default ExploreScreen;
