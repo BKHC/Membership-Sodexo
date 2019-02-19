@@ -3,6 +3,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
 import { createBottomTabNavigator, createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 import SignInScreen from './src/auth/login';
 import SignUpScreen from './src/auth/signup';
+import ExploreScreen from './src/explore/explore';
 import HomeScreen from './src/home/home';
 
 // Check if user logged in, aka. loading screen
