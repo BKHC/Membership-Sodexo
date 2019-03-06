@@ -1,5 +1,6 @@
 import React from 'react';
-import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground, Image, Platform, StyleSheet, Text, View} from 'react-native';
+import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
+  Image, Platform, StyleSheet, Text, View, FlatList} from 'react-native';
 import User from './user';
 
 // to normalize font size
@@ -27,58 +28,14 @@ import User from './user';
     return SCREEN_HEIGHT
   }
 
-class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  renderData(){
-    return this.props.items.map((item) =>
-    <View key = {item.id}>
-        <Text
-          style={{
-            fontSize:normalize(10),
-          }}
-        ><User User_ID={item.User_ID} /> - {item.date}</Text>
-        <Text
-          style={{
-            fontSize:normalize(24),
-          }}
-        >{item.topic}</Text>
-        <Text
-          style={{
-            fontSize:normalize(12),
-          }}
-        >運動: {item.rating_1}    文化: {item.rating_2}</Text>
-        <Text
-          style={{
-            fontSize:normalize(12),
-          }}
-        >環境: {item.rating_3}    仙制: {item.rating_4}</Text>
-      </View>
-    );
-  }
-
-  render(){
-    return (
-      <View>
-        {this.renderData()}
-      </View>
-      );
-
-
-  }
-}
-
-
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {items: [{id: 1, User_ID: 1, date: "5/3/2019", topic: "BTS is back", rating_1: 2, rating_2: 3,
+    this.state = {items: [{id: "1", User_ID: "1", date: "5/3/2019", topic: "BTS is back", rating_1: 2, rating_2: 3,
   rating_3: 4, rating_4: 5}]};
-    //this.items = [];
   }
+
 
   componentDidMount() {
     const data = {Hall_ID: 0}
@@ -96,6 +53,31 @@ export default class HomeScreen extends React.Component {
       .catch(error => console.error(error));
       ***/
     }
+
+    _renderData = ({item}) => (
+      <View ref = {parseInt(item.id)}>
+          <Text
+            style={{
+              fontSize:normalize(10),
+            }}
+          ><User User_ID={parseInt(item.User_ID)} /> - {item.date}</Text>
+          <Text
+            style={{
+              fontSize:normalize(24),
+            }}
+          >{item.topic}</Text>
+          <Text
+            style={{
+              fontSize:normalize(12),
+            }}
+          >運動: {item.rating_1}    文化: {item.rating_2}</Text>
+          <Text
+            style={{
+              fontSize:normalize(12),
+            }}
+          >環境: {item.rating_3}    仙制: {item.rating_4}</Text>
+        </View>
+      );
 
   render() {
 
@@ -115,7 +97,11 @@ export default class HomeScreen extends React.Component {
               width:getScreenWidth()-80,
             }}
           >
-          <Comment items={this.state.items} />
+          <FlatList
+              data={this.state.items}
+              renderItem={this._renderData}
+              keyExtractor={({id}, index) => id}
+            />
           </View>
       </ImageBackground>
     );
@@ -132,3 +118,58 @@ export default class HomeScreen extends React.Component {
 }
   }
 }
+
+/***
+class HallScreen extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {items: NULL};
+  }
+
+  componentDidMount() {
+    /***
+    fetch(`https://i.cs.hku.hk/~wyvying/test.php`, {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+    })
+    //.then(response => response.json()); // parses response to JSON
+      .then((data) => {
+        alert(JSON.stringify(data));
+        //this.item = JSON.parse(data);
+        this.setState({items: JSON.parse(data)});
+
+      }) // JSON-string from `response.json()` call
+      .catch(error => console.error(error));
+
+    }
+
+    renderData(){
+      return this.props.items.map((item) =>
+      <View key = {parseInt(item.id)}>
+          <Text
+            style={{
+              fontSize:normalize(24),
+            }}
+          ><Hall Hall_ID={parseInt(item.id)} /></Text>
+          <Text
+            style={{
+              fontSize:normalize(12),
+            }}
+          >運動: {item.rating_1}    文化: {item.rating_2}</Text>
+          <Text
+            style={{
+              fontSize:normalize(12),
+            }}
+          >環境: {item.rating_3}    仙制: {item.rating_4}</Text>
+        </View>
+      );
+    }
+
+  render(){
+    return(
+      <View>
+        {this.renderData()}
+      </View>
+    );
+  }
+}
+***/

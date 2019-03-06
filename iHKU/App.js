@@ -32,7 +32,7 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
-const HomeStack = createStackNavigator({ Home: HomeScreen, });
+const HallStack = createStackNavigator({ Home: HomeScreen, });
 const AuthStack = createStackNavigator(
   { SignIn: SignInScreen,
     SignUp: SignUpScreen
@@ -46,9 +46,9 @@ const AuthStack = createStackNavigator(
 );
 
 const TabNavigator = createBottomTabNavigator({
-  Home: HomeStack,
-  //NewsFeed: NewsFeedStack,
-  //MyPoints: MyPointsStack,
+  Hall: HallStack,
+  //Eat: EatStack,
+  //Course: CourseStack,
   //MyCoupon: MyCouponStack,
   //Profile: ProfileStack,
 });
