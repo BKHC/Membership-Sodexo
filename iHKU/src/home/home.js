@@ -28,17 +28,48 @@ import User from './user';
     return SCREEN_HEIGHT
   }
 
+class Star extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render(){
+    if (this.props.rating == "1")
+      return (
+        <Text>★☆☆☆☆</Text>
+      );
+    else if (this.props.rating == "2")
+      return (
+        <Text>★★☆☆☆</Text>
+      );
+    else if (this.props.rating == "3")
+      return (
+        <Text>★★★☆☆</Text>
+      );
+    else if (this.props.rating == "4")
+      return (
+        <Text>★★★★☆</Text>
+      );
+    else
+      return (
+        <Text>★★★★★</Text>
+      );
+  }
+}
+
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {items: [{id: "1", User_ID: "1", date: "5/3/2019", topic: "BTS is back", rating_1: 2, rating_2: 3,
-  rating_3: 4, rating_4: 5}]};
+    this.state = {items: [{id: "1", User_ID: "1", date: "5/3/2019", topic: "BTS is back", rating_1: "2", rating_2: "3",
+  rating_3: "4", rating_4: "5"}]};
   }
 
 
   componentDidMount() {
-    const data = {Hall_ID: 0}
+    //const { navigation } = this.props;
+    //const Hall_ID = navigation.getParam('Hall_ID', '0');
+    //const data = {Hall_ID: Hall_ID};
     /***
     fetch(`https://i.cs.hku.hk/~wyvying/test.php?Hall_ID=${encodeURIComponent(data.Hall_ID)}`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -55,12 +86,12 @@ export default class HomeScreen extends React.Component {
     }
 
     _renderData = ({item}) => (
-      <View ref = {parseInt(item.id)}>
+      <View>
           <Text
             style={{
               fontSize:normalize(10),
             }}
-          ><User User_ID={parseInt(item.User_ID)} /> - {item.date}</Text>
+          ><User User_ID={item.User_ID} /> - {item.date}</Text>
           <Text
             style={{
               fontSize:normalize(24),
@@ -70,12 +101,12 @@ export default class HomeScreen extends React.Component {
             style={{
               fontSize:normalize(12),
             }}
-          >運動: {item.rating_1}    文化: {item.rating_2}</Text>
+          >運動: <Star rating={item.rating_1} />    文化: <Star rating={item.rating_2} /></Text>
           <Text
             style={{
               fontSize:normalize(12),
             }}
-          >環境: {item.rating_3}    仙制: {item.rating_4}</Text>
+          >環境: <Star rating={item.rating_3} />    仙制: <Star rating={item.rating_4} /></Text>
         </View>
       );
 
@@ -143,24 +174,7 @@ class HallScreen extends React.Component{
     }
 
     renderData(){
-      return this.props.items.map((item) =>
-      <View key = {parseInt(item.id)}>
-          <Text
-            style={{
-              fontSize:normalize(24),
-            }}
-          ><Hall Hall_ID={parseInt(item.id)} /></Text>
-          <Text
-            style={{
-              fontSize:normalize(12),
-            }}
-          >運動: {item.rating_1}    文化: {item.rating_2}</Text>
-          <Text
-            style={{
-              fontSize:normalize(12),
-            }}
-          >環境: {item.rating_3}    仙制: {item.rating_4}</Text>
-        </View>
+
       );
     }
 
