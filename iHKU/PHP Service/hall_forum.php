@@ -15,6 +15,6 @@ session_start();
 
 else
 {
-  echo json_encode("msg"=>"There's no related response on this hall!")
+  echo json_encode("msg"=>"There's no related response on this hall!");
 }
 ?>
