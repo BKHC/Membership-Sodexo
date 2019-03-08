@@ -12,5 +12,4 @@ session_start();
   echo json_encode(array("state"=>"success", "hall"=>$hall));
   
   
-}
 ?>
