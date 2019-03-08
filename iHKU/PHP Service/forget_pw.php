@@ -15,7 +15,7 @@
 	isExist = false;
     
         $user_email = mysqli_real_escape_string($db, $_POST["email"]);
-        $query = "SELECT * FROM users WHERE email = '$user_email'";
+        $query = "SELECT * FROM User WHERE email = '$user_email'";
 	
 	
 	
@@ -37,7 +37,7 @@
 	
 	if(isExist){
 		$token = generateRandomString();
-		$query1 = "UPDATE users SET token = '$token' WHERE email = '$user_email' ";
+		$query1 = "UPDATE User SET token = '$token' WHERE email = '$user_email' ";
 		//Set sender and recipient
 		$mail->setFrom("admin@admin.com", "Admin"); //Is there any email address to let us send email?
 		$mail->addAddress($user_email);
