@@ -9,7 +9,7 @@
 		
 		$user_password = md5(mysqli_real_escape_string($db, $_POST['password']));
 		
-		$query = "SELECT * FROM users WHERE email = '$email' and password = '$user_password'";
+		$query = "SELECT * FROM User WHERE email = '$email' and password = '$user_password'";
 		
 		$result = mysqli_query($db, $query);
 		
