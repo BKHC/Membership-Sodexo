@@ -1,15 +1,19 @@
-  <?php
+<?php
 	
-require_once("db_config.php");
-session_start();
-  
+	require_once("db_config.php");
+	
+		
+		$query = "SELECT name FROM Hall"
+		
+		$result = mysqli_query($db, $query);
+		
+		$json = array();
 
-  $hall_check_query = "SELECT name FROM Hall";
-  $result = mysqli_query($db, $hall_check_query);
-  $hall = mysqli_fetch_assoc($result);
-  
- 
-  echo json_encode(array("state"=>"success", "hall"=>$hall));
-  
-  
+		while($row = mysqli_fetch_array($result))
+		{
+			$json[]=array('Hall_Name'=>$row['name']);
+		}
+		
+		echo json_encode($json);
+
 ?>
