@@ -5,13 +5,16 @@ session_start();
 
 
   $hall = mysqli_real_escape_string($db, $_GET['hall_id']);
-  $check_query = "SELECT * FROM Hall Rate WHERE HallID='$hall'";
-  $result = mysqli_query($db, $user_check_query);
-  $output = mysqli_fetch_assoc($result);
+  $check_query = "SELECT * FROM 'Hall Rate' WHERE HallID='$hall'";
+  $result = mysqli_query($db, $check_query);
+$json = array();
 
-  if ($output) {
-      echo json_encode($output);
-    }
+ while($row=mysqli_fetch_array($result))
+		{
+			$json[]=array('id'=>$row['id'], 'UserID'=>$row['UserID'], 'HallID'=>$row['HallID'], 'Rating_1'=>$row['Rating_1'], 'Rating_2'=>$row['Rating_2'], 'Rating_13'=>$row['Rating_3'],'Rating_14'=>$row['Rating_4'], 'Topic'=>$row['Topic'],'Comment'=>$row['Comment']);
+		}
+		
+		echo json_encode($json);
 
 else
 {
