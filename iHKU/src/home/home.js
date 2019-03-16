@@ -1,7 +1,8 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Platform, StyleSheet, Text, View, FlatList} from 'react-native';
+  Image, Platform, StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
 import User from './user';
+import Star from './star';
 
 // to normalize font size
   const {
@@ -28,40 +29,11 @@ import User from './user';
     return SCREEN_HEIGHT
   }
 
-class Star extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render(){
-    if (this.props.rating == "1")
-      return (
-        <Text>★☆☆☆☆</Text>
-      );
-    else if (this.props.rating == "2")
-      return (
-        <Text>★★☆☆☆</Text>
-      );
-    else if (this.props.rating == "3")
-      return (
-        <Text>★★★☆☆</Text>
-      );
-    else if (this.props.rating == "4")
-      return (
-        <Text>★★★★☆</Text>
-      );
-    else
-      return (
-        <Text>★★★★★</Text>
-      );
-  }
-}
-
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {items: [{id: "1", User_ID: "1", date: "5/3/2019", topic: "BTS is back", rating_1: "2", rating_2: "3",
+    this.state = {items: [{id: "132", User_ID: "1", date: "5/3/2019", topic: "BTS is back", rating_1: "2", rating_2: "3",
   rating_3: "4", rating_4: "5"}]};
   }
 
@@ -86,65 +58,140 @@ export default class HomeScreen extends React.Component {
     }
 
     _renderData = ({item}) => (
-      <View>
-          <Text
-            style={{
-              fontSize:normalize(10),
-            }}
-          ><User User_ID={item.User_ID} /> - {item.date}</Text>
-          <Text
-            style={{
-              fontSize:normalize(24),
-            }}
-          >{item.topic}</Text>
-          <Text
-            style={{
-              fontSize:normalize(12),
-            }}
-          >運動: <Star rating={item.rating_1} />    文化: <Star rating={item.rating_2} /></Text>
-          <Text
-            style={{
-              fontSize:normalize(12),
-            }}
-          >環境: <Star rating={item.rating_3} />    仙制: <Star rating={item.rating_4} /></Text>
+      <TouchableOpacity
+        ref={item.id}
+        onPress={this.more.bind(this, item.id)}
+      >
+      <View
+        style={{
+          fontFamily:'Helvetica Neue',
+          width:getScreenWidth(),
+          backgroundColor: 'rgba(255, 255, 255, 1)',
+          paddingTop: 20, paddingBottom:18, paddingLeft:30, paddingRight:30,
+          marginTop: 4,
+        }}
+      >
+        <View style={{flexDirection:'row', justifyContent : 'space-between' }} >
+          <View style={{flexDirection:'row',}}>
+            <Text
+              style={{
+                fontSize:normalize(10),
+                color: 'rgba(255, 153, 204, 1)',
+                fontWeight: 'bold',
+              }}
+            ><User User_ID={item.User_ID} /></Text>
+            <Text
+              style={{
+                fontSize:normalize(10),
+              }}
+            > - {item.date}</Text>
+          </View>
+          <View style={{flexDirection:'row', textAlign:'right', }}>
+
+
+          </View>
         </View>
+
+        <View style={{flexDirection:'row', justifyContent : 'space-between'}} >
+          <View style={{flexDirection:'row'}}>
+            <Image
+                style={{width: 45, height: 45, marginTop:10, marginRight:10, }}
+                source={require('../../assets/happy.png')}
+            />
+            <View style={{flexDirection:'column',}} >
+              <Text
+                style={{
+                  fontSize:normalize(12),
+                  marginTop:5,
+                  marginBottom:3,
+                }}
+              >{item.topic}</Text>
+              <View style={{flexDirection:'row',}} >
+                <Text
+                  style={{
+                    fontSize:normalize(9),
+                  }}
+                >運動:</Text>
+                <View style={{flexDirection:'row',}} >
+                  <Star rating={item.rating_1} />
+                </View>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>文化:</Text>
+                <View style={{flexDirection:'row',}} >
+                  <Star rating={item.rating_2} />
+                </View>
+              </View>
+              <View style={{flexDirection:'row',}} >
+                <Text
+                  style={{
+                    fontSize:normalize(9),
+                  }}
+                >環境:</Text>
+                <View style={{flexDirection:'row',}} >
+                  <Star rating={item.rating_3} />
+                </View>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>仙制:</Text>
+                <View style={{flexDirection:'row',}} >
+                  <Star rating={item.rating_4} />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={{textAlign:'right',}}>
+            <View
+              style={{
+                flexDirection:'row',
+                borderRadius: 4,
+                borderWidth: 0.5,
+                borderColor: 'rgba(255, 153, 204, 1)',
+                padding: 4,
+              }}>
+              <Image
+                  style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
+                  source={require('../../assets/thumbUp.png')}
+              />
+              <Text>33 </Text>
+            </View>
+            <View
+              style={{
+                flexDirection:'row', marginTop:5,
+                borderRadius: 4,
+                borderWidth: 0.5,
+                borderColor: 'rgba(120, 120, 120, 1)',
+                padding: 4,
+              }}>
+              <Image
+                style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
+                source={require('../../assets/thumbDown.png')}
+              />
+              <Text>43 </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      </TouchableOpacity>
       );
+
+    more(id){
+      alert(id);
+    }
 
   render() {
 
     if (this.state.items){
     return (
-      <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
-          <Text
-            style={{
-              height: 150
-            }}
-          >It is the top bar that I will do later
-          </Text>
-          <View
-            style={{
-              marginLeft:40,
-              fontFamily:'Helvetica Neue',
-              width:getScreenWidth()-80,
-            }}
-          >
+      <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
+          <ScrollView>
           <FlatList
               data={this.state.items}
               renderItem={this._renderData}
               keyExtractor={({id}, index) => id}
             />
-          </View>
+          </ScrollView>
       </ImageBackground>
     );
   } else {
   return (
-    <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
-      <Text
-        style={{
-          height: 150
-        }}
-      >It is the top bar that I will do later
-      </Text>
+    <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
   </ImageBackground>);
 }
   }
