@@ -3,7 +3,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
 import { createBottomTabNavigator, createSwitchNavigator, createStackNavigator, createAppContainer, BottomTabBar } from 'react-navigation';
 import SignInScreen from './src/auth/login';
 import SignUpScreen from './src/auth/signup';
-import HomeScreen from './src/home/home';
+import HomeScreen from './src/hall/home';
 import Try from './try';
 
 const {

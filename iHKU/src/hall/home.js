@@ -1,8 +1,8 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Platform, StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
-import User from './user';
-import Star from './star';
+import User from '../user';
+import Star from '../star';
 
 // to normalize font size
   const {
@@ -173,6 +173,7 @@ export default class HomeScreen extends React.Component {
 
     more(id){
       alert(id);
+      //this.props.navigation.navigate('Comment', {CommentId: id,});
     }
 
   render() {
