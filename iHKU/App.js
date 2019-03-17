@@ -57,13 +57,18 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 const TryStack = createStackNavigator({ Home: Try, },);
-const HallStack = createStackNavigator({ Home: HomeScreen, },
+const HallStack = createStackNavigator({
+  Home: HomeScreen,
+  //HallList: HallList,
+  //HallComment: HallComment,
+  //Comment: Comment,
+},
   {
       initialRouteName: 'Home',
       headerLayoutPreset: 'center',
       /* The header config from HomeScreen is now here */
       defaultNavigationOptions: {
-        title: '利銘澤堂',
+        title: '舍堂',
         headerStyle: {
           backgroundColor: 'rgba(255, 153, 204, 1)',
         },
