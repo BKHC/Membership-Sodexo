@@ -1,15 +1,16 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Platform, StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
+import { createFilter } from 'react-native-search-filter';
 import User from '../user';
 import Star from '../star';
 
-export default class HomeScreen extends React.Component {
+export default class HallComment extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {items: [{id: "0", User_ID: "1", date: "5/3/2019", topic: "JK is back", rating_1: "2", rating_2: "3",
-  rating_3: "4", rating_4: "5"}]};
+  rating_3: "4", rating_4: "5"}], searchTerm: ''};
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -51,7 +52,7 @@ export default class HomeScreen extends React.Component {
     _renderData = ({item}) => (
       <TouchableOpacity
         ref={item.id}
-        onPress={this.more.bind(this, item.id)}
+        onPress={this.more.bind(this, item.id, item.topic)}
       >
       <View
         style={{
@@ -162,25 +163,38 @@ export default class HomeScreen extends React.Component {
       </TouchableOpacity>
       );
 
-    more(id){
-      alert(id);
-      //this.props.navigation.navigate('Comment', {CommentId: id,});
+    more(id, topic){
+      this.props.navigation.navigate('Comment', {CommentId: id, Topic: topic});
     }
 
   render() {
 
     if (this.state.items){
-    return (
-      <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
-          <ScrollView>
-          <FlatList
-              data={this.state.items}
-              renderItem={this._renderData}
-              keyExtractor={({id}, index) => id}
-            />
-          </ScrollView>
-      </ImageBackground>
-    );
+      const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, ['topic']))
+      return (
+        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
+            <ScrollView style={{marginBottom: 65}}>
+            <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
+              <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
+                <TextInput
+                style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
+                placeholder="搜尋"
+                onChangeText={(text) => this.setState({searchTerm: text})}
+                ></TextInput>
+                <Image
+                    style={{width: 18, height: 18, marginTop:11, marginLeft:11}}
+                    source={require('../../assets/search.png')}
+                />
+              </View>
+            </View>
+            <FlatList
+                data={filteredItems}
+                renderItem={this._renderData}
+                keyExtractor={({id}, index) => id}
+              />
+            </ScrollView>
+        </ImageBackground>
+      );
   } else {
   return (
     <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>

@@ -3,7 +3,9 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
 import { createBottomTabNavigator, createSwitchNavigator, createStackNavigator, createAppContainer, BottomTabBar } from 'react-navigation';
 import SignInScreen from './src/auth/login';
 import SignUpScreen from './src/auth/signup';
-import HomeScreen from './src/hall/home';
+import HallComment from './src/hall/hallcomment';
+import HallList from './src/hall/hallList';
+import Comment from './src/hall/comment';
 import Try from './try';
 
 const {
@@ -58,13 +60,13 @@ class AuthLoadingScreen extends React.Component {
 }
 const TryStack = createStackNavigator({ Home: Try, },);
 const HallStack = createStackNavigator({
-  Home: HomeScreen,
-  //HallList: HallList,
-  //HallComment: HallComment,
-  //Comment: Comment,
+  //Home: HomeScreen,
+  HallList: HallList,
+  HallComment: HallComment,
+  Comment: Comment,
 },
   {
-      initialRouteName: 'Home',
+      initialRouteName: 'HallList',
       headerLayoutPreset: 'center',
       /* The header config from HomeScreen is now here */
       defaultNavigationOptions: {
@@ -108,7 +110,15 @@ const TabNavigator = createBottomTabNavigator({
         if (routeName === '舍堂') {
           if (focused){
           return(
-            <View style={{width:getScreenWidth()/5}}>
+            <View
+              style={{
+                width:getScreenWidth()/5,
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: 'rgba(255, 153, 204, 1)',
+              }}
+            >
               <Image
                 source={require('./assets/hall_pink.png')}
                 style={{
@@ -118,6 +128,13 @@ const TabNavigator = createBottomTabNavigator({
                   marginTop:15
               }}
             />
+            <Text
+              style={{
+                textAlign: 'center',
+                marginTop: 5,
+                fontSize: 11,
+                color: 'rgba(255, 153, 204, 1)',
+              }}>舍堂</Text>
           </View>
           );
         }
@@ -133,28 +150,199 @@ const TabNavigator = createBottomTabNavigator({
                     marginTop:15
                 }}
               />
+              <Text style={{textAlign: 'center', marginTop:5, fontSize:11, color: 'white'}}>舍堂</Text>
             </View>
             );
           }
-        //} else if (routeName === 'Settings') {
-      } else {
-        return(
-          <View style={{width:getScreenWidth()/5}}>
-            <Image
-              source={require('./assets/account.png')}
+        } else if (routeName === '帳戶') {
+          if (focused){
+          return(
+            <View
               style={{
-                width:22,
-                height:22,
-                marginLeft:(getScreenWidth()/5-22)/2,
-                marginTop:15
-            }}
-          />
-        </View>
-        );
-      }
-
-        // You can return any component that you like here!
-        //return <IconComponent name={iconName} size={25} color={tintColor} />;
+                width:getScreenWidth()/5,
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: 'rgba(255, 153, 204, 1)',
+              }}
+            >
+              <Image
+                source={require('./assets/account.png')}
+                style={{
+                  width:22,
+                  height:22,
+                  marginLeft:(getScreenWidth()/5-22)/2,
+                  marginTop:15
+              }}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                marginTop: 5,
+                fontSize: 11,
+                color: 'rgba(255, 153, 204, 1)',
+              }}>帳戶</Text>
+          </View>
+          );
+        }
+          else {
+            return(
+              <View style={{width:getScreenWidth()/5}}>
+                <Image
+                  source={require('./assets/account.png')}
+                  style={{
+                    width:22,
+                    height:22,
+                    marginLeft:(getScreenWidth()/5-22)/2,
+                    marginTop:15
+                }}
+              />
+              <Text style={{textAlign: 'center', marginTop:5, fontSize:11, color: 'white'}}>帳戶</Text>
+            </View>
+            );
+          }
+        } else if (routeName === '餐廳') {
+          if (focused){
+          return(
+            <View
+              style={{
+                width:getScreenWidth()/5,
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: 'rgba(255, 153, 204, 1)',
+              }}
+            >
+              <Image
+                source={require('./assets/food.png')}
+                style={{
+                  width:22,
+                  height:22,
+                  marginLeft:(getScreenWidth()/5-22)/2,
+                  marginTop:15
+              }}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                marginTop: 5,
+                fontSize: 11,
+                color: 'rgba(255, 153, 204, 1)',
+              }}>餐廳</Text>
+          </View>
+          );
+        }
+          else {
+            return(
+              <View style={{width:getScreenWidth()/5}}>
+                <Image
+                  source={require('./assets/food.png')}
+                  style={{
+                    width:22,
+                    height:22,
+                    marginLeft:(getScreenWidth()/5-22)/2,
+                    marginTop:15
+                }}
+              />
+              <Text style={{textAlign: 'center', marginTop:5, fontSize:11, color: 'white'}}>餐廳</Text>
+            </View>
+            );
+          }
+        } else if (routeName === '課程') {
+          if (focused){
+          return(
+            <View
+              style={{
+                width:getScreenWidth()/5,
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: 'rgba(255, 153, 204, 1)',
+              }}
+            >
+              <Image
+                source={require('./assets/course.png')}
+                style={{
+                  width:22,
+                  height:22,
+                  marginLeft:(getScreenWidth()/5-22)/2,
+                  marginTop:15
+              }}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                marginTop: 5,
+                fontSize: 11,
+                color: 'rgba(255, 153, 204, 1)',
+              }}>舍堂</Text>
+          </View>
+          );
+        }
+          else {
+            return(
+              <View style={{width:getScreenWidth()/5}}>
+                <Image
+                  source={require('./assets/course.png')}
+                  style={{
+                    width:22,
+                    height:22,
+                    marginLeft:(getScreenWidth()/5-22)/2,
+                    marginTop:15
+                }}
+              />
+              <Text style={{textAlign: 'center', marginTop:5, fontSize:11, color: 'white'}}>課程</Text>
+            </View>
+            );
+          }
+        } else {
+          if (focused){
+          return(
+            <View
+              style={{
+                width:getScreenWidth()/5,
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: 'rgba(255, 153, 204, 1)',
+              }}
+            >
+              <Image
+                source={require('./assets/settings.png')}
+                style={{
+                  width:22,
+                  height:22,
+                  marginLeft:(getScreenWidth()/5-22)/2,
+                  marginTop:15
+              }}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                marginTop: 5,
+                fontSize: 11,
+                color: 'rgba(255, 153, 204, 1)',
+              }}>設定</Text>
+          </View>
+          );
+        }
+          else {
+            return(
+              <View style={{width:getScreenWidth()/5}}>
+                <Image
+                  source={require('./assets/settings.png')}
+                  style={{
+                    width:22,
+                    height:22,
+                    marginLeft:(getScreenWidth()/5-22)/2,
+                    marginTop:15
+                }}
+              />
+              <Text style={{textAlign: 'center', marginTop:5, fontSize:11, color: 'white'}}>設定</Text>
+            </View>
+            );
+          }
+        }
       },
     }),
 
@@ -176,8 +364,9 @@ const TabNavigator = createBottomTabNavigator({
       />,
 
     tabBarOptions: {
-      activeTintColor: 'rgba(225, 255, 255, 1)',
-      inactiveTintColor: 'gray',
+      showLabel: false,
+      activeTintColor: 'rgba(255, 153, 204, 1)',
+      inactiveTintColor: 'white',
     },
   });
 
