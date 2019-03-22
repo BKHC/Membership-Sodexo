@@ -17,17 +17,14 @@ export default class HallList extends React.Component {
   }
 
   componentDidMount() {
-
-    //const { navigation } = this.props;
     /***
     fetch(`https://i.cs.hku.hk/~wyvying/test.php`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
     //.then(response => response.json()); // parses response to JSON
       .then((data) => {
-        alert(JSON.stringify(data));
-        //this.item = JSON.parse(data);
-        this.setState({items: JSON.parse(data)});
+        //alert(JSON.stringify(data));
+        this.setState({items: data});
 
       }) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
@@ -44,6 +41,8 @@ export default class HallList extends React.Component {
           style={{width: getScreenWidth()-20, height: 170, padding:10, marginLeft:10, borderRadius: 8, marginBottom:10}}
           imageStyle={{ borderRadius: 8 }}
           source={require("../../assets/hall_uHall.jpg")}
+          //source={{uri: `https://i.cs.hku.hk/~wyvying/hall_img/${item.id}.jpg`}} 
+
       >
         <View style={{marginTop:80, marginLeft:10}}>
           <Text style={{color:'white', fontSize:22, fontWeight:'bold', marginBottom:5, shadowColor: 'black', shadowOpacity: 1,}}>{item.hallname}</Text>
