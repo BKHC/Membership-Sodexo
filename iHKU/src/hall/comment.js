@@ -31,9 +31,9 @@ class ImageList extends React.Component{
       rows.push(
         <TouchableWithoutFeedback onPress={() => {this.openModal(i)}}>
           <Image
-          style: {{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}},
+          style= {{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}},
           source={{uri: `https://i.cs.hku.hk/~wyvying/comment/hall/${Comment_ID}/post_img${i}.jpg`}}
-          />);
+          />
         </TouchableWithoutFeedback>
       );
     }
