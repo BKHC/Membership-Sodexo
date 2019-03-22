@@ -41,7 +41,7 @@
 		
 		$json = array();
 
-		$row = mysqli_fetch_array($result)
+		$row = mysqli_fetch_array($result);
 			
 		$json[]=array($row, $Hall_1_result_1, $Hall_1_result_2, $Hall_1_result_3, $Hall_1_result_4, $Hall_2_result_1, $Hall_2_result_2, $Hall_2_result_3, $Hall_2_result_4);
 		
