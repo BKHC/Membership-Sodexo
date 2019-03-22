@@ -41,7 +41,7 @@ export default class HallList extends React.Component {
           style={{width: getScreenWidth()-20, height: 170, padding:10, marginLeft:10, borderRadius: 8, marginBottom:10}}
           imageStyle={{ borderRadius: 8 }}
           source={require("../../assets/hall_uHall.jpg")}
-          //source={{uri: `https://i.cs.hku.hk/~wyvying/hall_img/${item.id}.jpg`}} 
+          //source={{uri: `https://i.cs.hku.hk/~wyvying/hall_img/${item.id}.jpg`}}
 
       >
         <View style={{marginTop:80, marginLeft:10}}>
