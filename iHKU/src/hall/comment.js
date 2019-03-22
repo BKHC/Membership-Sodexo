@@ -22,19 +22,16 @@ class ImageList extends React.Component{
     for (var i=0; i < noOfImg; i++){
       images.push(
         {
-          url: `https://i.cs.hku.hk/~wyvying/comment/hall/${Comment_ID}/post_img${i}.jpg`,
-          width:120,
-          height: 120,
-          marginRight:10,
-          marginTop:2,
-          marginLeft:2,
-          marginBottom:10,
+          props: {
+            style: {width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10},
+            source: {uri: `https://i.cs.hku.hk/~wyvying/comment/hall/${Comment_ID}/post_img${i}.jpg`},
           }
+        }
       );
       rows.push(
         <TouchableWithoutFeedback onPress={() => {this.openModal(i)}}>
           <Image
-          style= {{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}},
+          style= {{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
           source={{uri: `https://i.cs.hku.hk/~wyvying/comment/hall/${Comment_ID}/post_img${i}.jpg`}}
           />
         </TouchableWithoutFeedback>
