@@ -7,38 +7,48 @@
 		
 		$result = mysqli_query($db, $query);
 		
-		$query_1 = "Select Rating_1 FROM 'Hall_Rate'"
+		$Hall_1_query_1 = "Select AVG(Rating_1) FROM 'Hall_Rate' WHERE HallID = 1"
 		
-		$result_1 = mysqli_query($db, $query_1);
+		$Hall_1_result_1 = mysqli_query($db, $Hall_1_query_1);
 
-		$query_2 = "Select Rating_2 FROM 'Hall_Rate'"
+		$Hall_1_query_2 = "Select AVG(Rating_2) FROM 'Hall_Rate' WHERE HallID = 1"
 		
-		$result_2 = mysqli_query($db, $query_2);
+		$Hall_1_result_2 = mysqli_query($db, $Hall_1_query_2);
 
-		$query_3 = "Select Rating_3 FROM 'Hall_Rate'"
+		$Hall_1_query_3 = "Select AVG(Rating_3) FROM 'Hall_Rate' WHERE HallID = 1"
 		
-		$result_3 = mysqli_query($db, $query_3);
+		$Hall_1_result_3 = mysqli_query($db, $Hall_1_query_3);
 
-		$query_4 = "Select Rating_4 FROM 'Hall_Rate'"
+		$Hall_1_query_4 = "Select AVG(Rating_4) FROM 'Hall_Rate' WHERE HallID = 1"
 		
-		$result_4 = mysqli_query($db, $query_4);
+		$Hall_1_result_4 = mysqli_query($db, $Hall_1_query_4);
+
+		$Hall_2_query_1 = "Select AVG(Rating_1) FROM 'Hall_Rate' WHERE HallID = 2"
+		
+		$Hall_2_result_1 = mysqli_query($db, $Hall_2_query_1);
+
+		$Hall_2_query_2 = "Select AVG(Rating_2) FROM 'Hall_Rate' WHERE HallID = 2"
+		
+		$Hall_2_result_2 = mysqli_query($db, $Hall_2_query_2);
+
+		$Hall_2_query_3 = "Select AVG(Rating_3) FROM 'Hall_Rate' WHERE HallID = 2"
+		
+		$Hall_2_result_3 = mysqli_query($db, $Hall_2_query_3);
+
+		$Hall_2_query_4 = "Select AVG(Rating_4) FROM 'Hall_Rate' WHERE HallID = 2"
+		
+		$Hall_2_result_4 = mysqli_query($db, $Hall_2_query_4);
 		
 		$json = array();
 
+		$json['Rating'] = array{$Hall_1_result_1, $Hall_1_result_2, $Hall_1_result_3, $Hall_1_result_4, $Hall_2_result_1, $Hall_2_result_2, $Hall_2_result_3, $Hall_2_result_4};
+
 		while($row = mysqli_fetch_array($result))
 		{
-			$json[]=array('Hall_Name'=>$row['name']);
+			$json['Hall']=array('Hall_Name'=>$row['name']);
 		}
-
-		$average_1 = array_sum($result_1)/count($result_1)
-		$average_2 = array_sum($result_2)/count($result_2)
-		$average_3 = array_sum($result_3)/count($result_3)
-		$average_4 = array_sum($result_4)/count($result_4)
 		
 		echo json_encode($json);
-		echo json_encode($average_1);
-		echo json_encode($average_2);
-		echo json_encode($average_3);
-		echo json_encode($average_4);
+
 
 ?>
