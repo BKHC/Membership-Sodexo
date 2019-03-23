@@ -41,7 +41,7 @@ export default class SignInScreen extends React.Component{
                 >
       <KeyboardAvoidingView behavior="position" enabled>
       <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
-      <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+      <View style={{backgroundColor: 'rgba(255, 153, 204, 1)',flex: 1,justifyContent: 'center',alignItems: 'center'}}>
         <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
           <Image
             source={require('../../assets/sodexoLogo.png')}
@@ -61,7 +61,7 @@ export default class SignInScreen extends React.Component{
             shadowColor: 'black',
             shadowOpacity: 0.4,
           }}
-        >食盡HKU</Text>
+        >iHKU</Text>
         <Text
           style={{
             textAlign: 'center',
@@ -73,7 +73,7 @@ export default class SignInScreen extends React.Component{
             shadowOpacity: 0.6,
             marginTop: -5,
           }}
-        >多款菜式 任君選擇</Text>
+        >有咩意見 任君評論</Text>
         <View style={{justifyContent: 'center', alignItems:'center'}}>
             <TextInput
               style={{
@@ -164,23 +164,24 @@ export default class SignInScreen extends React.Component{
     }
     else {
       //postData(`https://i.cs.hku.hk/~wyvying/test.php`, {email: this.state.email, password: this.state.password})
+      /***
       fetch(`https://i.cs.hku.hk/~wyvying/test.php`, {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
           body: JSON.stringify({email: this.state.email, password: this.state.password}), // body data type must match "Content-Type" header
       })
       //.then(response => response.json()); // parses response to JSON
         .then((data) => {
-          alert(JSON.stringify(data));
-          /***
+          //alert(JSON.stringify(data));
           if (data.state == 'success'){ // login success
             await AsyncStorage.setItem('userToken', this.state.email);
             this.props.navigation.navigate('App');
           } else { // wrong email or password
             alert('Wrong email or password!');
           }
-          ***/
+
         }) // JSON-string from `response.json()` call
         .catch(error => console.error(error));
+        ***/
       }
     };
 }

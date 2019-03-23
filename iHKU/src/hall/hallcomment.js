@@ -14,8 +14,15 @@ export default class HallComment extends React.Component {
   }
 
   static navigationOptions = ({ navigation }) => {
+    var hallId = navigation.getParam('hallId', '-1')
     return {
       title: navigation.getParam('hallName', '利銘澤堂'),
+      headerRight: (
+        <Button
+          onPress={() => navigation.navigate('PostComment', {HallId: hallId})}
+          title="新增評論"
+        />
+      ),
     };
   };
 

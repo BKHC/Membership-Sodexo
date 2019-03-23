@@ -199,27 +199,6 @@ export default class Comment extends React.Component {
                   {this.state.item.comment}
                 </Text>
               </View>
-              <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
-              <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
-              <View style={{flexDirection:'row'}}>
-                <TouchableWithoutFeedback onPress={() => {this.openModal(0)}}>
-                  <Image
-                    style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-                    source={require('../../assets/post_img1.jpg')}
-                    />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback onPress={() => {this.openModal(1)}}>
-                  <Image
-                    style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-                    source={require('../../assets/post_img2.jpg')}
-                    />
-                </TouchableWithoutFeedback>
-                </View>
-
-                </View>
-                <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
-                  <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
-                </Modal>
               </ScrollView>
 
           </ImageBackground>
@@ -263,3 +242,27 @@ export default class Comment extends React.Component {
   export function getScreenHeight(){
     return SCREEN_HEIGHT
   }
+
+  /***
+  <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
+  <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
+  <View style={{flexDirection:'row'}}>
+    <TouchableWithoutFeedback onPress={() => {this.openModal(0)}}>
+      <Image
+        style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+        source={require('../../assets/post_img1.jpg')}
+        />
+    </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={() => {this.openModal(1)}}>
+      <Image
+        style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+        source={require('../../assets/post_img2.jpg')}
+        />
+    </TouchableWithoutFeedback>
+    </View>
+
+    </View>
+    <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
+      <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
+    </Modal>
+    ***/

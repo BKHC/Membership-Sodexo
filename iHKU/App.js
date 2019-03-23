@@ -6,6 +6,7 @@ import SignUpScreen from './src/auth/signup';
 import HallComment from './src/hall/hallcomment';
 import HallList from './src/hall/hallList';
 import Comment from './src/hall/comment';
+import PostComment from './src/hall/postcomment';
 import Try from './try';
 
 const {
@@ -64,6 +65,7 @@ const HallStack = createStackNavigator({
   HallList: HallList,
   HallComment: HallComment,
   Comment: Comment,
+  PostComment: PostComment,
 },
   {
       initialRouteName: 'HallList',
@@ -103,6 +105,7 @@ const TabNavigator = createBottomTabNavigator({
 
 },
 {
+    initialRouteName: '舍堂',
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
