@@ -4,23 +4,21 @@ import { View, Text } from 'react-native';
 export default class User extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {username: "Roy"};
+    this.state = {username: ""};
   }
 
   componentDidMount(){
-    const data = {User_ID: this.props.User_ID};
-    /***
-    fetch(`https://i.cs.hku.hk/~wyvying/test.php?Hall_ID=${encodeURIComponent(data.User_ID)}`, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
+    const data = {UserID: this.props.User_ID};
+    fetch(`https://i.cs.hku.hk/~wyvying/php/get_nickname.php?UserID=${encodeURIComponent(parseInt(data.UserID))}`, {
+        method: "GET",
     })
-    //.then(response => response.json()); // parses response to JSON
-      .then((data) => {
-        alert(JSON.stringify(data));
-        this.setState({username: data)});
+    .then(response => response.json()) // parses response to JSON
+    .then((data) => {
+        this.setState({username: data.username});
 
-      }) // JSON-string from `response.json()` call
+      })
       .catch(error => console.error(error));
-      ***/
+
   }
 
   render(){
