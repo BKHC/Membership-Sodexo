@@ -71,6 +71,14 @@ export default class Star extends React.Component {
         >☆</Text>
         </Text>
       );
+    else if (this.props.rating == "0")
+      return(
+        <Text
+          style={{
+            color: 'rgba(100, 100, 100, 1)',
+          }}
+        >☆☆☆☆☆</Text>
+      );
     else
       return (
         <Text

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Platform, StyleSheet, Text, View, FlatList, ScrollView, Modal} from 'react-native';
+  Image, Text, View, Platform, FlatList, ScrollView, Modal} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import User from '../user';
 import Star from '../star';
+import Face from '../face';
 
 class ImageList extends React.Component{
   constructor(props){
@@ -110,14 +111,12 @@ export default class Comment extends React.Component {
           rating = rating.toFixed(0);
         return (
           <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight(),flex: 1}}>
-              <ScrollView style={{marginBottom: 65}}>
+              <ScrollView style={{marginBottom: 145}}>
                 <View style={{backgroundColor:'white', width:getScreenWidth(), padding:30, marginTop: 4}}>
                   <View style={{flexDirection:'row', justifyContent : 'space-between'}} >
                     <View style={{flexDirection:'row'}}>
-                      <Image
-                        style={{width: 50, height: 50, marginRight:20, marginTop:4}}
-                        source={require('../../assets/happy.png')}
-                        />
+                    <Face rating_1= {this.state.item.rating_1} rating_2= {this.state.item.rating_2}
+                          rating_3= {this.state.item.rating_3} rating_4= {this.state.item.rating_4}/>
                     <View style={{flexDirection:'column',}} >
                       <View style={{flexDirection:'row',}} >
                         <Text

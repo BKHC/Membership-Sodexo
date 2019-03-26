@@ -1,9 +1,10 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Platform, StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
+  Image, Text, Platform, View, FlatList, ScrollView} from 'react-native';
 import { createFilter } from 'react-native-search-filter';
 import User from '../user';
 import Star from '../star';
+import Face from '../face';
 
 export default class HallComment extends React.Component {
 
@@ -18,15 +19,24 @@ export default class HallComment extends React.Component {
     return {
       title: navigation.getParam('hallName', '利銘澤堂'),
       headerRight: (
-        <Button
-          onPress={() => navigation.navigate('PostComment', {HallId: hallId})}
-          title="新增評論"
-        />
+        <TouchableOpacity onPress={() => navigation.navigate('PostComment', {HallId: hallId})}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize:18,
+            marginRight:22,
+            color: 'rgba(255, 255, 255, 1)',
+            fontWeight: 'bold',
+          }}
+        >
+          新增評論
+        </Text>
+        </TouchableOpacity>
       ),
     };
   };
 
-  componentDidMount() {
+  _doFetch = () => {
     fetch(`https://i.cs.hku.hk/~wyvying/php/json.php`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
@@ -37,8 +47,15 @@ export default class HallComment extends React.Component {
 
       }) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
+  };
 
-    //const { navigation } = this.props;
+  componentDidMount() {
+    this._doFetch();
+    const { navigation } = this.props;
+    navigation.addListener ('willFocus', () =>{
+    // do whatever you want to do when focused
+    this._doFetch();
+  });
     //const Hall_ID = navigation.getParam('hallId', '0');
     //const data = {Hall_ID: Hall_ID};
     /***
@@ -93,10 +110,8 @@ export default class HallComment extends React.Component {
 
         <View style={{flexDirection:'row', justifyContent : 'space-between'}} >
           <View style={{flexDirection:'row'}}>
-            <Image
-                style={{width: 45, height: 45, marginTop:10, marginRight:10, }}
-                source={require('../../assets/happy.png')}
-            />
+          <Face rating_1= {item.rating_1} rating_2= {item.rating_2}
+                rating_3= {item.rating_3} rating_4= {item.rating_4}/>
             <View style={{flexDirection:'column',}} >
               <Text
                 style={{
@@ -180,7 +195,7 @@ export default class HallComment extends React.Component {
       const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, ['topic']))
       return (
         <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
-            <ScrollView style={{marginBottom: 65}}>
+            <ScrollView style={{marginBottom: 145}}>
             <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
               <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
                 <TextInput
