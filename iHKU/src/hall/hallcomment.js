@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Text, Platform, View, FlatList, ScrollView} from 'react-native';
 import { createFilter } from 'react-native-search-filter';
+import { format } from 'date-fns';
 import User from '../user';
 import Star from '../star';
 import Face from '../face';
@@ -10,7 +11,7 @@ export default class HallComment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {items: [{id: "0", User_ID: "1", date: "5/3/2019", topic: "Roy is handsome", rating_1: "2", rating_2: "3",
+    this.state = {items: [{id: "0", User_ID: "1", date: new Date(), topic: "Roy is handsome", rating_1: "2", rating_2: "3",
   rating_3: "4", rating_4: "5"}], searchTerm: ''};
   }
 
@@ -58,7 +59,7 @@ export default class HallComment extends React.Component {
   });
     //const Hall_ID = navigation.getParam('hallId', '0');
     //const data = {Hall_ID: Hall_ID};
-    /***
+/***
     fetch(`https://i.cs.hku.hk/~wyvying/test.php?Hall_ID=${encodeURIComponent(data.Hall_ID)}`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
@@ -100,7 +101,7 @@ export default class HallComment extends React.Component {
               style={{
                 fontSize:normalize(10),
               }}
-            > - {item.date}</Text>
+            > - {format(item.date, 'HH:mm D MMM YYYY')}</Text>
           </View>
           <View style={{flexDirection:'row', textAlign:'right', }}>
 

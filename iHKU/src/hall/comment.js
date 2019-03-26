@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Text, View, Platform, FlatList, ScrollView, Modal} from 'react-native';
+import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import User from '../user';
 import Star from '../star';
@@ -58,7 +59,7 @@ export default class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: {id: "0", User_ID: "1", date: "17:30 2 Mar 2019", topic: "防彈少年團", comment:"韓國偶像組合防彈少年團將于4月12日帶著新專輯 MAP OF THE SOUL : PERSONA》複出。《MAP OF THE SOUL : PERSONA》是去年8月發售的《LOVE YOURSELF 結 ‘Answer》之後防彈少年團推出的最新專輯，也是「LOVE YOURSELF」系列完結之後防彈少年團的首張專輯， 防彈少年團通過這張專輯又會傳達什麼樣的主題讓廣大粉絲格外期待。 防彈少年團去年以「LOVE YOURSELF」系列專輯成為了首個在Billboard200連續兩張專輯奪冠的韓國歌手，此外他們還創下了韓國歌手首次在美國紐約Citi Field體育場舉行演唱會等多項新紀錄。防彈少年團將從5月4日開始陸續在洛杉磯、芝加哥、新澤西、聖保羅、倫敦、法國、大阪等全球各大城市舉行「LOVE YOURSELF : SPEAK YOURSELF」體育場巡演。",
+      item: {id: "0", User_ID: "1", date: "02 Mar 2019 17:30:23 GMT", topic: "防彈少年團", comment:"韓國偶像組合防彈少年團將于4月12日帶著新專輯 MAP OF THE SOUL : PERSONA》複出。《MAP OF THE SOUL : PERSONA》是去年8月發售的《LOVE YOURSELF 結 ‘Answer》之後防彈少年團推出的最新專輯，也是「LOVE YOURSELF」系列完結之後防彈少年團的首張專輯， 防彈少年團通過這張專輯又會傳達什麼樣的主題讓廣大粉絲格外期待。 防彈少年團去年以「LOVE YOURSELF」系列專輯成為了首個在Billboard200連續兩張專輯奪冠的韓國歌手，此外他們還創下了韓國歌手首次在美國紐約Citi Field體育場舉行演唱會等多項新紀錄。防彈少年團將從5月4日開始陸續在洛杉磯、芝加哥、新澤西、聖保羅、倫敦、法國、大阪等全球各大城市舉行「LOVE YOURSELF : SPEAK YOURSELF」體育場巡演。",
      rating_1: "2", rating_2: "3", rating_3: "4", rating_4: "5", noOfImg: "2"},
      isModalOpened: false,  //Controls if modal is opened or closed
      currentImageIndex: 0,   //Controls initial photo to show for modal
@@ -130,7 +131,7 @@ export default class Comment extends React.Component {
                           style={{
                             fontSize:normalize(10),
                           }}
-                        > - {this.state.item.date}</Text>
+                        > - {format(Date.parse(this.state.item.date), 'HH:mm D MMM YYYY')}</Text>
                       </View>
                       <Text
                         style={{

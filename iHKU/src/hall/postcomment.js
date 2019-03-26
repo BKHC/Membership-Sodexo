@@ -185,45 +185,38 @@ export default class PostComment extends React.Component {
 
   _post = () => {
     //let photo = { uri: source.uri} //for photo
-    let formdata = new FormData();
     const hallId = this.props.navigation.getParam('HallId','-1');
     const hallName = this.props.navigation.getParam('hallName','');
-    formdata.append("topic", this.state.topic);
-    formdata.append("rating_1",this.state.rating_1);
-    formdata.append("rating_2",this.state.rating_2);
-    formdata.append("rating_3",this.state.rating_3);
-    formdata.append("rating_4",this.state.rating_4);
-    formdata.append("comment",this.state.comment);
-    formdata.append("hallId", hallId);
-    alert(hallId);
-    this.props.navigation.goBack();
-    //this.props.navigation.replace('HallComment', {hallId: hallId, hallName: hallName});
-    /***
-    this.props.navigation.reset([NavigationActions.navigate({
-      routeName: 'HallStack',
-      params: {hallId: hallId, hallName: hallName},
-    })], 0);
-    fetch('http://192.168.1.101:3000/products',{
-  method: 'post',
-  headers: {
-    'Content-Type': 'multipart/form-data',
-  },
-  body: formdata
-  }).then(response => {
-    console.log("comment uploaded")
-    Alert.alert(
-  'Comment Posted!',
-  '',
-  [
-    {text: 'OK', onPress: () => this.props.navigation.reset([NavigationActions.navigate({ routeName: 'HallComment', { hallId: hallId, hallName: hallName}})], 0)},
-  ],
-  {cancelable: false},
-);
-  }).catch(err => {
-    console.log(err)
-  })
-});
-***/
+    fetch('https://i.cs.hku.hk/~wyvying/php/json_p.php',{
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "topic": this.state.topic,
+        "rating_1": this.state.rating_1,
+        "rating_2": this.state.rating_2,
+        "rating_3": this.state.rating_3,
+        "rating_4": this.state.rating_4,
+        "comment": this.state.comment,
+        "hallId": hallId,
+      }),
+      }).then((response) => response.json())
+      .then((data) => {
+        console.log("comment uploaded");
+
+        Alert.alert(
+      'Comment Posted!',
+      "Click ok to continue.",
+      [
+        {text: 'OK', onPress: () => this.props.navigation.goBack()},
+      ],
+      {cancelable: false},
+    );
+      }).catch(err => {
+        console.log(err)
+      })
 };
 }
 
