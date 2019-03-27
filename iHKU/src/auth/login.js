@@ -2,31 +2,6 @@ import React from 'react';
 import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, Text, View, Image, ImageBackground, TextInput,
   TouchableOpacity, AsyncStorage} from 'react-native';
 
-  // to normalize font size
-  const {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-  } = Dimensions.get('window');
-
-  // based on iphone 5s's scale
-  const scale = SCREEN_WIDTH / 320;
-
-  export function normalize(size) {
-    const newSize = size * scale
-    if (Platform.OS === 'ios') {
-      return Math.round(PixelRatio.roundToNearestPixel(newSize))
-    } else {
-      return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-    }
-  }
-
-  export function getScreenWidth(){
-    return SCREEN_WIDTH
-  }
-  export function getScreenHeight(){
-    return SCREEN_HEIGHT
-  }
-
 export default class SignInScreen extends React.Component{
   constructor(props) {
     super(props);
@@ -40,14 +15,13 @@ export default class SignInScreen extends React.Component{
                 onPress={this.blurTextInput.bind(this)}
                 >
       <KeyboardAvoidingView behavior="position" enabled>
-      <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
       <View style={{backgroundColor: 'rgba(255, 153, 204, 1)',flex: 1,justifyContent: 'center',alignItems: 'center'}}>
         <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
           <Image
-            source={require('../../assets/sodexoLogo.png')}
+            source={require('../../assets/HKULogo.png')}
             style={{
-              width: normalize(170),
-              height: normalize(55),
+              width: normalize(300),
+              height: normalize(339),
             }}
           />
         </View>
@@ -146,7 +120,6 @@ export default class SignInScreen extends React.Component{
             shadowOpacity: 0.4,
           }}
         >關於我們</Text>
-      </ImageBackground>
       </KeyboardAvoidingView>
       </TouchableOpacity>
     );
@@ -158,15 +131,15 @@ export default class SignInScreen extends React.Component{
   };
 
   signin = async () => {
-    this.props.navigation.navigate('App');
     if (this.state.email == '' || this.state.password == ''){
       alert('Email or password cannot be blank!');
     }
     else {
+      this.props.navigation.navigate('App');
       //postData(`https://i.cs.hku.hk/~wyvying/test.php`, {email: this.state.email, password: this.state.password})
       /***
       fetch(`https://i.cs.hku.hk/~wyvying/test.php`, {
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          method: "blurTextInput", // *GET, POST, PUT, DELETE, etc.
           body: JSON.stringify({email: this.state.email, password: this.state.password}), // body data type must match "Content-Type" header
       })
       //.then(response => response.json()); // parses response to JSON
@@ -184,4 +157,29 @@ export default class SignInScreen extends React.Component{
         ***/
       }
     };
+}
+
+// to normalize font size
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
+// based on iphone 5s's scale
+const scale = SCREEN_WIDTH / 320;
+
+export function normalize(size) {
+  const newSize = size * scale
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize))
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
+  }
+}
+
+export function getScreenWidth(){
+  return SCREEN_WIDTH
+}
+export function getScreenHeight(){
+  return SCREEN_HEIGHT
 }
