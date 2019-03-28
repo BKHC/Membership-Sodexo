@@ -18,7 +18,6 @@ export default class User extends React.Component{
 
       })
       .catch(error => console.error(error));
-
   }
 
   render(){

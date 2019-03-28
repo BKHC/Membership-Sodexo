@@ -59,8 +59,6 @@ export default class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: {id: "0", User_ID: "1", date: "02 Mar 2019 17:30:23 GMT", topic: "防彈少年團", comment:"韓國偶像組合防彈少年團將于4月12日帶著新專輯 MAP OF THE SOUL : PERSONA》複出。《MAP OF THE SOUL : PERSONA》是去年8月發售的《LOVE YOURSELF 結 ‘Answer》之後防彈少年團推出的最新專輯，也是「LOVE YOURSELF」系列完結之後防彈少年團的首張專輯， 防彈少年團通過這張專輯又會傳達什麼樣的主題讓廣大粉絲格外期待。 防彈少年團去年以「LOVE YOURSELF」系列專輯成為了首個在Billboard200連續兩張專輯奪冠的韓國歌手，此外他們還創下了韓國歌手首次在美國紐約Citi Field體育場舉行演唱會等多項新紀錄。防彈少年團將從5月4日開始陸續在洛杉磯、芝加哥、新澤西、聖保羅、倫敦、法國、大阪等全球各大城市舉行「LOVE YOURSELF : SPEAK YOURSELF」體育場巡演。",
-     rating_1: "2", rating_2: "3", rating_3: "4", rating_4: "5", noOfImg: "2"},
      isModalOpened: false,  //Controls if modal is opened or closed
      currentImageIndex: 0,   //Controls initial photo to show for modal
    };
@@ -73,22 +71,22 @@ export default class Comment extends React.Component {
   };
 
   componentDidMount() {
-/***
+
     const { navigation } = this.props;
     const Comment_ID = navigation.getParam('CommentId', '-1');
-    const data = {Comment_ID: Comment_ID};
+    const data = {Comment_ID: parseInt(Comment_ID)};
 
-    fetch(`https://i.cs.hku.hk/~wyvying/test.php?Comment_ID=${encodeURIComponent(data.Comment_ID)}`, {
+    fetch(`https://i.cs.hku.hk/~wyvying/php/get_comment.php?id=${encodeURIComponent(data.Comment_ID)}`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
-    //.then(response => response.json()); // parses response to JSON
+      .then(response => response.json()) // parses response to JSON
       .then((data) => {
         //alert(JSON.stringify(data));
         this.setState({item: data});
 
       }) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
-      ***/
+
     }
 
     render(){
@@ -131,7 +129,7 @@ export default class Comment extends React.Component {
                           style={{
                             fontSize:normalize(10),
                           }}
-                        > - {format(Date.parse(this.state.item.date), 'HH:mm D MMM YYYY')}</Text>
+                        > - {format(this.state.item.date, 'HH:mm D MMM YYYY')}</Text>
                       </View>
                       <Text
                         style={{
@@ -199,6 +197,27 @@ export default class Comment extends React.Component {
                   {this.state.item.comment}
                 </Text>
               </View>
+              <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
+              <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
+              <View style={{flexDirection:'row'}}>
+                <TouchableWithoutFeedback onPress={() => {this.openModal(0)}}>
+                  <Image
+                    style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+                    source={require('../../assets/post_img1.jpg')}
+                    />
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => {this.openModal(1)}}>
+                  <Image
+                    style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+                    source={require('../../assets/post_img2.jpg')}
+                    />
+                </TouchableWithoutFeedback>
+                </View>
+
+                </View>
+                <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
+                  <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
+                </Modal>
               </ScrollView>
 
           </ImageBackground>

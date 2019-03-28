@@ -5,19 +5,26 @@ session_start();
 
 
   $hall = mysqli_real_escape_string($db, $_GET['hall_id']);
-  $check_query = "SELECT * FROM 'Hall Rate' WHERE HallID='$hall'";
+  $check_query = "SELECT * FROM `Hall Rate` WHERE `HallID`= $hall";
   $result = mysqli_query($db, $check_query);
-$json = array();
+  $json = array();
+  $i = 0;
 
- while($row=mysqli_fetch_array($result))
-		{
-			$json[]=array('id'=>$row['id'], 'UserID'=>$row['UserID'], 'HallID'=>$row['HallID'], 'Rating_1'=>$row['Rating_1'], 'Rating_2'=>$row['Rating_2'], 'Rating_13'=>$row['Rating_3'],'Rating_14'=>$row['Rating_4'], 'Topic'=>$row['Topic'],'Comment'=>$row['Comment']);
-		}
-		
-		echo json_encode($json);
+  while($row=mysqli_fetch_array($result))
+ 		{
+ 			$json[$i]=array(
+        'id'=>$row['ID'],
+        'User_ID'=>$row['UserID'],
+        'HallID'=>$row['HallID'],
+        'rating_1'=>$row['Rating_1'],
+        'rating_2'=>$row['Rating_2'],
+        'rating_3'=>$row['Rating_3'],
+        'rating_4'=>$row['Rating_4'],
+        'topic' => $row['Topic'],
+        'date' => $row['Date']
+      );
+       $i = $i + 1;
+ 		}
 
-else
-{
-  echo json_encode("msg"=>"There's no related response on this hall!");
-}
+ 		echo json_encode($json);
 ?>

@@ -5,7 +5,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
 export default class SignInScreen extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {email: '', password: ''};
+    this.state = {email: '', password: '', disabled: true};
   }
 
   render() {
@@ -62,7 +62,14 @@ export default class SignInScreen extends React.Component{
               placeholder="電郵"
               placeholderTextColor="grey"
               ref="email"
-              onChangeText={(email) => this.setState({email})}
+              onChangeText={(email) => {
+                this.setState({email});
+                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@hku\.hk$/;
+                if (etest.test(email) && this.state.password.length >=6)
+                  this.setState({disabled: false});
+                else
+                  this.setState({disabled: true});
+              }}
             />
             <TextInput
               style={{
@@ -77,11 +84,25 @@ export default class SignInScreen extends React.Component{
               placeholderTextColor="grey"
               secureTextEntry={true}
               ref="password"
-              onChangeText={(password) => this.setState({password})}
+              onChangeText={(password) => {
+                this.setState({password});
+                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@hku\.hk$/;
+                if (etest.test(this.state.email) && password.length >=6)
+                  this.setState({disabled: false});
+                else
+                  this.setState({disabled: true});
+              }}
             />
           </View>
           <TouchableOpacity
-            style={{
+            style={this.state.disabled ? {
+              backgroundColor:'#172059',
+              height: normalize(42),
+              width: normalize(260),
+              borderRadius: normalize(40),
+              padding: normalize(10),
+              marginTop: 15,
+            } : {
               backgroundColor:'#293896',
               height: normalize(42),
               width: normalize(260),
@@ -89,7 +110,9 @@ export default class SignInScreen extends React.Component{
               padding: normalize(10),
               marginTop: 15,
             }}
+            disabled={this.state.disabled}
             onPress= {this.signin.bind(this)}
+            activeOpacity={this.state.disabled ? 1 : 0.7}
           >
             <Text style={{color:'white',textAlign: 'center', fontFamily:'Helvetica Neue',fontSize:normalize(12), marginTop:3}}>登入</Text>
           </TouchableOpacity>
