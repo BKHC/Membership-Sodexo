@@ -186,7 +186,6 @@ export default class PostComment extends React.Component {
   _post = () => {
     //let photo = { uri: source.uri} //for photo
     const hallId = this.props.navigation.getParam('HallId','-1');
-    const hallName = this.props.navigation.getParam('hallName','');
     fetch('https://i.cs.hku.hk/~wyvying/php/json_p.php',{
       method: 'POST',
       headers: {
@@ -205,10 +204,9 @@ export default class PostComment extends React.Component {
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");
-
         Alert.alert(
       'Comment Posted!',
-      "Click ok to continue.",
+      '',
       [
         {text: 'OK', onPress: () => this.props.navigation.goBack()},
       ],

@@ -15,7 +15,7 @@
 
 		$json = array();
 
-	for($x = 1; $x < $i; $x++)
+	for($x = 1; $x <= $i; $x++)
 	{
 
 		$temp_query_1 = "SELECT AVG(`Rating_1`) FROM `Hall Rate` WHERE `HallID`= $x";

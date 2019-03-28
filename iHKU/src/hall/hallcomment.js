@@ -39,14 +39,12 @@ export default class HallComment extends React.Component {
 
   _doFetch = () => {
     const Hall_ID = this.props.navigation.getParam('hallId', '-1');
-    alert(Hall_ID);
     const data = {Hall_ID: parseInt(Hall_ID)};
     fetch(`https://i.cs.hku.hk/~wyvying/php/hall_forum.php?hall_id=${encodeURIComponent(data.Hall_ID)}`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
     .then(response => response.json()) // parses response to JSON
       .then((data) => {
-        //alert(JSON.stringify(data));
         this.setState({items: data});
 
       }) // JSON-string from `response.json()` call
