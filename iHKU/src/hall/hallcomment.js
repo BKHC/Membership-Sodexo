@@ -38,6 +38,8 @@ export default class HallComment extends React.Component {
   };
 
   _doFetch = () => {
+    //const Hall_ID = navigation.getParam('hallId', '0');
+    //const data = {Hall_ID: Hall_ID};
     fetch(`https://i.cs.hku.hk/~wyvying/php/json.php`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
@@ -53,24 +55,14 @@ export default class HallComment extends React.Component {
   componentDidMount() {
     this._doFetch();
     const { navigation } = this.props;
-    navigation.addListener ('willFocus', () =>{
+    navigation.addListener ('didFocus', () =>{
     // do whatever you want to do when focused
     this._doFetch();
   });
-    //const Hall_ID = navigation.getParam('hallId', '0');
-    //const data = {Hall_ID: Hall_ID};
 /***
     fetch(`https://i.cs.hku.hk/~wyvying/test.php?Hall_ID=${encodeURIComponent(data.Hall_ID)}`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
-    //.then(response => response.json()); // parses response to JSON
-      .then((data) => {
-        alert(JSON.stringify(data));
-        //this.item = JSON.parse(data);
-        this.setState({items: JSON.parse(data)});
-
-      }) // JSON-string from `response.json()` call
-      .catch(error => console.error(error));
       ***/
     }
 

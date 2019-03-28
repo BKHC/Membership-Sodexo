@@ -8,7 +8,7 @@ export default class HallList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [{id: "0", hallname: "大學堂", image:"https://aal.hku.hk/admissions/international/sites/default/files/residential%20halls%20sidebar_0.jpg",
+      items: [{id: "0", hallname: "李國賢堂", image:"https://www.estates.hku.hk/application/files/9114/4231/2366/072_Simon_K_Y_Lee_Hall.jpg",
       rating_1: "2", rating_2: "3", rating_3: "4", rating_4: "5"},
      {id: "1", hallname: "何東夫人堂", image: "https://2.bp.blogspot.com/-r6KY0H1p8H0/VlLIxawtdrI/AAAAAAAACs4/Qx2mvR7ue_c/s1600/151123-03.JPG",
      rating_1: "5", rating_2: "2", rating_3: "3", rating_4: "2"},
@@ -16,9 +16,8 @@ export default class HallList extends React.Component {
      rating_1: "4", rating_2: "4", rating_3: "5", rating_4: "4"},
      {id: "3", hallname: "施德堂", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/HKU_Pokfulam_Road_Jockey_Club_Student_Village_%E6%96%BD%E5%BE%B7%E5%A0%82_Starr_Hall_AIG_Building_Mar-2012.jpg",
      rating_1: "1", rating_2: "1", rating_3: "1", rating_4: "1"},
-     {id: "4", hallname: "李國賢堂", image: "https://www.estates.hku.hk/application/files/9114/4231/2366/072_Simon_K_Y_Lee_Hall.jpg",
+     {id: "4", hallname: "大學堂", image: "https://aal.hku.hk/admissions/international/sites/default/files/residential%20halls%20sidebar_0.jpg",
      rating_1: "3", rating_2: "5", rating_3: "2", rating_4: "3"},
-
  ],
       searchTerm: ''
     };

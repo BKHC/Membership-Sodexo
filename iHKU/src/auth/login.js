@@ -15,13 +15,14 @@ export default class SignInScreen extends React.Component{
                 onPress={this.blurTextInput.bind(this)}
                 >
       <KeyboardAvoidingView behavior="position" enabled>
+      <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
       <View style={{backgroundColor: 'rgba(255, 153, 204, 1)',flex: 1,justifyContent: 'center',alignItems: 'center'}}>
         <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
           <Image
             source={require('../../assets/HKULogo.png')}
             style={{
-              width: normalize(300),
-              height: normalize(339),
+              width: normalize(200),
+              height: normalize(226),
             }}
           />
         </View>
@@ -120,6 +121,7 @@ export default class SignInScreen extends React.Component{
             shadowOpacity: 0.4,
           }}
         >關於我們</Text>
+      </ImageBackground>
       </KeyboardAvoidingView>
       </TouchableOpacity>
     );
