@@ -11,8 +11,7 @@ export default class HallComment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {items: [{id: "0", User_ID: "1", date: new Date(), topic: "Roy is handsome", rating_1: "2", rating_2: "3",
-  rating_3: "4", rating_4: "5"}], searchTerm: ''};
+    this.state = {searchTerm: ''};
   }
 
   static navigationOptions = ({ navigation }) => {

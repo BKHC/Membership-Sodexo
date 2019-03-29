@@ -8,7 +8,7 @@
 		$hall = array();
 		$i = 0;
 		while ($row=mysqli_fetch_array($result)){
-			$hall[$i]=urlencode($row['name']);
+			$hall[$i] = $row['name'];
        $i = $i + 1;
 		}
 
@@ -52,7 +52,7 @@
 
 	}
 
-		echo urldecode(json_encode($json));
+		echo json_encode($json);
 
 
 ?>

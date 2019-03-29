@@ -92,17 +92,15 @@ export default class Comment extends React.Component {
     render(){
       const images = [
 {
+    url: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img1.jpg`,
     props: {
         // Or you can set source directory.
-        style: {width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10},
-        source: require('../../assets/post_img1.jpg'),
     }
 },
 {
+    url: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img2.jpg`,
     props: {
         // Or you can set source directory.
-        style: {width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10},
-        source: require('../../assets/post_img2.jpg'),
     }
 }]
         if (this.state.item){
@@ -203,13 +201,13 @@ export default class Comment extends React.Component {
                 <TouchableWithoutFeedback onPress={() => {this.openModal(0)}}>
                   <Image
                     style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-                    source={require('../../assets/post_img1.jpg')}
+                    source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img1.jpg`}}
                     />
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => {this.openModal(1)}}>
                   <Image
                     style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-                    source={require('../../assets/post_img2.jpg')}
+                    source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img2.jpg`}}
                     />
                 </TouchableWithoutFeedback>
                 </View>
