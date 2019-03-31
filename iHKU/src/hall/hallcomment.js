@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Text, Platform, View, FlatList, ScrollView} from 'react-native';
+  Image, Text, Platform, View, FlatList, ScrollView, ActivityIndicator, RefreshControl} from 'react-native';
 import { createFilter } from 'react-native-search-filter';
 import { format } from 'date-fns';
 import User from '../user';
@@ -11,7 +11,7 @@ export default class HallComment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {searchTerm: ''};
+    this.state = {searchTerm: '', refreshing: false};
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -36,6 +36,11 @@ export default class HallComment extends React.Component {
     };
   };
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this._doFetch();
+  }
+
   _doFetch = () => {
     const Hall_ID = this.props.navigation.getParam('hallId', '-1');
     const data = {Hall_ID: parseInt(Hall_ID)};
@@ -44,17 +49,18 @@ export default class HallComment extends React.Component {
     })
     .then(response => response.json()) // parses response to JSON
       .then((data) => {
-        this.setState({items: data});
+        this.setState({items: data, refreshing: false});
 
       }) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     //this._doFetch();
     this.props.navigation.addListener ('didFocus', () =>{
     // do whatever you want to do when focused
-    this._doFetch();
+    this.setState({items: null});
+    this._onRefresh();
   });
     }
 
@@ -179,32 +185,53 @@ export default class HallComment extends React.Component {
     if (this.state.items){
       const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, ['topic']))
       return (
-        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
-            <ScrollView style={{marginBottom: 145}}>
-            <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
-              <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
-                <TextInput
-                style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
-                placeholder="搜尋"
-                onChangeText={(text) => this.setState({searchTerm: text})}
-                ></TextInput>
-                <Image
-                    style={{width: 18, height: 18, marginTop:11, marginLeft:11}}
-                    source={require('../../assets/search.png')}
-                />
+        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
+
+
+              <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
+                <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
+                  <TextInput
+                    style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
+                    placeholder="搜尋"
+                    onChangeText={(text) => this.setState({searchTerm: text})}
+                    ></TextInput>
+                  <Image
+                      style={{width: 18, height: 18, marginTop:11, marginLeft:11}}
+                      source={require('../../assets/search.png')}
+                    />
+                </View>
               </View>
-            </View>
-            <FlatList
-                data={filteredItems}
-                renderItem={this._renderData}
-                keyExtractor={({id}, index) => id}
-              />
-            </ScrollView>
+
+                <FlatList
+                  data={filteredItems}
+                  renderItem={this._renderData}
+                  keyExtractor={({id}, index) => id}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.refreshing}
+                      onRefresh={this._onRefresh}
+                      tintColor="rgba(255, 153, 204, 1)"
+                    />}
+                    />
         </ImageBackground>
       );
   } else {
   return (
-    <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
+    <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
+    <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
+      <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
+        <TextInput
+          style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
+          placeholder="搜尋"
+          onChangeText={(text) => this.setState({searchTerm: text})}
+          ></TextInput>
+        <Image
+            style={{width: 18, height: 18, marginTop:11, marginLeft:11}}
+            source={require('../../assets/search.png')}
+          />
+      </View>
+    </View>
+    <ActivityIndicator size="large" color="rgba(255, 153, 204, 1)" />
   </ImageBackground>);
 }
   }

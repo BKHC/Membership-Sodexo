@@ -5,7 +5,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
 export default class SignInScreen extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {email: '', password: '', disabled: true};
+    this.state = {email: '', password: '', disabled: false};
   }
 
   render() {
@@ -157,7 +157,8 @@ export default class SignInScreen extends React.Component{
 
   signin = async () => {
     if (this.state.email == '' || this.state.password == ''){
-      alert('Email or password cannot be blank!');
+      //alert('Email or password cannot be blank!');
+      this.props.navigation.navigate('App');
     }
     else {
       this.props.navigation.navigate('App');
