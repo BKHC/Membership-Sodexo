@@ -1,20 +1,22 @@
 <?php
-	
+
 	require_once("db_config.php");
-	
+
 	session_start();
+	$json = file_get_contents('php://input');
+	$data = json_decode($json);
+	$email = $data['email'];
+	$user_password = $data['password'];
 	if(!isset($_SESSION["username"]))
 	{
-		$email = mysqli_real_escape_string($db, $_POST['email']);
-		
-		$user_password = md5(mysqli_real_escape_string($db, $_POST['password']));
-		
+
+
 		$query = "SELECT * FROM User WHERE email = '$email' and password = '$user_password'";
-		
+
 		$result = mysqli_query($db, $query);
-		
-		$count = mysqli_num_rows($result); 
-		
+
+		$count = mysqli_num_rows($result);
+
 		if($count == 1)
 		{
 			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);

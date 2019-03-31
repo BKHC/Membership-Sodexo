@@ -162,15 +162,13 @@ export default class SignInScreen extends React.Component{
     }
     else {
       this.props.navigation.navigate('App');
-      //postData(`https://i.cs.hku.hk/~wyvying/test.php`, {email: this.state.email, password: this.state.password})
       /***
-      fetch(`https://i.cs.hku.hk/~wyvying/test.php`, {
-          method: "blurTextInput", // *GET, POST, PUT, DELETE, etc.
+      fetch(`https://i.cs.hku.hk/~wyvying/php/login.php`, {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
           body: JSON.stringify({email: this.state.email, password: this.state.password}), // body data type must match "Content-Type" header
       })
-      //.then(response => response.json()); // parses response to JSON
+        .then(response => response.json())
         .then((data) => {
-          //alert(JSON.stringify(data));
           if (data.state == 'success'){ // login success
             await AsyncStorage.setItem('userToken', this.state.email);
             this.props.navigation.navigate('App');

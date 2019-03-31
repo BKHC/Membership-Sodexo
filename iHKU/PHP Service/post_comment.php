@@ -1,21 +1,36 @@
 <?php
-
 require_once("db_config.php");
-session_start();
+//Receive the RAW post data.
+$content = file_get_contents("php://input");
 
-$json = file_get_contents('php://input');
-$data = json_decode($json);
+//Attempt to decode the incoming RAW post data from JSON.
+$decoded = json_decode($content, true);
+//If json_decode failed, the JSON is invalid.
+if(!is_array($decoded)){
+    throw new Exception('Received content contained invalid JSON!');
+}
 
-$UserID = mysqli_real_escape_string($db, $data["userID"]);
-$HallID = mysqli_real_escape_string($db, $data["hallID"]);
-$Rating_1 = mysqli_real_escape_string($db, $data["rating_1"]);
-$Rating_2 = mysqli_real_escape_string($db, $data["rating_2"]);
-$Rating_3 = mysqli_real_escape_string($db, $data["rating_3"]);
-$Rating_4 = mysqli_real_escape_string($db, $data["rating_4"]);
-$Topic = mysqli_real_escape_string($db, $data["topic"]);
-$Comment = mysqli_real_escape_string($db, $data["comment"]);
+//get data from the decoded json
+$topic = $decoded['topic'];
+$rating_1 = $decoded['rating_1'];
+$rating_2 = $decoded['rating_2'];
+$rating_3 = $decoded['rating_3'];
+$rating_4 = $decoded['rating_4'];
+$comment = $decoded['comment'];
+$hallId = $decoded['hallId'];
+$userId = '1'; // to be get by $decoded['userId'] when login implemented
 
-
-$insert = "INSERT INTO `Hall Rate`(`UserID`, `HallID`, `Rating_1`, `Rating_2`, `Rating_3`, `Rating_4`, `Topic`, `Comment`) VALUES ($UserID, $HallID, $Rating_1, $Rating_2, $Rating_3, $Rating_4, $Topic, $Comment)";
-
+$query = "INSERT INTO `Hall Rate` (ID, UserID, HallID, Rating_1, Rating_2, Rating_3, Rating_4, Topic, Comment, Image_num, Date)
+ VALUES (NULL, '$userId', '$hallId', '$rating_1', '$rating_2', '$rating_3', '$rating_4', '$topic', '$comment', '0', CURRENT_TIMESTAMP)";
+if (mysqli_query($db, $query)){
+  $json = array(
+    'comment' => "success",
+  );
+  echo json_encode($json);
+} else {
+  $json = array(
+    'comment' => "nogood",
+  );
+  echo json_encode($json);
+}
 ?>
