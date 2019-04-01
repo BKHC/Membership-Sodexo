@@ -3,7 +3,6 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback
   Image, Text, View, Platform, FlatList, ScrollView, Modal} from 'react-native';
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import User from '../user';
 import Star from '../star';
 import Face from '../face';
 
@@ -122,7 +121,7 @@ export default class Comment extends React.Component {
                             color: 'rgba(255, 153, 204, 1)',
                             fontWeight: 'bold',
                           }}
-                        ><User User_ID={this.state.item.User_ID} /></Text>
+                        >{this.state.item.nickname}</Text>
                         <Text
                           style={{
                             fontSize:normalize(10),

@@ -11,9 +11,13 @@ session_start();
 
   if($comment)
  		{
+      $id = (int) $comment['UserID'];
+      $user_check_query = "SELECT Alias FROM User WHERE UserID=$id LIMIT 1";
+      $result = mysqli_query($db, $user_check_query);
+      $user = mysqli_fetch_assoc($result);
  			$json=array(
         'id'=>$comment['ID'],
-        'User_ID'=>$comment['UserID'],
+        'nickname'=>$user["Alias"],
         'HallID'=>$comment['HallID'],
         'rating_1'=>$comment['Rating_1'],
         'rating_2'=>$comment['Rating_2'],

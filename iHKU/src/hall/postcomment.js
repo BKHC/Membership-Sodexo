@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Platform, StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
+  Image, Platform, StyleSheet, Text, View, FlatList, ScrollView, AsyncStorage} from 'react-native';
 import NavigationActions from 'react-navigation';
 import Star from '../star';
 import Face from '../face';
@@ -10,7 +10,7 @@ export default class PostComment extends React.Component {
     super(props);
     var color = new Array(4).fill(0).map(row => new Array(5).fill('rgba(100, 100, 100, 1)'));
     var star = new Array(4).fill(0).map(row => new Array(5).fill('☆'));
-    this.state = {topic: "", rating: "0", rating_1: "0", rating_2: "0", rating_3: "0", rating_4: "0", comment: "", color: color, star: star};
+    this.state = {userID: "",topic: "", rating: "0", rating_1: "0", rating_2: "0", rating_3: "0", rating_4: "0", comment: "", color: color, star: star};
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -27,9 +27,12 @@ export default class PostComment extends React.Component {
     };
 };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.navigation.setParams({ post: this._post });
-  }
+    AsyncStorage.getItem('userID').then((value) => {
+      this.setState({userID: value});
+  });
+}
 
   update(id, star){
     var totalrating;
@@ -186,21 +189,24 @@ export default class PostComment extends React.Component {
   _post = () => {
     //let photo = { uri: source.uri} //for photo
     const hallId = this.props.navigation.getParam('HallId','-1');
-    fetch('https://i.cs.hku.hk/~wyvying/php/json_p.php',{
+    let body = new FormData();
+    body.append('topic', this.state.topic);
+    body.append('rating_1', this.state.rating_1);
+    body.append('rating_2', this.state.rating_2);
+    body.append('rating_3', this.state.rating_3);
+    body.append('rating_4', this.state.rating_4);
+    body.append('comment', this.state.comment);
+    body.append('topic', this.state.topic);
+    body.append('hallId', hallId);
+    body.append('userId', this.state.userID);
+
+    fetch('https://i.cs.hku.hk/~wyvying/php/post_comment.php',{
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': "multipart/form-data",
       },
-      body: JSON.stringify({
-        "topic": this.state.topic,
-        "rating_1": this.state.rating_1,
-        "rating_2": this.state.rating_2,
-        "rating_3": this.state.rating_3,
-        "rating_4": this.state.rating_4,
-        "comment": this.state.comment,
-        "hallId": hallId,
-      }),
+      body: body,
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");

@@ -3,15 +3,14 @@
 	require_once("db_config.php");
 
 	session_start();
-	$json = file_get_contents('php://input');
-	$data = json_decode($json);
-	$email = $data['email'];
-	$user_password = $data['password'];
+
+	$email = $_POST['email'];
+	$user_password = $_POST['password'];
 	if(!isset($_SESSION["username"]))
 	{
 
 
-		$query = "SELECT * FROM User WHERE email = '$email' and password = '$user_password'";
+		$query = "SELECT UserID FROM User WHERE Email = '$email' and Password = '$user_password'";
 
 		$result = mysqli_query($db, $query);
 
@@ -19,16 +18,17 @@
 
 		if($count == 1)
 		{
-			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+			$id_result = mysqli_fetch_assoc($result);
+			$id = $id_result['UserID'];
 			$_SESSION["email"] = $email;
 			setcookie("email", $email);
-			echo json_encode(array("state"=>"success", "email"=>$email));
-			$_SESSION['id'] = $row['id'];
+			echo json_encode(array("state"=>"success", "id"=>$id));
+			$_SESSION['id'] = $id;
 			$_SESSION['logged'] = true;
 		}
 		else
 		{
-			echo json_encode(array("state"=>"fail", "msg"=>"incorrect_information"));
+			echo json_encode(array("state"=>"fail", "login"=>$email));
 		}
 	}
   	mysqli_close($db);

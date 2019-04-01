@@ -86,7 +86,7 @@ export default class HallComment extends React.Component {
                 color: 'rgba(255, 153, 204, 1)',
                 fontWeight: 'bold',
               }}
-            ><User User_ID={item.User_ID} /></Text>
+            >{item.nickname}</Text>
             <Text
               style={{
                 fontSize:normalize(10),

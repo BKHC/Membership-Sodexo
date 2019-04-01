@@ -1,16 +1,16 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, Text, View, Image, ImageBackground, TextInput,
-  TouchableOpacity, AsyncStorage} from 'react-native';
+  TouchableOpacity, TouchableWithoutFeedback, AsyncStorage} from 'react-native';
 
 export default class SignInScreen extends React.Component{
   constructor(props) {
     super(props);
-    this.state = {email: '', password: '', disabled: false};
+    this.state = {email: '', password: '', disabled: true};
   }
 
   render() {
     return (
-      <TouchableOpacity
+      <TouchableWithoutFeedback
                 activeOpacity={1.0}
                 onPress={this.blurTextInput.bind(this)}
                 >
@@ -117,20 +117,22 @@ export default class SignInScreen extends React.Component{
             <Text style={{color:'white',textAlign: 'center', fontFamily:'Helvetica Neue',fontSize:normalize(12), marginTop:3}}>登入</Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={{
-            position:'absolute',
-            bottom:getScreenWidth()/2 - normalize(260)/2,
-            left:getScreenWidth()/2 - normalize(260)/2,
-            fontFamily:'Helvetica Neue',
-            color:'white',
-            fontSize:normalize(10),
-            shadowOffset:{ width: 2, height: 2, },
-            shadowColor: 'black',
-            shadowOpacity: 0.4,
-          }}
-          onPress= {() => this.props.navigation.navigate('SignUp')}
-        >沒有帳號？立即註冊！</Text>
+        <TouchableOpacity style={{
+          bottom:getScreenWidth()/2 - normalize(260)/2,
+          left:getScreenWidth()/2 - normalize(260)/2,
+          position:'absolute',
+        }} onPress={() => this.props.navigation.navigate('SignUp')}>
+          <Text
+            style={{
+              fontFamily:'Helvetica Neue',
+              color:'white',
+              fontSize:normalize(10),
+              shadowOffset:{ width: 2, height: 2, },
+              shadowColor: 'black',
+              shadowOpacity: 0.4,
+            }}
+            >沒有帳號？立即註冊！</Text>
+        </TouchableOpacity>
         <Text
           style={{
             position:'absolute',
@@ -146,31 +148,46 @@ export default class SignInScreen extends React.Component{
         >關於我們</Text>
       </ImageBackground>
       </KeyboardAvoidingView>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     );
   }
+
 
   blurTextInput (){
     this.refs.email.blur();
     this.refs.password.blur();
   };
 
+  _storeData = async(id) => {
+    try {
+      await AsyncStorage.setItem('userID', id);
+    } catch (error){
+
+    }
+  };
+
   signin = async () => {
     if (this.state.email == '' || this.state.password == ''){
-      //alert('Email or password cannot be blank!');
-      this.props.navigation.navigate('App');
+      alert('Email or password cannot be blank!');
+      //this.props.navigation.navigate('App');
     }
     else {
-      this.props.navigation.navigate('App');
-      /***
+      let body = new FormData();
+      body.append('email', this.state.email);
+      body.append('password', this.state.password);
       fetch(`https://i.cs.hku.hk/~wyvying/php/login.php`, {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
-          body: JSON.stringify({email: this.state.email, password: this.state.password}), // body data type must match "Content-Type" header
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': "multipart/form-data",
+          },
+          body: body, // body data type must match "Content-Type" header
       })
         .then(response => response.json())
         .then((data) => {
           if (data.state == 'success'){ // login success
-            await AsyncStorage.setItem('userToken', this.state.email);
+            //AsyncStorage.setItem('userID', data.id);
+            this._storeData(data.id);
             this.props.navigation.navigate('App');
           } else { // wrong email or password
             alert('Wrong email or password!');
@@ -178,7 +195,6 @@ export default class SignInScreen extends React.Component{
 
         }) // JSON-string from `response.json()` call
         .catch(error => console.error(error));
-        ***/
       }
     };
 }

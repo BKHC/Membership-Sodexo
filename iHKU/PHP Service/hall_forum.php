@@ -12,9 +12,13 @@ session_start();
 
   while($row=mysqli_fetch_array($result))
  		{
+      $id = (int)$row['UserID'];
+      $user_check_query = "SELECT Alias FROM User WHERE UserID=$id LIMIT 1";
+      $new_result = mysqli_query($db, $user_check_query);
+      $user = mysqli_fetch_assoc($new_result);
  			$json[$i]=array(
         'id'=>$row['ID'],
-        'User_ID'=>$row['UserID'],
+        'nickname'=>$user["Alias"],
         'HallID'=>$row['HallID'],
         'rating_1'=>$row['Rating_1'],
         'rating_2'=>$row['Rating_2'],
