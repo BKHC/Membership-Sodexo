@@ -20,6 +20,7 @@ session_start();
         'id'=>$row['ID'],
         'nickname'=>$user["Alias"],
         'HallID'=>$row['HallID'],
+        'comment'=>$row['Comment'],
         'rating_1'=>$row['Rating_1'],
         'rating_2'=>$row['Rating_2'],
         'rating_3'=>$row['Rating_3'],

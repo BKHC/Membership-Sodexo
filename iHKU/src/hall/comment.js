@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Text, View, Platform, FlatList, ScrollView, Modal} from 'react-native';
+import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback, PixelRatio, Dimensions, TextInput, ImageBackground,
+  Image, Text, View, Platform, FlatList, ScrollView, Modal, ActivityIndicator} from 'react-native';
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import Star from '../star';
@@ -73,18 +73,19 @@ export default class Comment extends React.Component {
 
     const { navigation } = this.props;
     const Comment_ID = navigation.getParam('CommentId', '-1');
-    const data = {Comment_ID: parseInt(Comment_ID)};
+    const topic = navigation.getParam('Topic', '');
+    const date = navigation.getParam('Date', '');
+    const rating_1 = navigation.getParam('Rating_1', '');
+    const rating_2 = navigation.getParam('Rating_2', '');
+    const rating_3 = navigation.getParam('Rating_3', '');
+    const rating_4 = navigation.getParam('Rating_4', '');
+    const nickname = navigation.getParam('Nickname', '');
+    const comment = navigation.getParam('Comment', '');
 
-    fetch(`https://i.cs.hku.hk/~wyvying/php/get_comment.php?id=${encodeURIComponent(data.Comment_ID)}`, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-    })
-      .then(response => response.json()) // parses response to JSON
-      .then((data) => {
-        //alert(JSON.stringify(data));
-        this.setState({item: data});
+    const data = {Comment_ID: parseInt(Comment_ID), topic: topic, data: date, rating_1: rating_1, rating_2: rating_2,
+      rating_3: rating_3, rating_4: rating_4, nickname: nickname, comment: comment};
 
-      }) // JSON-string from `response.json()` call
-      .catch(error => console.error(error));
+    this.setState({item: data});
 
     }
 
@@ -106,8 +107,8 @@ export default class Comment extends React.Component {
           var rating = (parseInt(this.state.item.rating_1) + parseInt(this.state.item.rating_2) + parseInt(this.state.item.rating_3) + parseInt(this.state.item.rating_4)) / 4;
           rating = rating.toFixed(0);
         return (
-          <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight(),flex: 1}}>
-              <ScrollView style={{marginBottom: 145}}>
+          <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145,flex: 1}}>
+              <ScrollView>
                 <View style={{backgroundColor:'white', width:getScreenWidth(), padding:30, marginTop: 4}}>
                   <View style={{flexDirection:'row', justifyContent : 'space-between'}} >
                     <View style={{flexDirection:'row'}}>
@@ -223,8 +224,9 @@ export default class Comment extends React.Component {
       } else {
       return (
         <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
-        <ScrollView style={{marginBottom: 65}}>
-        </ScrollView>
+        <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+          <ActivityIndicator size="large" color="rgba(255, 153, 204, 1)" />
+        </View>
       </ImageBackground>);
     }
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
+import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Text, Platform, View, FlatList, ScrollView, ActivityIndicator, RefreshControl} from 'react-native';
 import { createFilter } from 'react-native-search-filter';
 import { format } from 'date-fns';
@@ -67,7 +67,8 @@ export default class HallComment extends React.Component {
     _renderData = ({item}) => (
       <TouchableOpacity
         ref={item.id}
-        onPress={this.more.bind(this, item.id, item.topic)}
+        onPress={this.more.bind(this, item.id, item.topic, item.date, item.rating_1, item.rating_2, item.rating_3,
+          item.rating_4, item.nickname, item.comment)}
       >
       <View
         style={{
@@ -176,8 +177,10 @@ export default class HallComment extends React.Component {
       </TouchableOpacity>
       );
 
-    more(id, topic){
-      this.props.navigation.navigate('Comment', {CommentId: id, Topic: topic});
+    more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment){
+      this.props.navigation.navigate('Comment',
+      {CommentId: id, Topic: topic, Date: date, Rating_1: rating_1, Rating_2: rating_2, Rating_3: rating_3,
+      Rating_4: rating_4, Nickname: nickname, Comment: comment});
     }
 
   render() {
@@ -231,7 +234,9 @@ export default class HallComment extends React.Component {
           />
       </View>
     </View>
-    <ActivityIndicator size="large" color="rgba(255, 153, 204, 1)" />
+    <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+      <ActivityIndicator size="large" color="rgba(255, 153, 204, 1)" />
+    </View>
   </ImageBackground>);
 }
   }

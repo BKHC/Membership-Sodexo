@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Platform, StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
+import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, TextInput, ImageBackground, Image,
+  Platform, Text, View, FlatList, ScrollView, ActivityIndicator} from 'react-native';
 import { createFilter } from 'react-native-search-filter';
 import Star from '../star';
 export default class HallList extends React.Component {
@@ -138,6 +138,9 @@ export default class HallList extends React.Component {
       } else {
       return (
         <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
+        <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
+          <ActivityIndicator size="large" color="rgba(255, 153, 204, 1)" />
+        </View>
       </ImageBackground>);
     }
     }
