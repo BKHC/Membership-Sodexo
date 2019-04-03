@@ -82,7 +82,7 @@ export default class Comment extends React.Component {
     const nickname = navigation.getParam('Nickname', '');
     const comment = navigation.getParam('Comment', '');
 
-    const data = {Comment_ID: parseInt(Comment_ID), topic: topic, data: date, rating_1: rating_1, rating_2: rating_2,
+    const data = {Comment_ID: parseInt(Comment_ID), topic: topic, date: date, rating_1: rating_1, rating_2: rating_2,
       rating_3: rating_3, rating_4: rating_4, nickname: nickname, comment: comment};
 
     this.setState({item: data});
