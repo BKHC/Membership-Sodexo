@@ -4,7 +4,7 @@
 		$query = "SELECT Rest_Name FROM Restaurant";
 		$result = mysqli_query($db, $query);
     
-		$hall = array();
+		$Rest = array();
 		$i = 0;
     
 		while ($row=mysqli_fetch_array($result)){
