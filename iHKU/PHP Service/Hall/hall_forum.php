@@ -16,7 +16,7 @@ session_start();
       $user_check_query = "SELECT Alias FROM User WHERE UserID=$id LIMIT 1";
       $new_result = mysqli_query($db, $user_check_query);
       $user = mysqli_fetch_assoc($new_result);
- 			$json[$i]=array(
+ 			$json[$i] = array(
         'id'=>$row['ID'],
         'nickname'=>$user["Alias"],
         'HallID'=>$row['HallID'],
