@@ -9,7 +9,7 @@
 		$i = 0;
 		while ($row=mysqli_fetch_array($result)){
 			$hall[$i] = $row['name'];
-       $i = $i + 1;
+       			$i = $i + 1;
 		}
 
 
