@@ -42,7 +42,7 @@
 		$mail->setFrom("gavin97@hku.hk", "Admin");
 		$mail->addAddress($user_email);
 		$mail->isHTML(true);
-		$link = 'http://ihku/pw_reset.php?email='.$user_email.'&token='.$token;
+		$link = 'http://ihku/pw_reset.php?email='.$user_email.'&token='.$token; //i dont know what the link should be lol
 		
 		//Set content of the email
 		$mail->Subject = "Password Reset Request";
