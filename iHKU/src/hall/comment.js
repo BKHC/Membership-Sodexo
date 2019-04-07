@@ -15,6 +15,15 @@ class ImageList extends React.Component{
    };
   }
 
+  _renderData = ({item}) => (
+    <TouchableWithoutFeedback onPress={() => {this.openModal(item.id)}}>
+      <Image
+      style= {{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+      source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${item.Comment_ID}/${item.id}.jpg`}}
+      />
+    </TouchableWithoutFeedback>
+  );
+
   render(){
     var Comment_ID = this.props.Comment_ID;
     var noOfImg = this.props.noOfImg;
@@ -23,24 +32,24 @@ class ImageList extends React.Component{
     for (var i=0; i < noOfImg; i++){
       images.push(
         {
+          url: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`,
           props: {
-            style: {width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10},
-            source: {uri: `https://i.cs.hku.hk/~wyvying/comment/hall/${Comment_ID}/post_img${i}.jpg`},
           }
         }
       );
       rows.push(
-        <TouchableWithoutFeedback onPress={() => {this.openModal(i)}}>
-          <Image
-          style= {{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-          source={{uri: `https://i.cs.hku.hk/~wyvying/comment/hall/${Comment_ID}/post_img${i}.jpg`}}
-          />
-        </TouchableWithoutFeedback>
-      );
+        {id: i, Comment_ID: Comment_ID}
+        );
     }
     return(
       <View>
-      <View style={{flexDirection:'row'}}>{rows}</View>
+      <View style={{flexDirection:'row'}}>
+      <FlatList
+        data={rows}
+        renderItem={this._renderData}
+        keyExtractor={(item) => item.id.toString()}
+          />
+          </View>
       <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
         <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
       </Modal>
@@ -57,10 +66,7 @@ class ImageList extends React.Component{
 export default class Comment extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-     isModalOpened: false,  //Controls if modal is opened or closed
-     currentImageIndex: 0,   //Controls initial photo to show for modal
-   };
+    this.state = {};
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -81,28 +87,16 @@ export default class Comment extends React.Component {
     const rating_4 = navigation.getParam('Rating_4', '');
     const nickname = navigation.getParam('Nickname', '');
     const comment = navigation.getParam('Comment', '');
+    const image_num = navigation.getParam('image_num', '');
 
     const data = {Comment_ID: parseInt(Comment_ID), topic: topic, date: date, rating_1: rating_1, rating_2: rating_2,
-      rating_3: rating_3, rating_4: rating_4, nickname: nickname, comment: comment};
+      rating_3: rating_3, rating_4: rating_4, nickname: nickname, comment: comment, image_num: image_num};
 
     this.setState({item: data});
 
     }
 
     render(){
-      const images = [
-{
-    url: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img1.jpg`,
-    props: {
-        // Or you can set source directory.
-    }
-},
-{
-    url: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img2.jpg`,
-    props: {
-        // Or you can set source directory.
-    }
-}]
         if (this.state.item){
           var rating = (parseInt(this.state.item.rating_1) + parseInt(this.state.item.rating_2) + parseInt(this.state.item.rating_3) + parseInt(this.state.item.rating_4)) / 4;
           rating = rating.toFixed(0);
@@ -197,25 +191,8 @@ export default class Comment extends React.Component {
               </View>
               <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
               <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
-              <View style={{flexDirection:'row'}}>
-                <TouchableWithoutFeedback onPress={() => {this.openModal(0)}}>
-                  <Image
-                    style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-                    source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img1.jpg`}}
-                    />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback onPress={() => {this.openModal(1)}}>
-                  <Image
-                    style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-                    source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/comment_image/post_img2.jpg`}}
-                    />
-                </TouchableWithoutFeedback>
-                </View>
-
-                </View>
-                <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
-                  <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
-                </Modal>
+              <ImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />
+              </View>
               </ScrollView>
 
           </ImageBackground>
@@ -231,9 +208,6 @@ export default class Comment extends React.Component {
     }
     }
 
-    openModal(index) {
-   this.setState({isModalOpened: true, currentImageIndex: index })
-}
 }
 
 // to normalize font size
@@ -260,27 +234,3 @@ export default class Comment extends React.Component {
   export function getScreenHeight(){
     return SCREEN_HEIGHT
   }
-
-  /***
-  <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
-  <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
-  <View style={{flexDirection:'row'}}>
-    <TouchableWithoutFeedback onPress={() => {this.openModal(0)}}>
-      <Image
-        style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-        source={require('../../assets/post_img1.jpg')}
-        />
-    </TouchableWithoutFeedback>
-    <TouchableWithoutFeedback onPress={() => {this.openModal(1)}}>
-      <Image
-        style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-        source={require('../../assets/post_img2.jpg')}
-        />
-    </TouchableWithoutFeedback>
-    </View>
-
-    </View>
-    <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
-      <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
-    </Modal>
-    ***/

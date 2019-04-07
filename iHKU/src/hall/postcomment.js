@@ -2,6 +2,7 @@ import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, Button, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Platform, StyleSheet, Text, View, FlatList, ScrollView, AsyncStorage} from 'react-native';
 import NavigationActions from 'react-navigation';
+import ImagePicker from 'react-native-image-crop-picker';
 import Star from '../star';
 import Face from '../face';
 
@@ -70,8 +71,8 @@ export default class PostComment extends React.Component {
 
   render(){
     return(
-      <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
-          <ScrollView style={{marginBottom:145}}>
+      <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
+          <ScrollView>
           <View style={{backgroundColor:'white', width:getScreenWidth(), padding:30, marginTop: 4,}}>
           <View style={{flexDirection:'row', justifyContent : 'space-between'}} >
             <View style={{flexDirection:'row'}}>
@@ -181,9 +182,52 @@ export default class PostComment extends React.Component {
             onChangeText={(text) => this.setState({comment: text})}
           />
         </View>
+        <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
+        <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
+        {this.state.images ? (
+          <View style={{flexDirection:'row'}}>
+            <FlatList
+            data={this.state.images}
+            renderItem={this._renderData}
+            keyExtractor={({id}, index) => index}
+              />
+          </View>
+        ) : (
+          <View style={{flexDirection:'row'}}>
+          <TouchableOpacity onPress={() => {this.pick()}}>
+            <Image
+                style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+                source={require('../../assets/add_image.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.pick()}}>
+            <Image
+                style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+                source={require('../../assets/add_image.png')}
+            />
+          </TouchableOpacity>
+          </View>
+        )}
+          </View>
           </ScrollView>
       </ImageBackground>
     );
+  }
+
+  _renderData = ({item}) => (
+    <Image
+      style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+      source={{uri: item.path}}
+      />
+  );
+
+  pick(){
+    ImagePicker.openPicker({
+  multiple: true
+}).then(images => {
+  console.log(images);
+  this.setState({images: images});
+});
   }
 
   _post = () => {
@@ -199,6 +243,15 @@ export default class PostComment extends React.Component {
     body.append('topic', this.state.topic);
     body.append('hallId', hallId);
     body.append('userId', this.state.userID);
+    body.append('image_num', this.state.images.length);
+
+    this.state.images.forEach((item, i) => {
+  body.append("img[]", {
+    uri: item.path,
+    type: "image/jpeg",
+    name: `${i}.jpg`,
+  });
+});
 
     fetch('https://i.cs.hku.hk/~wyvying/php/post_comment.php',{
       method: 'POST',
@@ -214,7 +267,8 @@ export default class PostComment extends React.Component {
       'Comment Posted!',
       '',
       [
-        {text: 'OK', onPress: () => this.props.navigation.goBack()},
+        {text: data.comment, onPress: () => this.props.navigation.pop()
+        },
       ],
       {cancelable: false},
     );
@@ -248,23 +302,3 @@ export default class PostComment extends React.Component {
   export function getScreenHeight(){
     return SCREEN_HEIGHT
   }
-
-  /***
-  <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
-  <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
-  <View style={{flexDirection:'row'}}>
-    <TouchableOpacity>
-      <Image
-          style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-          source={require('../../assets/add_image.png')}
-      />
-    </TouchableOpacity>
-    <TouchableOpacity>
-      <Image
-          style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-          source={require('../../assets/add_image.png')}
-      />
-    </TouchableOpacity>
-  </View>
-    </View>
-    ***/

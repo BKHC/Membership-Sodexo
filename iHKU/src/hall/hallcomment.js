@@ -11,7 +11,7 @@ export default class HallComment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {searchTerm: '', refreshing: false};
+    this.state = {searchTerm: '', refreshing: false, refresh: true};
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -49,18 +49,19 @@ export default class HallComment extends React.Component {
     })
     .then(response => response.json()) // parses response to JSON
       .then((data) => {
-        this.setState({items: data, refreshing: false});
+        this.setState({items: data, refreshing: false, refresh: false});
 
       }) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
   };
 
   async componentDidMount() {
-    //this._doFetch();
     this.props.navigation.addListener ('didFocus', () =>{
     // do whatever you want to do when focused
+    if (this.state.refresh){
     this.setState({items: null});
     this._onRefresh();
+  }
   });
     }
 
@@ -68,7 +69,7 @@ export default class HallComment extends React.Component {
       <TouchableOpacity
         ref={item.id}
         onPress={this.more.bind(this, item.id, item.topic, item.date, item.rating_1, item.rating_2, item.rating_3,
-          item.rating_4, item.nickname, item.comment)}
+          item.rating_4, item.nickname, item.comment, item.image_num)}
       >
       <View
         style={{
@@ -177,10 +178,10 @@ export default class HallComment extends React.Component {
       </TouchableOpacity>
       );
 
-    more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment){
+    more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment, image_num){
       this.props.navigation.navigate('Comment',
       {CommentId: id, Topic: topic, Date: date, Rating_1: rating_1, Rating_2: rating_2, Rating_3: rating_3,
-      Rating_4: rating_4, Nickname: nickname, Comment: comment});
+      Rating_4: rating_4, Nickname: nickname, Comment: comment, image_num: image_num});
     }
 
   render() {
