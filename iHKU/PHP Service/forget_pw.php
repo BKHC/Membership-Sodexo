@@ -39,10 +39,10 @@
 		$token = generateRandomString();
 		$query1 = "UPDATE User SET token = '$token' WHERE email = '$user_email' ";
 		//Set sender and recipient
-		$mail->setFrom("admin@admin.com", "Admin"); //Is there any email address to let us send email?
+		$mail->setFrom("gavin97@hku.hk", "Admin");
 		$mail->addAddress($user_email);
 		$mail->isHTML(true);
-		$link = 'http://???/pw_reset.php?email='.$user_email.'&token='.$token;
+		$link = 'http://ihku/pw_reset.php?email='.$user_email.'&token='.$token; //i dont know what the link should be lol
 		
 		//Set content of the email
 		$mail->Subject = "Password Reset Request";

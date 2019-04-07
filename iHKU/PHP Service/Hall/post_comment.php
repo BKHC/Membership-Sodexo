@@ -20,7 +20,7 @@ if (mysqli_query($db, $query)){
   );
 } else {
   $json = array(
-    'comment' => "nogood",
+    'comment' => "Please try again",
   );
 }
 
