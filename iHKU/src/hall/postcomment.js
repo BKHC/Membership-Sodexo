@@ -185,13 +185,12 @@ export default class PostComment extends React.Component {
         <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
         <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
         {this.state.images ? (
-          <View style={{flexDirection:'row'}}>
             <FlatList
             data={this.state.images}
             renderItem={this._renderData}
             keyExtractor={({id}, index) => index}
+            numColumns={2}
               />
-          </View>
         ) : (
           <View style={{flexDirection:'row'}}>
           <TouchableOpacity onPress={() => {this.pick()}}>
@@ -215,10 +214,12 @@ export default class PostComment extends React.Component {
   }
 
   _renderData = ({item}) => (
+    <View style={{flex: 1, flexDirection: 'column', marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}>
     <Image
-      style={{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
+      style={{width: 120, height: 120}}
       source={{uri: item.path}}
       />
+    </View>
   );
 
   pick(){

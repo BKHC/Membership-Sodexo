@@ -3,6 +3,9 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback
   Image, Text, View, Platform, FlatList, ScrollView, Modal, ActivityIndicator} from 'react-native';
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import FastImage from 'react-native-fast-image';
+import Lightbox from 'react-native-lightbox';
+import Carousel from 'react-native-looped-carousel';
 import Star from '../star';
 import Face from '../face';
 
@@ -16,13 +19,23 @@ class ImageList extends React.Component{
   }
 
   _renderData = ({item}) => (
+    <View style={{flex: 1, flexDirection: 'column', marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}>
     <TouchableWithoutFeedback onPress={() => {this.openModal(item.id)}}>
-      <Image
-      style= {{width: 120, height: 120, marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}
-      source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${item.Comment_ID}/${item.id}.jpg`}}
+      <FastImage
+      style= {{width: 120, height: 120}}
+      source={{
+        uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${item.Comment_ID}/${item.id}.jpg`,
+        priority: FastImage.priority.normal,
+    }}
       />
     </TouchableWithoutFeedback>
+    </View>
   );
+
+  openModal(index) {
+ this.setState({isModalOpened: true, currentImageIndex: index });
+}
+
 
   render(){
     var Comment_ID = this.props.Comment_ID;
@@ -30,11 +43,24 @@ class ImageList extends React.Component{
     var rows = [];
     var images = [];
     for (var i=0; i < noOfImg; i++){
+      /***
+        images.push(
+          {
+            uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`,
+            props: {
+              style: {width: 120, height: 120},
+              source: {uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`},
+            },
+            id: i
+          }
+        );
+      ***/
       images.push(
         {
           url: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`,
           props: {
-          }
+          },
+          id: i
         }
       );
       rows.push(
@@ -43,24 +69,18 @@ class ImageList extends React.Component{
     }
     return(
       <View>
-      <View style={{flexDirection:'row'}}>
       <FlatList
-        data={rows}
-        renderItem={this._renderData}
-        keyExtractor={(item) => item.id.toString()}
+        data={rows} //rows
+        renderItem={this._renderData} //this._renderData
+        numColumns={2}
           />
-          </View>
-      <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
-        <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
-      </Modal>
+          <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
+            <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
+          </Modal>
       </View>
     );
 
   }
-
-  openModal(index) {
- this.setState({isModalOpened: true, currentImageIndex: index });
-}
 }
 
 export default class Comment extends React.Component {
@@ -101,7 +121,7 @@ export default class Comment extends React.Component {
           var rating = (parseInt(this.state.item.rating_1) + parseInt(this.state.item.rating_2) + parseInt(this.state.item.rating_3) + parseInt(this.state.item.rating_4)) / 4;
           rating = rating.toFixed(0);
         return (
-          <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145,flex: 1}}>
+          <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
               <ScrollView>
                 <View style={{backgroundColor:'white', width:getScreenWidth(), padding:30, marginTop: 4}}>
                   <View style={{flexDirection:'row', justifyContent : 'space-between'}} >
@@ -234,3 +254,36 @@ export default class Comment extends React.Component {
   export function getScreenHeight(){
     return SCREEN_HEIGHT
   }
+
+
+/***
+LightImage = (props) => {
+  const currentPage = this.images.findIndex(x => x.uri === props.uri);
+  var width = getScreenWidth();
+  var height = getScreenHeight();
+  const renderCarousel = (album, currentPage) => (
+    <Carousel style={{ width, height }} currentPage={currentPage} autoplay={false}>
+      {album.map(image => (
+        <FastImage
+          style={{ flex: 1 }}
+          resizeMode={FastImage.resizeMode.contain}
+          source={{ uri: image.uri }}
+          key={image.uri}
+        />))
+      }
+    </Carousel>);
+  const activeProps = {
+  resizeMode: 'contain',
+  flex: 1,
+  width: null
+};
+  return (
+    <Lightbox
+      activeProps={activeProps}
+      renderContent={() => renderCarousel(this.images, currentPage)}
+    >
+      <FastImage {...props.props} />
+    </Lightbox>
+  );
+}
+***/
