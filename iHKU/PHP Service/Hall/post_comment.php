@@ -29,6 +29,7 @@ $que = mysqli_query($db, $query);
 $result = mysqli_fetch_assoc($que);
 $id = $result['ID'];
 
+if ($image_num != 0){
 $target_dir = "/student/15/iscs/wyvying/public_html/iHKU/hall_comment/$id/";
 $oldmask = umask(0);
 mkdir($target_dir, 0777, true);
@@ -38,6 +39,7 @@ for ($i = 0; $i < count($_FILES["img"]["name"]); $i++){
 $target_file = $target_dir . basename($_FILES["img"]["name"][$i]);
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 move_uploaded_file($_FILES["img"]["tmp_name"][$i], $target_file);
+}
 }
 
 echo json_encode($json);

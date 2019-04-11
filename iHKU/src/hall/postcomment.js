@@ -244,15 +244,21 @@ export default class PostComment extends React.Component {
     body.append('topic', this.state.topic);
     body.append('hallId', hallId);
     body.append('userId', this.state.userID);
-    body.append('image_num', this.state.images.length);
 
-    this.state.images.forEach((item, i) => {
-  body.append("img[]", {
-    uri: item.path,
-    type: "image/jpeg",
-    name: `${i}.jpg`,
+    if (this.state.images){
+      this.state.images.forEach((item, i) => {
+    body.append("img[]", {
+      uri: item.path,
+      type: "image/jpeg",
+      name: `${i}.jpg`,
+    });
   });
-});
+    body.append('image_num', this.state.images.length);
+    }
+    else{
+    body.append('image_num', 0);
+  }
+
 
     fetch('https://i.cs.hku.hk/~wyvying/php/post_comment.php',{
       method: 'POST',

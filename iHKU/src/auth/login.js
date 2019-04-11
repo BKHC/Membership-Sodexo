@@ -10,11 +10,11 @@ export default class SignInScreen extends React.Component{
 
   render() {
     return (
+      <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback
                 activeOpacity={1.0}
                 onPress={this.blurTextInput.bind(this)}
                 >
-      <KeyboardAvoidingView behavior="position" enabled>
       <ImageBackground source={require('../../assets/loginBackground.jpg')} style={{width: '100%', height: '100%'}}>
       <View style={{backgroundColor: 'rgba(255, 153, 204, 1)',flex: 1,justifyContent: 'center',alignItems: 'center'}}>
         <View style={{justifyContent: 'center', alignItems:'center',shadowOffset:{ width: 2, height: 2, },shadowColor: 'black',shadowOpacity: 0.3,}}>
@@ -147,8 +147,8 @@ export default class SignInScreen extends React.Component{
           }}
         >關於我們</Text>
       </ImageBackground>
-      </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -169,7 +169,6 @@ export default class SignInScreen extends React.Component{
   signin = async () => {
     if (this.state.email == '' || this.state.password == ''){
       alert('Email or password cannot be blank!');
-      //this.props.navigation.navigate('App');
     }
     else {
       let body = new FormData();
@@ -186,7 +185,6 @@ export default class SignInScreen extends React.Component{
         .then(response => response.json())
         .then((data) => {
           if (data.state == 'success'){ // login success
-            //AsyncStorage.setItem('userID', data.id);
             this._storeData(data.id);
             this.props.navigation.navigate('App');
           } else { // wrong email or password

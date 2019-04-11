@@ -27,7 +27,6 @@ export default class HallList extends React.Component {
 
     }
 
-
     _renderData = ({item}) => (
       <TouchableOpacity
         ref={item.id}

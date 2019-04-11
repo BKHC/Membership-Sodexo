@@ -4,8 +4,6 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FastImage from 'react-native-fast-image';
-import Lightbox from 'react-native-lightbox';
-import Carousel from 'react-native-looped-carousel';
 import Star from '../star';
 import Face from '../face';
 
@@ -23,10 +21,7 @@ class ImageList extends React.Component{
     <TouchableWithoutFeedback onPress={() => {this.openModal(item.id)}}>
       <FastImage
       style= {{width: 120, height: 120}}
-      source={{
-        uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${item.Comment_ID}/${item.id}.jpg`,
-        priority: FastImage.priority.normal,
-    }}
+      source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${item.Comment_ID}/${item.id}.jpg`}}
       />
     </TouchableWithoutFeedback>
     </View>
@@ -43,18 +38,6 @@ class ImageList extends React.Component{
     var rows = [];
     var images = [];
     for (var i=0; i < noOfImg; i++){
-      /***
-        images.push(
-          {
-            uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`,
-            props: {
-              style: {width: 120, height: 120},
-              source: {uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`},
-            },
-            id: i
-          }
-        );
-      ***/
       images.push(
         {
           url: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`,
@@ -70,8 +53,8 @@ class ImageList extends React.Component{
     return(
       <View>
       <FlatList
-        data={rows} //rows
-        renderItem={this._renderData} //this._renderData
+        data={rows}
+        renderItem={this._renderData}
         numColumns={2}
           />
           <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
@@ -209,10 +192,12 @@ export default class Comment extends React.Component {
                   {this.state.item.comment}
                 </Text>
               </View>
+              {this.state.item.image_num != "0" ? (
               <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
               <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
               <ImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />
               </View>
+            ) : (<View />) }
               </ScrollView>
 
           </ImageBackground>

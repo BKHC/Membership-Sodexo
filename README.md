@@ -9,10 +9,20 @@ Click this link to install software needed according to the instructions provide
 ### Install yarn
 https://yarnpkg.com/en/docs/install
 
+Run this to install node_modules
+```
+yarn install
+```
+
 When you want to add new package, use the following code:
 ```
 yarn add [package-name]
 ```
+
+### IOS Integration for external library
+
+react-native-image-crop-picker:
+https://github.com/ivpusic/react-native-image-crop-picker#step-2
 
 ## Database
 https://console.cloud.google.com/sql/instances/sodexo-member/overview?project=graphic-armor-231305&duration=PT12H
