@@ -19,7 +19,7 @@ When you want to add new package, use the following code:
 yarn add [package-name]
 ```
 
-### IOS Integration for external library
+## IOS Integration for external library
 
 react-native-image-crop-picker:
 https://github.com/ivpusic/react-native-image-crop-picker#step-2
