@@ -5,13 +5,13 @@
 	session_start();
 
 	$email = $_POST['email'];
-	$user_password = $_POST['password'];
+	$user_password = md5($_POST['password']);
 	if(!isset($_SESSION["username"]))
 	{
 
 
 		$query = "SELECT UserID FROM User WHERE Email = '$email' and Password = '$user_password' and Verify = 'Yes'";
- and 
+ and
 		$result = mysqli_query($db, $query);
 
 		$count = mysqli_num_rows($result);
