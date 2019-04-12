@@ -36,7 +36,7 @@ function generateRandomString() {
 
 			$token = generateRandomString();
 			$password = md5($password);
-			$query = "INSERT INTO `User` (UserID, Email, Password, Alias, Token) VALUES (NULL, '$email', '$password', '$alias', '$token')";
+			$query = "INSERT INTO `User` (UserID, Email, Password, Alias, Token, Verify) VALUES (NULL, '$email', '$password', '$alias', '$token', 'Y')";
 			mysqli_query($db, $query);
 			//Set sender and recipient
 			$mail->setFrom("", "Admin");
