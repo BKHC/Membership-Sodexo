@@ -11,7 +11,7 @@
 
 
 		$query = "SELECT UserID FROM User WHERE Email = '$email' and Password = '$user_password' and Verify = 'Yes'";
- and
+		
 		$result = mysqli_query($db, $query);
 
 		$count = mysqli_num_rows($result);
