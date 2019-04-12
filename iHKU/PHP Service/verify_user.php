@@ -18,6 +18,6 @@
 		{
 			echo ("Wrong Link, Please try again");
 		}
-	}
+	
   	mysqli_close($db);
 ?>
