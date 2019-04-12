@@ -4661,6 +4661,11 @@ react-native-image-pan-zoom@^2.1.9:
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.11.tgz#61bcb69219d95e76a9797d23e4a2e8e0bd654ae9"
   integrity sha512-ZCisGUFpPchHXsjT7ZI0anlSLPgcTmjRKXqpVnPu3RDWFXfKjuL4zpY57DX4Y8YgGZCpbf9fApN7KjVYody2Mw==
 
+react-native-image-view@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-image-view/-/react-native-image-view-2.1.4.tgz#47faa6c42588e7509f530561a53d3b13eaa5e9bc"
+  integrity sha512-V9nKJ9voZgKVaB6IzLpl9WJ+g1j/CrrWG+x/XtEjjxYQK5yi1pTUcybkoNRXpxF7K8ZnGqR2Dp4VdEKPt5qJlA==
+
 react-native-image-zoom-viewer@^2.2.25:
   version "2.2.25"
   resolved "https://registry.yarnpkg.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-2.2.25.tgz#61d0978b26d5a07bbbdfe04791818e49d1e538a0"
