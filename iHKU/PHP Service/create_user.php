@@ -36,13 +36,13 @@ function generateRandomString() {
 
 			$token = generateRandomString();
 			$password = md5($password);
-			$query = "INSERT INTO `User` (UserID, Email, Password, Alias, Token, Verify) VALUES (NULL, '$email', '$password', '$alias', '$token', 'Y')";
+			$query = "INSERT INTO `User` (UserID, Email, Password, Alias, Token, Verify) VALUES (NULL, '$email', '$password', '$alias', '$token', 'No')";
 			mysqli_query($db, $query);
 			//Set sender and recipient
-			$mail->setFrom("", "Admin");
+			$mail->setFrom("noreply@ihku.hk", "Edan");
 			$mail->addAddress($email);
 			$mail->isHTML(true);
-			$link = 'http://ihku/login.php?email='.$email.'&token='.$token; //i dont know what the link should be lol
+			$link = 'https://i.cs.hku.hk/~wyvying/php/verify_user.php?email='.$email.'&token='.$token; //i dont know what the link should be lol
 			//Set content of the email
 			$mail->Subject = "Welcome to iHKU";
 			$mail->Body = "Dear User(\"".$user_name."\"), welcome using iHKU. Please click the following link

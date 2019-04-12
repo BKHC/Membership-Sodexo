@@ -14,7 +14,7 @@ export default class HallList extends React.Component {
 
   componentDidMount() {
 
-    fetch(`https://i.cs.hku.hk/~wyvying/php/get_hall.php`, {
+    fetch(`https://i.cs.hku.hk/~wyvying/php/hall/get_hall.php`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
       .then(response => response.json()) // parses response to JSON

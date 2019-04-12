@@ -260,7 +260,7 @@ export default class PostComment extends React.Component {
   }
 
 
-    fetch('https://i.cs.hku.hk/~wyvying/php/post_comment.php',{
+    fetch('https://i.cs.hku.hk/~wyvying/php/hall/post_comment.php',{
       method: 'POST',
       headers: {
         Accept: 'application/json',
