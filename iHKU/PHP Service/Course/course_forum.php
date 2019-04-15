@@ -28,7 +28,7 @@ session_start();
         'topic' => $row['Topic'],
         'date' => $row['Date'],
         'like_num' => $row['Like_num'],
-        'dislike_num' => $row['Dislike_num'],
+        'dislike_num' => $row['Dislike_num']
       );
        $i = $i + 1;
  		}
