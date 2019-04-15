@@ -28,6 +28,8 @@ session_start();
         'topic' => $row['Topic'],
         'date' => $row['Date'],
         'image_num' => $row['Image_num']
+        'like_num' => $row['Like_num']
+        'dislike_num' => $row['Dislike_num']
       );
        $i = $i + 1;
  		}
