@@ -97,7 +97,7 @@ const AuthStack = createStackNavigator(
 const TabBarComponent = (props) => (<BottomTabBar {...props} />);
 
 const TabNavigator = createBottomTabNavigator({
-  帳戶: HallStack,
+  帳戶: HallStack, //newsfeed
   餐廳: TryStack,
   舍堂: HallStack,
   課程: HallStack,

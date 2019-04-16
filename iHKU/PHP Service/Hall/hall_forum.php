@@ -5,7 +5,7 @@ session_start();
 
 
   $hall = mysqli_real_escape_string($db, $_GET['hall_id']);
-  $check_query = "SELECT * FROM `Hall Rate` WHERE `HallID`= $hall";
+  $check_query = "SELECT * FROM `Hall Rate` WHERE `HallID`= $hall ORDER BY `DATE` DESC";
   $result = mysqli_query($db, $check_query);
   $json = array();
   $i = 0;

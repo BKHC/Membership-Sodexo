@@ -64,7 +64,7 @@ export default class SignInScreen extends React.Component{
               ref="email"
               onChangeText={(email) => {
                 this.setState({email});
-                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@hku\.hk$/;
+                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
                 if (etest.test(email) && this.state.password.length >=6)
                   this.setState({disabled: false});
                 else
@@ -86,7 +86,7 @@ export default class SignInScreen extends React.Component{
               ref="password"
               onChangeText={(password) => {
                 this.setState({password});
-                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@hku\.hk$/;
+                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
                 if (etest.test(this.state.email) && password.length >=6)
                   this.setState({disabled: false});
                 else

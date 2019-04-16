@@ -65,7 +65,8 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 placeholderTextColor="grey"
                 onChangeText={(nickname) => {
                   this.setState({nickname});
-                  if (this.state.email != "" && this.state.password.length >=6 && this.state.password == this.state.repassword && nickname!="")
+                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                  if (etest.test(email) && this.state.password.length >=6 && this.state.password == this.state.repassword && nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});
@@ -85,7 +86,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 placeholderTextColor="grey"
                 onChangeText={(email) => {
                   this.setState({email});
-                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@hku\.hk$/;
+                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
                   if (etest.test(email) && this.state.password.length >=6 && this.state.password == this.state.repassword && this.state.nickname!="")
                     this.setState({disabled: false});
                   else
@@ -107,7 +108,8 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 secureTextEntry={true}
                 onChangeText={(password) => {
                   this.setState({password});
-                  if (this.state.email != "" && this.state.password.length >=6 && password == this.state.repassword && this.state.nickname!="")
+                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                  if (etest.test(this.state.email) != "" && this.state.password.length >=6 && password == this.state.repassword && this.state.nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});
@@ -128,7 +130,8 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 secureTextEntry={true}
                 onChangeText={(repassword) => {
                   this.setState({repassword});
-                  if (this.state.email != "" && this.state.password.length >=6 && this.state.password == repassword && this.state.nickname!="")
+                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                  if (etest.test(this.state.email) && this.state.password.length >=6 && this.state.password == repassword && this.state.nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});
@@ -187,7 +190,18 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
           .then(response => response.json()) // parses response to JSON
           .then((data) => {
             if (data.state == 'success'){
-              alert('Please check your email for further authentication.');
+              var email_name = this.state.email.split("@")[0];
+              var link = 'https://thetutor.hk/iHKU_send_email.php?email=' + email_name;
+              fetch(link);
+              Alert.alert(
+            'Please check your email for further authentication.',
+            '',
+            [
+              {text: "OK", onPress: () => this.props.navigation.pop()
+              },
+            ],
+            {cancelable: false},
+          );
             } else { // wrong email or password
               alert('Email has been registered!');
             }
