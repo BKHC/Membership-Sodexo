@@ -26,7 +26,9 @@ session_start();
         'rating_3'=>$row['Rating_3'],
         'rating_4'=>$row['Rating_4'],
         'topic' => $row['Topic'],
-        'date' => $row['Date']
+        'date' => $row['Date'],
+        'like_num' => $row['Like_num'],
+        'dislike_num' => $row['Dislike_num']
       );
        $i = $i + 1;
  		}
