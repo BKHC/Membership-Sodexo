@@ -8,7 +8,7 @@ import User from '../user';
 import Star from '../star';
 import Face from '../face';
 
-export default class HallComment extends React.Component {
+export default class CanCommentList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -16,11 +16,11 @@ export default class HallComment extends React.Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    var hallId = navigation.getParam('hallId', '-1')
+    var restId = navigation.getParam('restId', '-1')
     return {
-      title: navigation.getParam('hallName', '利銘澤堂'),
+      title: navigation.getParam('restName', 'Magic Shop'),
       headerRight: (
-        <TouchableOpacity onPress={() => navigation.navigate('PostComment', {HallId: hallId})}>
+        <TouchableOpacity onPress={() => navigation.navigate('CanPostComment', {RestId: restId})}>
         <Text
           style={{
             textAlign: 'center',
@@ -43,9 +43,9 @@ export default class HallComment extends React.Component {
   }
 
   _doFetch = () => {
-    const Hall_ID = this.props.navigation.getParam('hallId', '-1');
-    const data = {Hall_ID: parseInt(Hall_ID)};
-    fetch(`https://i.cs.hku.hk/~wyvying/php/hall/hall_forum.php?hall_id=${encodeURIComponent(data.Hall_ID)}`, {
+    const Rest_ID = this.props.navigation.getParam('restId', '-1');
+    const data = {Rest_ID: parseInt(Rest_ID)};
+    fetch(`https://i.cs.hku.hk/~wyvying/php/canteen/rest_forum.php?rest_id=${encodeURIComponent(data.Rest_ID)}`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
     .then(response => response.json()) // parses response to JSON
@@ -119,11 +119,11 @@ export default class HallComment extends React.Component {
                   style={{
                     fontSize:normalize(9),
                   }}
-                >運動:</Text>
+                >食物:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_1} />
                 </View>
-                <Text style={{marginLeft:10, fontSize:normalize(9),}}>文化:</Text>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>環境:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_2} />
                 </View>
@@ -133,11 +133,11 @@ export default class HallComment extends React.Component {
                   style={{
                     fontSize:normalize(9),
                   }}
-                >環境:</Text>
+                >價錢:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_3} />
                 </View>
-                <Text style={{marginLeft:10, fontSize:normalize(9),}}>仙制:</Text>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>服務:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_4} />
                 </View>
@@ -153,7 +153,7 @@ export default class HallComment extends React.Component {
                 borderColor: 'rgba(255, 153, 204, 1)',
                 padding: 4,
               }}>
-              <Image
+              <FastImage
                   style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
                   source={require('../../assets/thumbUp.png')}
               />
@@ -167,7 +167,7 @@ export default class HallComment extends React.Component {
                 borderColor: 'rgba(120, 120, 120, 1)',
                 padding: 4,
               }}>
-              <Image
+              <FastImage
                 style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
                 source={require('../../assets/thumbDown.png')}
               />
@@ -180,7 +180,7 @@ export default class HallComment extends React.Component {
       );
 
     more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment, image_num){
-      this.props.navigation.navigate('Comment',
+      this.props.navigation.navigate('CanComment',
       {CommentId: id, Topic: topic, Date: date, Rating_1: rating_1, Rating_2: rating_2, Rating_3: rating_3,
       Rating_4: rating_4, Nickname: nickname, Comment: comment, image_num: image_num});
     }
@@ -315,41 +315,3 @@ export default class HallComment extends React.Component {
   export function getScreenHeight(){
     return SCREEN_HEIGHT
   }
-
-/***
-class HallScreen extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {items: NULL};
-  }
-
-  componentDidMount() {
-    /***
-    fetch(`https://i.cs.hku.hk/~wyvying/test.php`, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-    })
-    //.then(response => response.json()); // parses response to JSON
-      .then((data) => {
-        alert(JSON.stringify(data));
-        //this.item = JSON.parse(data);
-        this.setState({items: JSON.parse(data)});
-
-      }) // JSON-string from `response.json()` call
-      .catch(error => console.error(error));
-
-    }
-
-    renderData(){
-
-      );
-    }
-
-  render(){
-    return(
-      <View>
-        {this.renderData()}
-      </View>
-    );
-  }
-}
-***/

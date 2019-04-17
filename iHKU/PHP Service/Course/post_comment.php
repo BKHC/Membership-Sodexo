@@ -8,12 +8,12 @@ $rating_2 = $_POST['rating_2'];
 $rating_3 = $_POST['rating_3'];
 $rating_4 = $_POST['rating_4'];
 $comment = $_POST['comment'];
-$courseId = $_POST['courseId'];
+$facultyId = $_POST['facultyId'];
 $userId = $_POST['userId'];
 $image_num = $_POST['image_num'];
 
-$query = "INSERT INTO `Course Rate` (ID, UserID, CourseID, Rating_1, Rating_2, Rating_3, Rating_4, Topic, Comment, Image_num, Date)
- VALUES (NULL, '$userId', '$courseId', '$rating_1', '$rating_2', '$rating_3', '$rating_4', '$topic', '$comment', '$image_num', CURRENT_TIMESTAMP)";
+$query = "INSERT INTO `Course Rate` (ID, UserID, Faculty_ID, Rating_1, Rating_2, Rating_3, Rating_4, Topic, Comment, Image_num, Date)
+ VALUES (NULL, '$userId', '$facultyId', '$rating_1', '$rating_2', '$rating_3', '$rating_4', '$topic', '$comment', '$image_num', CURRENT_TIMESTAMP)";
  if (mysqli_query($db, $query)){
    $json = array(
      'comment' => "OK",
@@ -24,7 +24,7 @@ $query = "INSERT INTO `Course Rate` (ID, UserID, CourseID, Rating_1, Rating_2, R
    );
  }
 
- $query= "SELECT MAX(`ID`) AS ID FROM `Course Rate` WHERE `CourseID`= $CourseId";
+ $query= "SELECT MAX(`ID`) AS ID FROM `Course Rate` WHERE `Faculty_ID`= $facultyId";
  $que = mysqli_query($db, $query);
  $result = mysqli_fetch_assoc($que);
  $id = $result['ID'];

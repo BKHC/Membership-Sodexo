@@ -179,7 +179,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
         body.append('email', this.state.email);
         body.append('password', this.state.password);
 
-        fetch(`https://i.cs.hku.hk/~wyvying/php/create_user.php`, {
+        fetch(`https://i.cs.hku.hk/~wyvying/php/auth/create_user.php`, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
               Accept: 'application/json',

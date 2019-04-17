@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert, Button, PixelRatio, Dimensions, TextInput, Image, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 export default class Face extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class Face extends React.Component {
     rating = rating.toFixed(0);
     if (rating <= 2){
       return(
-        <Image
+        <FastImage
             style={{width: 50, height: 50, marginRight:20, marginTop:4}}
             source={require('../assets/angry.png')}
         />
@@ -23,7 +24,7 @@ export default class Face extends React.Component {
   }
     else if (rating == 3){
       return(
-        <Image
+        <FastImage
             style={{width: 50, height: 50, marginRight:20, marginTop:4}}
             source={require('../assets/neutral.png')}
         />
@@ -31,7 +32,7 @@ export default class Face extends React.Component {
     }
     else {
       return(
-        <Image
+        <FastImage
             style={{width: 50, height: 50, marginRight:20, marginTop:4}}
             source={require('../assets/happy.png')}
         />

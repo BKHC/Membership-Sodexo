@@ -59,13 +59,14 @@ export default class SignInScreen extends React.Component{
                 padding: normalize(13),
                 color:'white',
               }}
-              placeholder="電郵"
+              placeholder="電郵(只需輸入@hku.hk之前的Alias)"
               placeholderTextColor="grey"
               ref="email"
-              onChangeText={(email) => {
+              onChangeText={(name) => {
+                email = name + "@connect.hku.hk";
                 this.setState({email});
-                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
-                if (etest.test(email) && this.state.password.length >=6)
+                //var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                if (name!="" && this.state.password.length >=6)
                   this.setState({disabled: false});
                 else
                   this.setState({disabled: true});
@@ -86,8 +87,8 @@ export default class SignInScreen extends React.Component{
               ref="password"
               onChangeText={(password) => {
                 this.setState({password});
-                var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
-                if (etest.test(this.state.email) && password.length >=6)
+                //var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                if (this.state.email != "@connect.hku.hk" && password.length >=6)
                   this.setState({disabled: false});
                 else
                   this.setState({disabled: true});
@@ -174,7 +175,7 @@ export default class SignInScreen extends React.Component{
       let body = new FormData();
       body.append('email', this.state.email);
       body.append('password', this.state.password);
-      fetch(`https://i.cs.hku.hk/~wyvying/php/login.php`, {
+      fetch(`https://i.cs.hku.hk/~wyvying/php/auth/login.php`, {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
           headers: {
             Accept: 'application/json',

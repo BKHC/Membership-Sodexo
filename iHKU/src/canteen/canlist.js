@@ -3,7 +3,7 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, 
   Platform, Text, View, FlatList, ScrollView, ActivityIndicator, AsyncStorage} from 'react-native';
 import { createFilter } from 'react-native-search-filter';
 import Star from '../star';
-export default class HallList extends React.Component {
+export default class CanList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ export default class HallList extends React.Component {
 
   componentDidMount() {
 
-    fetch(`https://i.cs.hku.hk/~wyvying/php/hall/get_hall.php`, {
+    fetch(`https://i.cs.hku.hk/~wyvying/php/canteen/get_rest.php`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
     })
       .then(response => response.json()) // parses response to JSON
@@ -31,16 +31,16 @@ export default class HallList extends React.Component {
     _renderData = ({item}) => (
       <TouchableOpacity
         ref={item.id}
-        onPress={this.more.bind(this, item.id, item.hallname)}
+        onPress={this.more.bind(this, item.id, item.restname)}
       >
       <ImageBackground
           style={{width: getScreenWidth()-20, height: 170, padding:10, marginLeft:10, borderRadius: 8, marginBottom:10}}
           imageStyle={{ borderRadius: 8 }}
-          source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_image/${item.id}.jpg`}}
+          source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/rest_image/${item.id}.jpg`}}
 
       >
         <View style={{marginTop:80, marginLeft:10}}>
-          <Text style={{color:'white', fontSize:22, fontWeight:'bold', marginBottom:5, shadowColor: 'black', shadowOpacity: 1,}}>{item.hallname}</Text>
+          <Text style={{color:'white', fontSize:22, fontWeight:'bold', marginBottom:5, shadowColor: 'black', shadowOpacity: 1,}}>{item.restname}</Text>
           <View style={{flexDirection:'row'}}>
             <Text
               style={{
@@ -51,7 +51,7 @@ export default class HallList extends React.Component {
                 shadowOpacity: 1,
                 shadowOffset:{ width: 5, height: 5, },
               }}
-            >運動:</Text>
+            >食物:</Text>
             <View style={{flexDirection:'row',}} >
               <Star rating={item.rating_1} />
             </View>
@@ -64,7 +64,7 @@ export default class HallList extends React.Component {
                 shadowColor: 'black',
                 shadowOpacity: 1,
               }}
-            >文化:</Text>
+            >環境:</Text>
             <View style={{flexDirection:'row',}} >
               <Star rating={item.rating_2} />
             </View>
@@ -78,7 +78,7 @@ export default class HallList extends React.Component {
                 shadowColor: 'black',
                 shadowOpacity: 1,
               }}
-            >環境:</Text>
+            >價錢:</Text>
             <View style={{flexDirection:'row',}} >
               <Star rating={item.rating_3} />
             </View>
@@ -91,7 +91,7 @@ export default class HallList extends React.Component {
                 shadowColor: 'black',
                 shadowOpacity: 1,
               }}
-            >仙制:</Text>
+            >服務:</Text>
             <View style={{flexDirection:'row',}} >
               <Star rating={item.rating_4} />
             </View>
@@ -102,7 +102,7 @@ export default class HallList extends React.Component {
     );
 
     more(id, name){
-      this.props.navigation.navigate('HallComment', {hallId: id, hallName: name});
+      this.props.navigation.navigate('CanCommentList', {restId: id, restName: name});
     }
 
     keyword() {
@@ -131,7 +131,7 @@ export default class HallList extends React.Component {
 
     render(){
         if (this.state.items){
-          const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, 'hallname'));
+          const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, 'restname'));
           return (
             <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
                 <ScrollView style={{marginBottom:145, marginTop:4}}>

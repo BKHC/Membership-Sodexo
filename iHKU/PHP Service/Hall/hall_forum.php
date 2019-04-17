@@ -1,8 +1,7 @@
 <?php
 
-require_once("../db_config.php");
+require_once("db_config.php");
 session_start();
-
 
   $hall = mysqli_real_escape_string($db, $_GET['hall_id']);
   $check_query = "SELECT * FROM `Hall Rate` WHERE `HallID`= $hall ORDER BY `DATE` DESC";
@@ -19,7 +18,6 @@ session_start();
  			$json[$i] = array(
         'id'=>$row['ID'],
         'nickname'=>$user["Alias"],
-        'HallID'=>$row['HallID'],
         'comment'=>$row['Comment'],
         'rating_1'=>$row['Rating_1'],
         'rating_2'=>$row['Rating_2'],
@@ -28,8 +26,6 @@ session_start();
         'topic' => $row['Topic'],
         'date' => $row['Date'],
         'image_num' => $row['Image_num'],
-        'like_num' => $row['Like_num'],
-        'dislike_num' => $row['Dislike_num']
       );
        $i = $i + 1;
  		}
