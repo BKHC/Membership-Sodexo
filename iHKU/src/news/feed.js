@@ -1,41 +1,17 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Text, Platform, View, FlatList, ScrollView, ActivityIndicator, RefreshControl, AsyncStorage} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import { createFilter } from 'react-native-search-filter';
 import { format } from 'date-fns';
 import User from '../user';
 import Star from '../star';
 import Face from '../face';
 
-export default class CanCommentList extends React.Component {
+export default class NewsFeed extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {searchTerm: '', text: '', refreshing: false, refresh: true};
+    this.state = {refreshing: false, refresh: true};
   }
-
-  static navigationOptions = ({ navigation }) => {
-    var restId = navigation.getParam('restId', '-1')
-    return {
-      title: navigation.getParam('restName', 'Magic Shop'),
-      headerRight: (
-        <TouchableOpacity onPress={() => navigation.navigate('CanPostComment', {RestId: restId})}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize:18,
-            marginRight:22,
-            color: 'rgba(255, 255, 255, 1)',
-            fontWeight: 'bold',
-          }}
-        >
-          新增評論
-        </Text>
-        </TouchableOpacity>
-      ),
-    };
-  };
 
   _onRefresh = () => {
     this.setState({refreshing: true});
@@ -43,17 +19,17 @@ export default class CanCommentList extends React.Component {
   }
 
   _doFetch = () => {
-    const Rest_ID = this.props.navigation.getParam('restId', '-1');
-    const data = {Rest_ID: parseInt(Rest_ID)};
-    fetch(`https://i.cs.hku.hk/~wyvying/php/canteen/rest_forum.php?rest_id=${encodeURIComponent(data.Rest_ID)}`, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-    })
-    .then(response => response.json()) // parses response to JSON
-      .then((data) => {
-        this.setState({items: data, refreshing: false, refresh: false});
+    AsyncStorage.getItem('userID').then((value) => {
+      fetch(`https://i.cs.hku.hk/~wyvying/php/news/feed.php?userID=${encodeURIComponent(value)}`, {
+          method: "GET", // *GET, POST, PUT, DELETE, etc.
+      })
+      .then(response => response.json()) // parses response to JSON
+        .then((data) => {
+          this.setState({items: data, refreshing: false, refresh: false});
 
-      }) // JSON-string from `response.json()` call
-      .catch(error => console.error(error));
+        }) // JSON-string from `response.json()` call
+        .catch(error => console.error(error));
+  });
   };
 
   async componentDidMount() {
@@ -70,7 +46,7 @@ export default class CanCommentList extends React.Component {
       <TouchableOpacity
         ref={item.id}
         onPress={this.more.bind(this, item.id, item.topic, item.date, item.rating_1, item.rating_2, item.rating_3,
-          item.rating_4, item.nickname, item.comment, item.image_num)}
+          item.rating_4, item.nickname, item.comment, item.image_num, item.category)}
       >
       <View
         style={{
@@ -119,11 +95,11 @@ export default class CanCommentList extends React.Component {
                   style={{
                     fontSize:normalize(9),
                   }}
-                >食物:</Text>
+                >{item.category == "0" ? 食物 : item.category == "1" ? 運動 : 知識}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_1} />
                 </View>
-                <Text style={{marginLeft:10, fontSize:normalize(9),}}>環境:</Text>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>{item.category == "0" ? 環境 : item.category == "1" ? 文化 : 難度}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_2} />
                 </View>
@@ -133,11 +109,11 @@ export default class CanCommentList extends React.Component {
                   style={{
                     fontSize:normalize(9),
                   }}
-                >價錢:</Text>
+                >{item.category == "0" ? 價錢 : item.category == "1" ? 環境 : 耗時}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_3} />
                 </View>
-                <Text style={{marginLeft:10, fontSize:normalize(9),}}>服務:</Text>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>{item.category == "0" ? 服務 : item.category == "1" ? 仙制 : 成績}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_4} />
                 </View>
@@ -153,7 +129,7 @@ export default class CanCommentList extends React.Component {
                 borderColor: 'rgba(255, 153, 204, 1)',
                 padding: 4,
               }}>
-              <FastImage
+              <Image
                   style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
                   source={require('../../assets/thumbUp.png')}
               />
@@ -167,7 +143,7 @@ export default class CanCommentList extends React.Component {
                 borderColor: 'rgba(120, 120, 120, 1)',
                 padding: 4,
               }}>
-              <FastImage
+              <Image
                 style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
                 source={require('../../assets/thumbDown.png')}
               />
@@ -175,77 +151,28 @@ export default class CanCommentList extends React.Component {
             </View>
           </View>
         </View>
-        <View style={{marginTop:6,}}>
-          <Text numberOfLines={3} style={{fontSize: 13}}>
-            {item.comment}
-          </Text>
-        </View>
       </View>
       </TouchableOpacity>
       );
 
-    more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment, image_num){
-      this.props.navigation.navigate('CanComment',
+    more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment, image_num, category){
+      this.props.navigation.navigate('Comment',
       {CommentId: id, Topic: topic, Date: date, Rating_1: rating_1, Rating_2: rating_2, Rating_3: rating_3,
-      Rating_4: rating_4, Nickname: nickname, Comment: comment, image_num: image_num});
-    }
-
-    keyword() {
-
-      let body = new FormData();
-      text = this.state.text;
-      body.append("keyword", text);
-      AsyncStorage.getItem('userID').then((value) => {
-        body.append("UserID", value);
-        fetch('https://i.cs.hku.hk/~wyvying/php/update_search_hist.php',{
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': "multipart/form-data",
-          },
-          body: body,
-          }).then((response) => response.json())
-          .then((data) => {
-            this.setState({searchTerm: text});
-          }).catch(err => {
-            console.log(err)
-          })
-    });
-
+      Rating_4: rating_4, Nickname: nickname, Comment: comment, image_num: image_num, category: category});
     }
 
   render() {
 
     if (this.state.items){
-      const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, ['topic']))
       return (
         <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
 
 
               <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
-                <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
-                  <TextInput
-                    style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
-                    placeholder="搜尋"
-                    onChangeText={(text) => {
-                      this.setState({text: text});
-                      if (text == "")
-                        this.setState({searchTerm: ""});
-                    }}
-                    ></TextInput>
-                    <TouchableOpacity
-                      onPress={this.keyword.bind(this)}
-                    >
-                      <Image
-                          style={{width: 18, height: 18, marginTop:11, marginLeft:11}}
-                          source={require('../../assets/search.png')}
-                        />
-                    </TouchableOpacity>
-                </View>
               </View>
 
                 <FlatList
-                  data={filteredItems}
+                  data={this.state.items}
                   renderItem={this._renderData}
                   keyExtractor={({id}, index) => id}
                   ListHeaderComponent = {() => {
@@ -260,9 +187,8 @@ export default class CanCommentList extends React.Component {
                        }}
                   >
                      <FastImage
-                          style={{width: getScreenWidth(), height: 100,}}
+                          style={{resizeMode: "stretch", width: getScreenWidth(), height: 100,}}
                           source={require('../../assets/ads_banner.jpg')}
-                          resizeMode={FastImage.resizeMode.stretch}
                      />
                     </View>
                     )
@@ -281,17 +207,6 @@ export default class CanCommentList extends React.Component {
   return (
     <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
     <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
-      <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
-        <TextInput
-          style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
-          placeholder="搜尋"
-          onChangeText={(text) => this.setState({searchTerm: text})}
-          ></TextInput>
-        <Image
-            style={{width: 18, height: 18, marginTop:11, marginLeft:11}}
-            source={require('../../assets/search.png')}
-          />
-      </View>
     </View>
     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
       <ActivityIndicator size="large" color="rgba(255, 153, 204, 1)" />

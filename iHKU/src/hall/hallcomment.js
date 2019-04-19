@@ -8,7 +8,7 @@ import User from '../user';
 import Star from '../star';
 import Face from '../face';
 
-export default class HallComment extends React.Component {
+export default class Profile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -175,6 +175,11 @@ export default class HallComment extends React.Component {
             </View>
           </View>
         </View>
+        <View style={{marginTop:6,}}>
+          <Text numberOfLines={3} style={{fontSize: 13}}>
+            {item.comment}
+          </Text>
+        </View>
       </View>
       </TouchableOpacity>
       );
@@ -222,7 +227,11 @@ export default class HallComment extends React.Component {
                   <TextInput
                     style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
                     placeholder="搜尋"
-                    onChangeText={(text) => this.setState({text: text})}
+                    onChangeText={(text) => {
+                      this.setState({text: text});
+                      if (text == "")
+                        this.setState({searchTerm: ""});
+                    }}
                     ></TextInput>
                     <TouchableOpacity
                       onPress={this.keyword.bind(this)}
@@ -251,8 +260,9 @@ export default class HallComment extends React.Component {
                        }}
                   >
                      <FastImage
-                          style={{resizeMode: "stretch", width: getScreenWidth(), height: 100,}}
+                          style={{width: getScreenWidth(), height: 100,}}
                           source={require('../../assets/ads_banner.jpg')}
+                          resizeMode={FastImage.resizeMode.stretch}
                      />
                     </View>
                     )

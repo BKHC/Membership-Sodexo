@@ -4,6 +4,8 @@ import { createBottomTabNavigator, createSwitchNavigator, createStackNavigator, 
 import SignInScreen from './src/auth/login';
 import SignUpScreen from './src/auth/signup';
 
+import NewsFeed from './src/news/feed';
+
 import HallComment from './src/hall/hallcomment';
 import HallList from './src/hall/hallList';
 import Comment from './src/hall/comment';
@@ -18,6 +20,31 @@ import FacList from './src/course/faclist';
 import CouCommentList from './src/course/cclist';
 import CouComment from './src/course/ccomment';
 import CouPostComment from './src/course/cpost';
+
+import Profile from './src/account/profile';
+
+const NewsStack = createStackNavigator({
+
+  News: NewsFeed,
+  //RestComment: RestComment,
+  //CanComment: CanComment,
+  //HallComment: HallComment,
+},
+  {
+      initialRouteName: 'News',
+      headerLayoutPreset: 'center',
+      /* The header config from HomeScreen is now here */
+      defaultNavigationOptions: {
+        title: '動態',
+        headerStyle: {
+          backgroundColor: 'rgba(255, 153, 204, 1)',
+        },
+        headerTintColor: 'rgba(255, 255, 255, 1)',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+    }
+  });
 
 const RestStack = createStackNavigator({
 
@@ -103,11 +130,11 @@ const AuthStack = createStackNavigator(
 const TabBarComponent = (props) => (<BottomTabBar {...props} />);
 
 const TabNavigator = createBottomTabNavigator({
-  動態: HallStack, //newsfeed
+  動態: NewsStack,
   餐廳: RestStack,
   舍堂: HallStack,
   課程: CourseStack,
-  帳戶: HallStack,
+  帳戶: Profile,
 
 },
 {

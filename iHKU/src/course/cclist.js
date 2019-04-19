@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, TextInput, ImageBackground,
   Image, Text, Platform, View, FlatList, ScrollView, ActivityIndicator, RefreshControl, AsyncStorage} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { createFilter } from 'react-native-search-filter';
 import { format } from 'date-fns';
 import User from '../user';
@@ -174,6 +175,11 @@ export default class CouCommentList extends React.Component {
             </View>
           </View>
         </View>
+        <View style={{marginTop:6,}}>
+          <Text numberOfLines={3} style={{fontSize: 13}}>
+            {item.comment}
+          </Text>
+        </View>
       </View>
       </TouchableOpacity>
       );
@@ -221,7 +227,11 @@ export default class CouCommentList extends React.Component {
                   <TextInput
                     style={{marginLeft:15, fontSize:16, marginTop:2, color:'grey', width:getScreenWidth()-80}}
                     placeholder="搜尋"
-                    onChangeText={(text) => this.setState({text: text})}
+                    onChangeText={(text) => {
+                      this.setState({text: text});
+                      if (text == "")
+                        this.setState({searchTerm: ""});
+                    }}
                     ></TextInput>
                     <TouchableOpacity
                       onPress={this.keyword.bind(this)}
@@ -250,8 +260,9 @@ export default class CouCommentList extends React.Component {
                        }}
                   >
                      <FastImage
-                          style={{resizeMode: "stretch", width: getScreenWidth(), height: 100,}}
+                          style={{width: getScreenWidth(), height: 100,}}
                           source={require('../../assets/ads_banner.jpg')}
+                          resizeMode={FastImage.resizeMode.stretch}
                      />
                     </View>
                     )
