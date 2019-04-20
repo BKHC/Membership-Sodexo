@@ -70,6 +70,7 @@ class ImageList extends React.Component{
         data={rows}
         renderItem={this._renderData}
         numColumns={2}
+        keyExtractor={(item, index) => index.toString()}
           />
           <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
             <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>

@@ -189,7 +189,7 @@ export default class CouPostComment extends React.Component {
             <FlatList
             data={this.state.images}
             renderItem={this._renderData}
-            keyExtractor={({id}, index) => index}
+            keyExtractor={(item, index) => index.toString()}
             numColumns={2}
               />
         ) : (

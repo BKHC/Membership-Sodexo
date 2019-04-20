@@ -174,7 +174,7 @@ export default class NewsFeed extends React.Component {
                 <FlatList
                   data={this.state.items}
                   renderItem={this._renderData}
-                  keyExtractor={({id}, index) => id}
+                  keyExtractor={(item, index) => index.toString()}
                   ListHeaderComponent = {() => {
                     return (
                       <View

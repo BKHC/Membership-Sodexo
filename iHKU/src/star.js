@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Dimensions, PixelRatio, Platform} from 'react-native';
 
 export default class Star extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ export default class Star extends React.Component {
   render(){
     if (this.props.rating == "1")
       return (
-        <Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         <Text
           style={{
             color: 'rgba(255, 153, 204, 1)',
@@ -21,11 +21,11 @@ export default class Star extends React.Component {
             color: 'rgba(100, 100, 100, 1)',
           }}
         >☆☆☆☆</Text>
-        </Text>
+        </View>
       );
     else if (this.props.rating == "2")
       return (
-        <Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         <Text
           style={{
             color: 'rgba(255, 153, 204, 1)',
@@ -37,11 +37,11 @@ export default class Star extends React.Component {
             color: 'rgba(100, 100, 100, 1)',
           }}
         >☆☆☆</Text>
-        </Text>
+        </View>
       );
     else if (this.props.rating == "3")
       return (
-        <Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         <Text
           style={{
             color: 'rgba(255, 153, 204, 1)',
@@ -53,11 +53,11 @@ export default class Star extends React.Component {
             color: 'rgba(100, 100, 100, 1)',
           }}
         >☆☆</Text>
-        </Text>
+        </View>
       );
     else if (this.props.rating == "4")
       return (
-        <Text>
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         <Text
           style={{
             color: 'rgba(255, 153, 204, 1)',
@@ -69,7 +69,7 @@ export default class Star extends React.Component {
             color: 'rgba(100, 100, 100, 1)',
           }}
         >☆</Text>
-        </Text>
+        </View>
       );
     else if (this.props.rating == "0")
       return(

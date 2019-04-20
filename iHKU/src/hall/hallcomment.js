@@ -144,36 +144,7 @@ export default class Profile extends React.Component {
               </View>
             </View>
           </View>
-          <View style={{textAlign:'right',}}>
-            <View
-              style={{
-                flexDirection:'row',
-                borderRadius: 4,
-                borderWidth: 0.5,
-                borderColor: 'rgba(255, 153, 204, 1)',
-                padding: 4,
-              }}>
-              <Image
-                  style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-                  source={require('../../assets/thumbUp.png')}
-              />
-              <Text>33 </Text>
-            </View>
-            <View
-              style={{
-                flexDirection:'row', marginTop:5,
-                borderRadius: 4,
-                borderWidth: 0.5,
-                borderColor: 'rgba(120, 120, 120, 1)',
-                padding: 4,
-              }}>
-              <Image
-                style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-                source={require('../../assets/thumbDown.png')}
-              />
-              <Text>43 </Text>
-            </View>
-          </View>
+          <LikeStatus commentID={item.id} />
         </View>
         <View style={{marginTop:6,}}>
           <Text numberOfLines={3} style={{fontSize: 13}}>
@@ -247,7 +218,7 @@ export default class Profile extends React.Component {
                 <FlatList
                   data={filteredItems}
                   renderItem={this._renderData}
-                  keyExtractor={({id}, index) => id}
+                  keyExtractor={(item, index) => index.toString()}
                   ListHeaderComponent = {() => {
                     return (
                       <View
@@ -301,6 +272,108 @@ export default class Profile extends React.Component {
   }
 }
 
+class LikeStatus extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {items: {like_status: "1", likes: "10", dislikes: "5"}};
+  }
+
+  componentDidMount() {
+    var commentID = this.props.commentID;
+    /***
+    AsyncStorage.getItem('userID').then((value) => {
+      fetch(`https://i.cs.hku.hk/~wyvying/php/get_like_status.php?commentID=${encodeURIComponent(parseInt(commentID))}&userID=${encodeURIComponent(parseInt(value))}`, {
+          method: "GET",
+      })
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({items: data});
+        }) // JSON-string from `response.json()` call
+        .catch(error => console.error(error));
+    });
+    ***/
+
+    }
+
+    _like = () => {
+      newitem = this.state.items;
+      if (newitem.like_status == "1"){
+        newitem.like_status = "-1";
+        newitem.likes = parseInt(newitem.likes) - 1;
+      } else if (newitem.like_status == "0"){
+        newitem.like_status = "1";
+        newitem.likes = parseInt(newitem.likes) + 1;
+        newitem.dislikes = parseInt(newitem.dislikes) - 1;
+      } else {
+        newitem.like_status = "1";
+        newitem.likes = parseInt(newitem.likes) + 1;
+      }
+      this.setState({items: newitem});
+    };
+
+    _dislike = () => {
+      newitem = this.state.items;
+      if (newitem.like_status == "1"){
+        newitem.like_status = "0";
+        newitem.dislikes = parseInt(newitem.dislikes) + 1;
+        newitem.likes = parseInt(newitem.likes) - 1;
+      } else if (newitem.like_status == "0"){
+        newitem.like_status = "-1";
+        newitem.dislikes = parseInt(newitem.dislikes) - 1;
+      } else {
+        newitem.like_status = "0";
+        newitem.dislikes = parseInt(newitem.dislikes) + 1;
+      }
+      this.setState({items: newitem});
+    };
+
+  render(){
+    color_like = 'rgba(120, 120, 120, 1)';
+    color_dislike = 'rgba(120, 120, 120, 1)';
+    if (this.state.items.like_status == "1")
+      color_like = 'rgba(255, 153, 204, 1)';
+    else if (this.state.items.like_status == "0") {
+      color_dislike = 'rgba(255, 153, 204, 1)';
+    }
+    return(
+      <View style={{textAlign:'right',}}>
+        <TouchableOpacity onPress={() => this._like()}>
+        <View
+          style={{
+            flexDirection:'row',
+            borderRadius: 4,
+            borderWidth: 0.5,
+            borderColor: color_like,
+            padding: 4,
+          }}>
+            <FastImage
+                style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
+                source={require('../../assets/thumbUp.png')}
+            />
+            <Text>{this.state.items.likes} </Text>
+        </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this._dislike()}>
+        <View
+          style={{
+            flexDirection:'row', marginTop:5,
+            borderRadius: 4,
+            borderWidth: 0.5,
+            borderColor: color_dislike,
+            padding: 4,
+          }}>
+          <FastImage
+            style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
+            source={require('../../assets/thumbDown.png')}
+          />
+          <Text>{this.state.items.dislikes} </Text>
+        </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
 // to normalize font size
   const {
     width: SCREEN_WIDTH,
@@ -325,41 +398,3 @@ export default class Profile extends React.Component {
   export function getScreenHeight(){
     return SCREEN_HEIGHT
   }
-
-/***
-class HallScreen extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {items: NULL};
-  }
-
-  componentDidMount() {
-    /***
-    fetch(`https://i.cs.hku.hk/~wyvying/test.php`, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-    })
-    //.then(response => response.json()); // parses response to JSON
-      .then((data) => {
-        alert(JSON.stringify(data));
-        //this.item = JSON.parse(data);
-        this.setState({items: JSON.parse(data)});
-
-      }) // JSON-string from `response.json()` call
-      .catch(error => console.error(error));
-
-    }
-
-    renderData(){
-
-      );
-    }
-
-  render(){
-    return(
-      <View>
-        {this.renderData()}
-      </View>
-    );
-  }
-}
-***/

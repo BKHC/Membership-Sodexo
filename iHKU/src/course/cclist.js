@@ -247,7 +247,7 @@ export default class CouCommentList extends React.Component {
                 <FlatList
                   data={filteredItems}
                   renderItem={this._renderData}
-                  keyExtractor={({id}, index) => id}
+                  keyExtractor={(item, index) => index.toString()}
                   ListHeaderComponent = {() => {
                     return (
                       <View
