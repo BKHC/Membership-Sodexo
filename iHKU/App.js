@@ -388,7 +388,7 @@ const TabNavigator = createBottomTabNavigator({
         style={{
           backgroundColor: 'rgba(255, 153, 204, 1)',
           width: getScreenWidth(),
-          height: 65,
+          height: 60,
           position: 'absolute',
           bottom: 0,
           flex: 1,

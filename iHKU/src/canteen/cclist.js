@@ -4,6 +4,7 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, 
 import FastImage from 'react-native-fast-image';
 import { createFilter } from 'react-native-search-filter';
 import { format } from 'date-fns';
+import LikeStatus from './like_status';
 import User from '../user';
 import Star from '../star';
 import Face from '../face';
@@ -144,36 +145,7 @@ export default class CanCommentList extends React.Component {
               </View>
             </View>
           </View>
-          <View style={{textAlign:'right',}}>
-            <View
-              style={{
-                flexDirection:'row',
-                borderRadius: 4,
-                borderWidth: 0.5,
-                borderColor: 'rgba(255, 153, 204, 1)',
-                padding: 4,
-              }}>
-              <FastImage
-                  style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-                  source={require('../../assets/thumbUp.png')}
-              />
-              <Text>33 </Text>
-            </View>
-            <View
-              style={{
-                flexDirection:'row', marginTop:5,
-                borderRadius: 4,
-                borderWidth: 0.5,
-                borderColor: 'rgba(120, 120, 120, 1)',
-                padding: 4,
-              }}>
-              <FastImage
-                style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-                source={require('../../assets/thumbDown.png')}
-              />
-              <Text>43 </Text>
-            </View>
-          </View>
+          <LikeStatus commentID={item.id} />
         </View>
         <View style={{marginTop:6,}}>
           <Text numberOfLines={3} style={{fontSize: 13}}>
@@ -219,7 +191,7 @@ export default class CanCommentList extends React.Component {
     if (this.state.items){
       const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, ['topic']))
       return (
-        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
+        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-142}}>
 
 
               <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>

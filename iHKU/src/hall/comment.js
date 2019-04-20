@@ -4,6 +4,7 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FastImage from 'react-native-fast-image';
+import LikeStatus from './like_status';
 import Star from '../star';
 import Face from '../face';
 
@@ -96,7 +97,7 @@ export default class Comment extends React.Component {
     const data = {Comment_ID: parseInt(Comment_ID), topic: topic, date: date, rating_1: rating_1, rating_2: rating_2,
       rating_3: rating_3, rating_4: rating_4, nickname: nickname, comment: comment, image_num: image_num};
 
-    this.setState({item: data});
+    this.setState({item: data, key: 0});
 
     }
 
@@ -142,6 +143,7 @@ export default class Comment extends React.Component {
                       </View>
                     </View>
                   </View>
+                  <LikeStatus commentID={this.state.item.Comment_ID} key={this.state.key}/>
                 </View>
                 <Text style={{marginLeft:50, marginRight:50, color: 'rgba(255, 153, 204, 1)',}}>___________________________________</Text>
                 <View style={{flexDirection:'row', marginTop:15, justifyContent: 'space-between', paddingLeft:20, paddingRight:20}} >

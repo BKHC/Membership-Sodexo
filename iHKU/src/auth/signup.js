@@ -6,7 +6,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
 
     constructor(props) {
       super(props);
-      this.state = { nickname: '', email: '', password: '', repassword: '', disabled: true};
+      this.state = { nickname: '', email: '@connect.hku.hk', password: '', repassword: '', disabled: true};
     }
 
     render() {
@@ -65,8 +65,8 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 placeholderTextColor="grey"
                 onChangeText={(nickname) => {
                   this.setState({nickname});
-                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
-                  if (etest.test(email) && this.state.password.length >=6 && this.state.password == this.state.repassword && nickname!="")
+                  //var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                  if (email != "" && this.state.password.length >=6 && this.state.password == this.state.repassword && nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});
@@ -82,12 +82,13 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                   marginTop: 10,
                   color:'white',
                 }}
-                placeholder="電郵 (@hku.hk)"
+                placeholder="電郵(只需輸入@hku.hk之前的Alias)"
                 placeholderTextColor="grey"
-                onChangeText={(email) => {
+                onChangeText={(name) => {
+                  email = name + "@connect.hku.hk";
                   this.setState({email});
-                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
-                  if (etest.test(email) && this.state.password.length >=6 && this.state.password == this.state.repassword && this.state.nickname!="")
+                  //var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                  if (name != "" && this.state.password.length >=6 && this.state.password == this.state.repassword && this.state.nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});
@@ -108,8 +109,8 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 secureTextEntry={true}
                 onChangeText={(password) => {
                   this.setState({password});
-                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
-                  if (etest.test(this.state.email) != "" && this.state.password.length >=6 && password == this.state.repassword && this.state.nickname!="")
+                  //var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                  if (this.state.email != "@connect.hku.hk" && this.state.password.length >=6 && password == this.state.repassword && this.state.nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});
@@ -130,8 +131,8 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 secureTextEntry={true}
                 onChangeText={(repassword) => {
                   this.setState({repassword});
-                  var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
-                  if (etest.test(this.state.email) && this.state.password.length >=6 && this.state.password == repassword && this.state.nickname!="")
+                  //var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
+                  if (this.state.email != "@connect.hku.hk" && this.state.password.length >=6 && this.state.password == repassword && this.state.nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});

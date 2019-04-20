@@ -4,11 +4,12 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, 
 import FastImage from 'react-native-fast-image';
 import { createFilter } from 'react-native-search-filter';
 import { format } from 'date-fns';
+import LikeStatus from './like_status';
 import User from '../user';
 import Star from '../star';
 import Face from '../face';
 
-export default class Profile extends React.Component {
+export default class HallComment extends React.Component {
 
   constructor(props) {
     super(props);
@@ -156,9 +157,11 @@ export default class Profile extends React.Component {
       );
 
     more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment, image_num){
+
       this.props.navigation.navigate('Comment',
       {CommentId: id, Topic: topic, Date: date, Rating_1: rating_1, Rating_2: rating_2, Rating_3: rating_3,
       Rating_4: rating_4, Nickname: nickname, Comment: comment, image_num: image_num});
+
     }
 
     keyword() {
@@ -190,7 +193,7 @@ export default class Profile extends React.Component {
     if (this.state.items){
       const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, ['topic']))
       return (
-        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
+        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-142}}>
 
 
               <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
@@ -269,108 +272,6 @@ export default class Profile extends React.Component {
     </View>
   </ImageBackground>);
 }
-  }
-}
-
-class LikeStatus extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {items: {like_status: "1", likes: "10", dislikes: "5"}};
-  }
-
-  componentDidMount() {
-    var commentID = this.props.commentID;
-    /***
-    AsyncStorage.getItem('userID').then((value) => {
-      fetch(`https://i.cs.hku.hk/~wyvying/php/get_like_status.php?commentID=${encodeURIComponent(parseInt(commentID))}&userID=${encodeURIComponent(parseInt(value))}`, {
-          method: "GET",
-      })
-        .then(response => response.json())
-        .then((data) => {
-          this.setState({items: data});
-        }) // JSON-string from `response.json()` call
-        .catch(error => console.error(error));
-    });
-    ***/
-
-    }
-
-    _like = () => {
-      newitem = this.state.items;
-      if (newitem.like_status == "1"){
-        newitem.like_status = "-1";
-        newitem.likes = parseInt(newitem.likes) - 1;
-      } else if (newitem.like_status == "0"){
-        newitem.like_status = "1";
-        newitem.likes = parseInt(newitem.likes) + 1;
-        newitem.dislikes = parseInt(newitem.dislikes) - 1;
-      } else {
-        newitem.like_status = "1";
-        newitem.likes = parseInt(newitem.likes) + 1;
-      }
-      this.setState({items: newitem});
-    };
-
-    _dislike = () => {
-      newitem = this.state.items;
-      if (newitem.like_status == "1"){
-        newitem.like_status = "0";
-        newitem.dislikes = parseInt(newitem.dislikes) + 1;
-        newitem.likes = parseInt(newitem.likes) - 1;
-      } else if (newitem.like_status == "0"){
-        newitem.like_status = "-1";
-        newitem.dislikes = parseInt(newitem.dislikes) - 1;
-      } else {
-        newitem.like_status = "0";
-        newitem.dislikes = parseInt(newitem.dislikes) + 1;
-      }
-      this.setState({items: newitem});
-    };
-
-  render(){
-    color_like = 'rgba(120, 120, 120, 1)';
-    color_dislike = 'rgba(120, 120, 120, 1)';
-    if (this.state.items.like_status == "1")
-      color_like = 'rgba(255, 153, 204, 1)';
-    else if (this.state.items.like_status == "0") {
-      color_dislike = 'rgba(255, 153, 204, 1)';
-    }
-    return(
-      <View style={{textAlign:'right',}}>
-        <TouchableOpacity onPress={() => this._like()}>
-        <View
-          style={{
-            flexDirection:'row',
-            borderRadius: 4,
-            borderWidth: 0.5,
-            borderColor: color_like,
-            padding: 4,
-          }}>
-            <FastImage
-                style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-                source={require('../../assets/thumbUp.png')}
-            />
-            <Text>{this.state.items.likes} </Text>
-        </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this._dislike()}>
-        <View
-          style={{
-            flexDirection:'row', marginTop:5,
-            borderRadius: 4,
-            borderWidth: 0.5,
-            borderColor: color_dislike,
-            padding: 4,
-          }}>
-          <FastImage
-            style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-            source={require('../../assets/thumbDown.png')}
-          />
-          <Text>{this.state.items.dislikes} </Text>
-        </View>
-        </TouchableOpacity>
-      </View>
-    );
   }
 }
 

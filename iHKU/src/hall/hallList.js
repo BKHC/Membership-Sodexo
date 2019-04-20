@@ -134,7 +134,7 @@ export default class HallList extends React.Component {
           const filteredItems = this.state.items.filter(createFilter(this.state.searchTerm, 'hallname'));
           return (
             <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()}}>
-                <ScrollView style={{marginBottom:145, marginTop:4}}>
+                <ScrollView style={{marginBottom:142, marginTop:4}}>
                 <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
                   <View style={{width: getScreenWidth()-20, backgroundColor:'rgba(230, 230, 230, 1)', height:40, borderRadius: 8, flexDirection:'row',}}>
                     <TextInput
