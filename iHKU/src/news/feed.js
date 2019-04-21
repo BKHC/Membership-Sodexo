@@ -1,7 +1,11 @@
 import React from 'react';
-import { Alert, KeyboardAvoidingView, TouchableOpacity, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Text, Platform, View, FlatList, ScrollView, ActivityIndicator, RefreshControl, AsyncStorage} from 'react-native';
+import { Alert, TouchableOpacity, PixelRatio, Dimensions, ImageBackground, Text,
+  Platform, View, FlatList, ScrollView, ActivityIndicator, AsyncStorage} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { format } from 'date-fns';
+import CanLikeStatus from './like_status_canteen';
+import HallLikeStatus from './like_status_hall';
+import CouLikeStatus from './like_status_course';
 import User from '../user';
 import Star from '../star';
 import Face from '../face';
@@ -10,12 +14,7 @@ export default class NewsFeed extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {refreshing: false, refresh: true};
-  }
-
-  _onRefresh = () => {
-    this.setState({refreshing: true});
-    this._doFetch();
+    this.state = {like_refresh: false};
   }
 
   _doFetch = () => {
@@ -25,7 +24,7 @@ export default class NewsFeed extends React.Component {
       })
       .then(response => response.json()) // parses response to JSON
         .then((data) => {
-          this.setState({items: data, refreshing: false, refresh: false});
+          this.setState({items: data});
 
         }) // JSON-string from `response.json()` call
         .catch(error => console.error(error));
@@ -33,12 +32,16 @@ export default class NewsFeed extends React.Component {
   };
 
   async componentDidMount() {
+    this._doFetch();
     this.props.navigation.addListener ('didFocus', () =>{
     // do whatever you want to do when focused
-    if (this.state.refresh){
-    this.setState({items: null});
-    this._onRefresh();
-  }
+    AsyncStorage.getItem('Comment').then((value) => {
+        if (value == '1'){
+          this.setState({like_refresh: !this.state.like_refresh});
+          AsyncStorage.setItem('Comment', '0');
+        }
+      });
+
   });
     }
 
@@ -120,36 +123,15 @@ export default class NewsFeed extends React.Component {
               </View>
             </View>
           </View>
-          <View style={{textAlign:'right',}}>
-            <View
-              style={{
-                flexDirection:'row',
-                borderRadius: 4,
-                borderWidth: 0.5,
-                borderColor: 'rgba(255, 153, 204, 1)',
-                padding: 4,
-              }}>
-              <Image
-                  style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-                  source={require('../../assets/thumbUp.png')}
-              />
-              <Text>33 </Text>
-            </View>
-            <View
-              style={{
-                flexDirection:'row', marginTop:5,
-                borderRadius: 4,
-                borderWidth: 0.5,
-                borderColor: 'rgba(120, 120, 120, 1)',
-                padding: 4,
-              }}>
-              <Image
-                style={{width: 12, height: 12, marginRight:2, marginTop:2, marginLeft:2}}
-                source={require('../../assets/thumbDown.png')}
-              />
-              <Text>43 </Text>
-            </View>
-          </View>
+          {item.category == "0" ?
+          (<CanLikeStatus commentID={this.state.item.Comment_ID} refresh={this.state.like_refresh} />) : item.category == "1" ?
+          (<HallLikeStatus commentID={this.state.item.Comment_ID} refresh={this.state.like_refresh} />):
+          (<CouLikeStatus commentID={this.state.item.Comment_ID} refresh={this.state.like_refresh} />)}
+        </View>
+        <View style={{marginTop:6,}}>
+          <Text numberOfLines={3} style={{fontSize: 13}}>
+            {item.comment}
+          </Text>
         </View>
       </View>
       </TouchableOpacity>
@@ -165,7 +147,7 @@ export default class NewsFeed extends React.Component {
 
     if (this.state.items){
       return (
-        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
+        <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-142}}>
 
 
               <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
@@ -194,18 +176,12 @@ export default class NewsFeed extends React.Component {
                     )
                   }
                   }
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={this.state.refreshing}
-                      onRefresh={this._onRefresh}
-                      tintColor="rgba(255, 153, 204, 1)"
-                    />}
                     />
         </ImageBackground>
       );
   } else {
   return (
-    <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-145}}>
+    <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-142}}>
     <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
     </View>
     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>

@@ -4,6 +4,9 @@ import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FastImage from 'react-native-fast-image';
+import CanLikeStatus from './like_status_canteen';
+import HallLikeStatus from './like_status_hall';
+import CouLikeStatus from './like_status_course';
 import Star from '../star';
 import Face from '../face';
 
@@ -108,6 +111,10 @@ export default class Comment extends React.Component {
     const image_num = navigation.getParam('image_num', '');
     const category = navigation.getParam('category', '');
 
+    navigation.addListener('willBlur', () => {
+      AsyncStorage.setItem('Comment', '1').then(() => console.log(""));
+    });
+
     const data = {Comment_ID: parseInt(Comment_ID), topic: topic, date: date, rating_1: rating_1, rating_2: rating_2,
       rating_3: rating_3, rating_4: rating_4, nickname: nickname, comment: comment, image_num: image_num, category: category};
 
@@ -157,6 +164,10 @@ export default class Comment extends React.Component {
                       </View>
                     </View>
                   </View>
+                  {this.state.item.category == "0" ?
+                  (<CanLikeStatus commentID={this.state.item.Comment_ID} />) : this.state.item.category == "1" ?
+                  (<HallLikeStatus commentID={this.state.item.Comment_ID} />):
+                  (<CouLikeStatus commentID={this.state.item.Comment_ID} />)}
                 </View>
                 <Text style={{marginLeft:50, marginRight:50, color: 'rgba(255, 153, 204, 1)',}}>___________________________________</Text>
                 <View style={{flexDirection:'row', marginTop:15, justifyContent: 'space-between', paddingLeft:20, paddingRight:20}} >
