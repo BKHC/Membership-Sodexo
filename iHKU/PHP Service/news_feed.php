@@ -3,7 +3,7 @@
 require_once("../db_config.php");
 session_start();
 
-  $user_id = mysqli_real_escape_string($db, $_POST['keyword']);
+  $user_id = mysqli_real_escape_string($db, $_POST['UserID']);
   $hist_query = "SELECT `keyword` FROM `User_search_hist` WHERE `UserID` = $user_id";
   $hist_result = mysqli_query($db, $hist_query);
   $count = mysqli_num_rows($hist_result);
