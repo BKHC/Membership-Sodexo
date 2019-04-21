@@ -10,7 +10,8 @@ session_start();
   
   if($count == 0)
   {
-    //working on it
+    $check_query = "SELECT * FROM `Hall Rate` ORDER BY rand() UNION SELECT * FROM `Restaurant Rate` ORDER BY rand() UNION SELECT * FROM `Course Rate` ORDER BY rand()";
+    $result = mysqli_query($db, $check_query)
   }
 
   else
