@@ -5,6 +5,7 @@ import SignInScreen from './src/auth/login';
 import SignUpScreen from './src/auth/signup';
 
 import NewsFeed from './src/news/feed';
+import NewsComment from './src/news/comment';
 
 import HallComment from './src/hall/hallcomment';
 import HallList from './src/hall/hallList';
@@ -26,7 +27,7 @@ import Profile from './src/account/profile';
 const NewsStack = createStackNavigator({
 
   News: NewsFeed,
-  //RestComment: RestComment,
+  Comment: NewsComment,
   //CanComment: CanComment,
   //HallComment: HallComment,
 },

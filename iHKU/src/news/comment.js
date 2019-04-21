@@ -84,7 +84,7 @@ class ImageList extends React.Component{
   }
 }
 
-export default class Comment extends React.Component {
+export default class NewsComment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
