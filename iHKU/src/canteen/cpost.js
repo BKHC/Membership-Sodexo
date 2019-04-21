@@ -279,15 +279,17 @@ export default class CanPostComment extends React.Component {
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");
-        Alert.alert(
-      'Comment Posted!',
-      '',
-      [
-        {text: data.comment, onPress: () => this.props.navigation.pop()
-        },
-      ],
-      {cancelable: false},
-    );
+        AsyncStorage.setItem('PostComment', '1').then(() => {
+          Alert.alert(
+        'Comment Posted!',
+        '',
+        [
+          {text: data.comment, onPress: () => this.props.navigation.pop()
+          },
+        ],
+        {cancelable: false},
+      );
+    });
       }).catch(err => {
         console.log(err)
       })

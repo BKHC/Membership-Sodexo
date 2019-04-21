@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Text, View, Platform, FlatList, ScrollView, Modal, ActivityIndicator} from 'react-native';
+import { Alert, TouchableOpacity, TouchableWithoutFeedback, PixelRatio, Dimensions, TextInput, ImageBackground,
+  Image, Text, View, Platform, FlatList, ScrollView, Modal, ActivityIndicator, AsyncStorage} from 'react-native';
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FastImage from 'react-native-fast-image';
@@ -94,6 +94,10 @@ export default class Comment extends React.Component {
     const comment = navigation.getParam('Comment', '');
     const image_num = navigation.getParam('image_num', '');
 
+    navigation.addListener('willBlur', () => {
+      AsyncStorage.setItem('Comment', '1').then(() => console.log(""));
+    });
+
     const data = {Comment_ID: parseInt(Comment_ID), topic: topic, date: date, rating_1: rating_1, rating_2: rating_2,
       rating_3: rating_3, rating_4: rating_4, nickname: nickname, comment: comment, image_num: image_num};
 
@@ -143,7 +147,7 @@ export default class Comment extends React.Component {
                       </View>
                     </View>
                   </View>
-                  <LikeStatus commentID={this.state.item.Comment_ID} key={this.state.key}/>
+                  <LikeStatus commentID={this.state.item.Comment_ID} />
                 </View>
                 <Text style={{marginLeft:50, marginRight:50, color: 'rgba(255, 153, 204, 1)',}}>___________________________________</Text>
                 <View style={{flexDirection:'row', marginTop:15, justifyContent: 'space-between', paddingLeft:20, paddingRight:20}} >

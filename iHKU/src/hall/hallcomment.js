@@ -51,7 +51,7 @@ export default class HallComment extends React.Component {
     })
     .then(response => response.json()) // parses response to JSON
       .then((data) => {
-        this.setState({items: data, refreshing: false, refresh: false});
+        this.setState({items: data, refreshing: false, refresh: false, like_refresh: false});
 
       }) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
@@ -63,6 +63,22 @@ export default class HallComment extends React.Component {
     if (this.state.refresh){
     this.setState({items: null});
     this._onRefresh();
+  } else {
+
+    AsyncStorage.getItem('PostComment').then((value) => {
+      if (value == '1'){
+        this.setState({items: null});
+        this._onRefresh();
+        AsyncStorage.setItem('PostComment', '0');
+      }
+    });
+
+    AsyncStorage.getItem('Comment').then((value) => {
+        if (value == '1'){
+          this.setState({like_refresh: !this.state.like_refresh});
+          AsyncStorage.setItem('Comment', '0');
+        }
+      });
   }
   });
     }
@@ -145,7 +161,7 @@ export default class HallComment extends React.Component {
               </View>
             </View>
           </View>
-          <LikeStatus commentID={item.id} />
+          <LikeStatus commentID={item.id} refresh={this.state.like_refresh} />
         </View>
         <View style={{marginTop:6,}}>
           <Text numberOfLines={3} style={{fontSize: 13}}>

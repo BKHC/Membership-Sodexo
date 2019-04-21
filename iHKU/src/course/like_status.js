@@ -8,6 +8,23 @@ export default class LikeStatus extends React.Component{
     this.state = {};
   }
 
+  componentWillReceiveProps(props){
+    const {refresh} = this.props;
+    if (props.refresh !== refresh){
+      var commentID = this.props.commentID;
+      AsyncStorage.getItem('userID').then((value) => {
+      fetch(`https://i.cs.hku.hk/~wyvying/php/fac/get_like_status.php?commentID=${encodeURIComponent(parseInt(commentID))}&userID=${encodeURIComponent(parseInt(value))}`, {
+          method: "GET",
+      })
+        .then(response => response.json())
+        .then((data) => {
+          this.setState({items: data});
+        }) // JSON-string from `response.json()` call
+        .catch(error => console.error(error));
+    });
+  }
+  }
+
   componentDidMount() {
     var commentID = this.props.commentID;
 

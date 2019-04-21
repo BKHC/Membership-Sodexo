@@ -242,7 +242,6 @@ export default class CouPostComment extends React.Component {
     body.append('rating_3', this.state.rating_3);
     body.append('rating_4', this.state.rating_4);
     body.append('comment', this.state.comment);
-    body.append('topic', this.state.topic);
     body.append('facultyId', facultyId);
     body.append('userId', this.state.userID);
 
@@ -260,7 +259,6 @@ export default class CouPostComment extends React.Component {
     body.append('image_num', 0);
   }
 
-
     fetch('https://i.cs.hku.hk/~wyvying/php/fac/post_comment.php',{
       method: 'POST',
       headers: {
@@ -271,18 +269,22 @@ export default class CouPostComment extends React.Component {
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");
-        Alert.alert(
-      'Comment Posted!',
-      '',
-      [
-        {text: data.comment, onPress: () => this.props.navigation.pop()
-        },
-      ],
-      {cancelable: false},
-    );
+        AsyncStorage.setItem('PostComment', '1').then(() => {
+          Alert.alert(
+        'Comment Posted!',
+        '',
+        [
+          {text: data.comment, onPress: () => this.props.navigation.pop()
+          },
+        ],
+        {cancelable: false},
+      );
+    });
       }).catch(err => {
         console.log(err)
       })
+
+
 };
 }
 

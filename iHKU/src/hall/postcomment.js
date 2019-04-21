@@ -241,7 +241,6 @@ export default class PostComment extends React.Component {
     body.append('rating_3', this.state.rating_3);
     body.append('rating_4', this.state.rating_4);
     body.append('comment', this.state.comment);
-    body.append('topic', this.state.topic);
     body.append('hallId', hallId);
     body.append('userId', this.state.userID);
 
@@ -270,19 +269,21 @@ export default class PostComment extends React.Component {
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");
-        Alert.alert(
-      'Comment Posted!',
-      '',
-      [
-        {text: data.comment, onPress: () => this.props.navigation.pop()
-        },
-      ],
-      {cancelable: false},
-    );
-      }).catch(err => {
-        console.log(err)
-      })
-};
+        AsyncStorage.setItem('PostComment', '1').then(() => {
+          Alert.alert(
+        'Comment Posted!',
+        '',
+        [
+          {text: data.comment, onPress: () => this.props.navigation.pop()
+          },
+        ],
+        {cancelable: false},
+      );
+    });
+        }).catch(err => {
+          console.log(err)
+        })
+  };
 }
 
 // to normalize font size
