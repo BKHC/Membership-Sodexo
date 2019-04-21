@@ -6,15 +6,15 @@ session_start();
   $user_id = $_POST['userID'];
   $hist_query = "SELECT `keyword` FROM `User_search_hist` WHERE `UserID` = $user_id";
   $hist_result = mysqli_query($db, $hist_query);
-  $count = mysqli_num_rows($result);
+  $count = mysqli_num_rows($hist_result);
+
+  $json = array();
+  $i = 0;
   
   if($count == 0)
   {
     $check_query = "SELECT * FROM `Hall Rate` ORDER BY rand() UNION SELECT * FROM `Restaurant Rate` ORDER BY rand() UNION SELECT * FROM `Course Rate` ORDER BY rand()";
     $result = mysqli_query($db, $check_query);
-    
-     $json = array();
-     $i = 0;
   
   while($row=mysqli_fetch_array($result))
  		{
@@ -40,11 +40,10 @@ session_start();
 
   else
   {
-
-  $check_query = "SELECT * FROM `Hall Rate` ORDER BY Date DESC UNION SELECT * FROM `Restaurant Rate` ORDER BY Date DESC UNION SELECT * FROM `Course Rate` ORDER BY Date DESC";
+   $search_hist = mysqli_fetch_array($hist_result);
+    
+  $check_query = "SELECT * FROM `Hall Rate` ORDER BY '$search_hist' DESC UNION SELECT * FROM `Restaurant Rate` ORDER BY "$search_hist" DESC UNION SELECT * FROM `Course Rate` ORDER BY '$search_hist' DESC";
   $result = mysqli_query($db, $check_query);
-  $json = array();
-  $i = 0;
   
   while($row=mysqli_fetch_array($result))
  		{
