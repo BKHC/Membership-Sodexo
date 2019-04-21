@@ -26,10 +26,13 @@ session_start();
  			$json[$i] = array(
         'id'=>$row['ID'],
         'nickname'=>$user["Alias"],
+        'Topic' =>$row['Topic'],
+        'rating_1' =>$row['Rating_1'],
+        'rating_2' =>$row['Rating_2'],
+        'rating_3' =>$row['Rating_3'],
+        'rating_4' =>$row['Rating_4'],
         'comment'=>$row['Comment'],
-        'date' => $row['Date'],
-        'like_num' => $row['Like_num'],
-        'dislike_num' => $row['Dislike_num']
+        'date' => $row['Date']
       );
              $i = $i + 1;
  		}
@@ -53,10 +56,13 @@ session_start();
  			$json[$i] = array(
         'id'=>$row['ID'],
         'nickname'=>$user["Alias"],
+        'Topic' =>$row['Topic'],
+        'rating_1' =>$row['Rating_1'],
+        'rating_2' =>$row['Rating_2'],
+        'rating_3' =>$row['Rating_3'],
+        'rating_4' =>$row['Rating_4'],
         'comment'=>$row['Comment'],
-        'date' => $row['Date'],
-        'like_num' => $row['Like_num'],
-        'dislike_num' => $row['Dislike_num']
+        'date' => $row['Date']
       );
              $i = $i + 1;
  		}
