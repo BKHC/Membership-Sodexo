@@ -48,7 +48,7 @@ export default class NewsFeed extends React.Component {
     _renderData = ({item}) => (
       <TouchableOpacity
         ref={item.id}
-        onPress={this.more.bind(this, item.id, item.topic, item.date, item.rating_1, item.rating_2, item.rating_3,
+        onPress={this.more.bind(this, item.id, item.Topic, item.date, item.rating_1, item.rating_2, item.rating_3,
           item.rating_4, item.nickname, item.comment, item.image_num, item.category)}
       >
       <View
@@ -92,17 +92,17 @@ export default class NewsFeed extends React.Component {
                   marginTop:5,
                   marginBottom:3,
                 }}
-              >{item.topic}</Text>
+              >{item.Topic}</Text>
               <View style={{flexDirection:'row',}} >
                 <Text
                   style={{
                     fontSize:normalize(9),
                   }}
-                >{item.category == "0" ? 食物 : item.category == "1" ? 運動 : 知識}:</Text>
+                >{item.category == "0" ? "食物" : item.category == "1" ? "運動" : "知識"}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_1} />
                 </View>
-                <Text style={{marginLeft:10, fontSize:normalize(9),}}>{item.category == "0" ? 環境 : item.category == "1" ? 文化 : 難度}:</Text>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>{item.category == "0" ? "環境" : item.category == "1" ? "文化" : "難度"}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_2} />
                 </View>
@@ -112,11 +112,11 @@ export default class NewsFeed extends React.Component {
                   style={{
                     fontSize:normalize(9),
                   }}
-                >{item.category == "0" ? 價錢 : item.category == "1" ? 環境 : 耗時}:</Text>
+                >{item.category == "0" ? "價錢" : item.category == "1" ? "環境" : "耗時"}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_3} />
                 </View>
-                <Text style={{marginLeft:10, fontSize:normalize(9),}}>{item.category == "0" ? 服務 : item.category == "1" ? 仙制 : 成績}:</Text>
+                <Text style={{marginLeft:10, fontSize:normalize(9),}}>{item.category == "0" ? "服務" : item.category == "1" ? "仙制" : "成績"}:</Text>
                 <View style={{flexDirection:'row',}} >
                   <Star rating={item.rating_4} />
                 </View>
@@ -124,9 +124,9 @@ export default class NewsFeed extends React.Component {
             </View>
           </View>
           {item.category == "0" ?
-          (<CanLikeStatus commentID={this.state.item.Comment_ID} refresh={this.state.like_refresh} />) : item.category == "1" ?
-          (<HallLikeStatus commentID={this.state.item.Comment_ID} refresh={this.state.like_refresh} />):
-          (<CouLikeStatus commentID={this.state.item.Comment_ID} refresh={this.state.like_refresh} />)}
+          (<CanLikeStatus commentID={item.id} refresh={this.state.like_refresh} />) : item.category == "1" ?
+          (<HallLikeStatus commentID={item.id} refresh={this.state.like_refresh} />):
+          (<CouLikeStatus commentID={item.id} refresh={this.state.like_refresh} />)}
         </View>
         <View style={{marginTop:6,}}>
           <Text numberOfLines={3} style={{fontSize: 13}}>
@@ -138,7 +138,7 @@ export default class NewsFeed extends React.Component {
       );
 
     more(id, topic, date, rating_1, rating_2, rating_3, rating_4, nickname, comment, image_num, category){
-      this.props.navigation.navigate('Comment',
+      this.props.navigation.navigate('NewsComment',
       {CommentId: id, Topic: topic, Date: date, Rating_1: rating_1, Rating_2: rating_2, Rating_3: rating_3,
       Rating_4: rating_4, Nickname: nickname, Comment: comment, image_num: image_num, category: category});
     }
@@ -148,10 +148,6 @@ export default class NewsFeed extends React.Component {
     if (this.state.items){
       return (
         <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-142}}>
-
-
-              <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
-              </View>
 
                 <FlatList
                   data={this.state.items}
@@ -169,8 +165,9 @@ export default class NewsFeed extends React.Component {
                        }}
                   >
                      <FastImage
-                          style={{resizeMode: "stretch", width: getScreenWidth(), height: 100,}}
+                          style={{width: getScreenWidth(), height: 100,}}
                           source={require('../../assets/ads_banner.jpg')}
+                          resizeMode={FastImage.resizeMode.stretch}
                      />
                     </View>
                     )
@@ -182,8 +179,6 @@ export default class NewsFeed extends React.Component {
   } else {
   return (
     <ImageBackground source={require('../../assets/background.jpg')} style={{width: getScreenWidth(), height: getScreenHeight()-142}}>
-    <View style={{width: getScreenWidth(), backgroundColor:'white', height:60, marginTop:4, padding:10 }}>
-    </View>
     <View style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}>
       <ActivityIndicator size="large" color="rgba(255, 153, 204, 1)" />
     </View>

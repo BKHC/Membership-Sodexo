@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, TouchableOpacity, TouchableWithoutFeedback, PixelRatio, Dimensions, TextInput, ImageBackground,
-  Image, Text, View, Platform, FlatList, ScrollView, Modal, ActivityIndicator} from 'react-native';
+  Image, Text, View, Platform, FlatList, ScrollView, Modal, ActivityIndicator, AsyncStorage} from 'react-native';
 import { format } from 'date-fns';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import FastImage from 'react-native-fast-image';
@@ -111,6 +111,7 @@ export default class NewsComment extends React.Component {
     const image_num = navigation.getParam('image_num', '');
     const category = navigation.getParam('category', '');
 
+
     navigation.addListener('willBlur', () => {
       AsyncStorage.setItem('Comment', '1').then(() => console.log(""));
     });
@@ -177,14 +178,14 @@ export default class NewsComment extends React.Component {
                       style={{
                         fontSize:normalize(12),
                       }}
-                    >{this.state.item.category == "0" ? 食物 : this.state.item.category == "1" ? 運動 : 知識}:</Text>
+                    >{this.state.item.category == "0" ? "食物" : this.state.item.category == "1" ? "運動" : "知識"}:</Text>
                     <View style={{flexDirection:'row',}} >
                       <Star rating={this.state.item.rating_1} />
                     </View>
                   </View>
                   <Text style={{marginLeft:14, color: 'rgba(30, 30, 30, 1)',}}>|</Text>
                   <View style={{flexDirection:'row'}}>
-                    <Text style={{marginLeft:14, fontSize:normalize(12),}}>{this.state.item.category == "0" ? 環境 : this.state.item.category == "1" ? 文化 : 難度}:</Text>
+                    <Text style={{marginLeft:14, fontSize:normalize(12),}}>{this.state.item.category == "0" ? "環境" : this.state.item.category == "1" ? "文化" : "難度"}:</Text>
                     <View style={{flexDirection:'row',}} >
                       <Star rating={this.state.item.rating_2} />
                     </View>
@@ -198,14 +199,14 @@ export default class NewsComment extends React.Component {
                       style={{
                         fontSize:normalize(12),
                       }}
-                    >{this.state.item.category == "0" ? 價錢 : this.state.item.category == "1" ? 環境 : 耗時}:</Text>
+                    >{this.state.item.category == "0" ? "價錢" : this.state.item.category == "1" ? "環境" : "耗時"}:</Text>
                     <View style={{flexDirection:'row',}} >
                       <Star rating={this.state.item.rating_3} />
                     </View>
                   </View>
                   <Text style={{marginLeft:14, color: 'rgba(30, 30, 30, 1)',}}>|</Text>
                   <View style={{flexDirection:'row'}}>
-                    <Text style={{marginLeft:14, fontSize:normalize(12),}}>{this.state.item.category == "0" ? 服務 : this.state.item.category == "1" ? 仙制 : 成績}:</Text>
+                    <Text style={{marginLeft:14, fontSize:normalize(12),}}>{this.state.item.category == "0" ? "服務" : this.state.item.category == "1" ? "仙制" : "成績"}:</Text>
                     <View style={{flexDirection:'row',}} >
                       <Star rating={this.state.item.rating_4} />
                     </View>

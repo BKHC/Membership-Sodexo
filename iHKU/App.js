@@ -27,7 +27,7 @@ import Profile from './src/account/profile';
 const NewsStack = createStackNavigator({
 
   News: NewsFeed,
-  Comment: NewsComment,
+  NewsComment: NewsComment,
   //CanComment: CanComment,
   //HallComment: HallComment,
 },
@@ -139,7 +139,7 @@ const TabNavigator = createBottomTabNavigator({
 
 },
 {
-    initialRouteName: '舍堂',
+    initialRouteName: '動態',
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
