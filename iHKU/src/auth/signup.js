@@ -66,7 +66,7 @@ import { Alert, KeyboardAvoidingView, Platform, Button, PixelRatio, Dimensions, 
                 onChangeText={(nickname) => {
                   this.setState({nickname});
                   //var etest = /^[a-z0-9](\.?[a-z0-9]){0,}@connect.hku\.hk$/;
-                  if (email != "" && this.state.password.length >=6 && this.state.password == this.state.repassword && nickname!="")
+                  if (this.state.email != "@connect.hku.hk" && this.state.password.length >=6 && this.state.password == this.state.repassword && nickname!="")
                     this.setState({disabled: false});
                   else
                     this.setState({disabled: true});

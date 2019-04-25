@@ -71,6 +71,7 @@ export default class Profile extends React.Component {
           </View>
           <ScrollView>
             <View style={{backgroundColor: 'rgba(255, 255, 255, 1)',marginTop: 4,}}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('MyCommentList')}>
               <View
                 style={{
                   fontFamily:'Helvetica Neue',
@@ -82,6 +83,7 @@ export default class Profile extends React.Component {
               >
                 <Text>我的發帖</Text>
               </View>
+              </TouchableOpacity>
               <View
                 style={{
                   height:1,

@@ -23,13 +23,14 @@ import CouComment from './src/course/ccomment';
 import CouPostComment from './src/course/cpost';
 
 import Profile from './src/account/profile';
+import MyCommentList from './src/account/mycommentlist';
+import MyComment from './src/account/mycomment';
+import EditComment from './src/account/editcomment'
 
 const NewsStack = createStackNavigator({
 
   News: NewsFeed,
   NewsComment: NewsComment,
-  //CanComment: CanComment,
-  //HallComment: HallComment,
 },
   {
       initialRouteName: 'News',
@@ -116,6 +117,29 @@ const CourseStack = createStackNavigator({
       }
     });
 
+const ProfileStack = createStackNavigator({
+
+      Profile: Profile,
+      MyCommentList: MyCommentList,
+      MyComment: MyComment,
+      EditComment: EditComment,
+    },
+      {
+          initialRouteName: 'Profile',
+          headerLayoutPreset: 'center',
+          /* The header config from HomeScreen is now here */
+          defaultNavigationOptions: {
+            title: '帳戶',
+            headerStyle: {
+              backgroundColor: 'rgba(255, 153, 204, 1)',
+            },
+            headerTintColor: 'rgba(255, 255, 255, 1)',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+        }
+      });
+
 const AuthStack = createStackNavigator(
   { SignIn: SignInScreen,
     SignUp: SignUpScreen
@@ -135,7 +159,7 @@ const TabNavigator = createBottomTabNavigator({
   餐廳: RestStack,
   舍堂: HallStack,
   課程: CourseStack,
-  帳戶: Profile,
+  帳戶: ProfileStack,
 
 },
 {
