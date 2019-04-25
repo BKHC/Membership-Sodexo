@@ -269,17 +269,22 @@ export default class CouPostComment extends React.Component {
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");
-        AsyncStorage.setItem('PostComment', '1').then(() => {
+        if (data.comment == "Contain Bad Words"){
+          alert('評論含有不雅字句!')
+        } else
+        {
+          AsyncStorage.setItem('PostComment', '1').then(() => {
           Alert.alert(
-        'Comment Posted!',
-        '',
-        [
-          {text: data.comment, onPress: () => this.props.navigation.pop()
+            '評論成功!',
+            '',
+            [
+              {text: "返回評論列表", onPress: () => this.props.navigation.pop()
           },
         ],
         {cancelable: false},
       );
     });
+  }
       }).catch(err => {
         console.log(err)
       })

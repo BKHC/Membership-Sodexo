@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, TouchableOpacity, PixelRatio, Dimensions, ImageBackground, Text,
+import { Alert, TouchableOpacity, PixelRatio, Dimensions, ImageBackground, Text, RefreshControl,
   Platform, View, FlatList, ScrollView, ActivityIndicator, AsyncStorage} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ export default class NewsFeed extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {like_refresh: false};
+    this.state = {like_refresh: false, refreshing: false};
   }
 
   _doFetch = () => {
@@ -24,24 +24,29 @@ export default class NewsFeed extends React.Component {
       })
       .then(response => response.json()) // parses response to JSON
         .then((data) => {
-          this.setState({items: data});
+          this.setState({items: data, refreshing: false});
 
         }) // JSON-string from `response.json()` call
         .catch(error => console.error(error));
   });
   };
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this._doFetch();
+  }
+
   async componentDidMount() {
     this._doFetch();
     this.props.navigation.addListener ('didFocus', () =>{
     // do whatever you want to do when focused
+
     AsyncStorage.getItem('Comment').then((value) => {
         if (value == '1'){
           this.setState({like_refresh: !this.state.like_refresh});
           AsyncStorage.setItem('Comment', '0');
         }
       });
-
   });
     }
 
@@ -173,6 +178,12 @@ export default class NewsFeed extends React.Component {
                     )
                   }
                   }
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.refreshing}
+                      onRefresh={this._onRefresh}
+                      tintColor="rgba(255, 153, 204, 1)"
+                    />}
                     />
         </ImageBackground>
       );

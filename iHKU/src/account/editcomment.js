@@ -230,19 +230,25 @@ async componentDidMount() {
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");
-        AsyncStorage.setItem('Update', '1').then(() => {
-          Alert.alert(
-        '修改成功!',
-        '',
-        [
-          {text: data.comment, onPress: () => {
-            AsyncStorage.setItem('Update', '1').then(() => this.props.navigation.pop(2));
-          }
-          },
-        ],
-        {cancelable: false},
-      );
-    });
+        if (data.comment == "Contain Bad Words"){
+          alert('評論含有不雅字句!')
+        } else
+        {
+          AsyncStorage.setItem('Update', '1').then(() => {
+            Alert.alert(
+          '修改成功!',
+          '',
+          [
+            {text: data.comment, onPress: () => {
+              AsyncStorage.setItem('Update', '1').then(() => this.props.navigation.pop(2));
+            }
+            },
+          ],
+          {cancelable: false},
+        );
+      });
+  }
+
         }).catch(err => {
           console.log(err)
         })

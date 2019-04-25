@@ -11,6 +11,22 @@ $comment = $_POST['comment'];
 $category = $_POST['category'];
 $id = $_POST['id'];
 
+$badwords = array('fuck', 'shit', 'piss off', 'dick', 'asshole','ass', 'bitch', 'bastard', 'bollock', 'bugger',
+'bloody hell', 'choad','shag','wnaker','piss','twat');
+$found = 0;
+for ($i = 0; $i < count($badwords); $i++){
+  if(stristr($comment, $badwords[$i]) !== FALSE) {
+    $found = 1;
+    break;
+  }
+
+  if(stristr($topic, $badwords[$i]) !== FALSE) {
+    $found = 1;
+    break;
+  }
+}
+
+if ($found == 0){
 if ($category == '0'){
   $query = "UPDATE `Restaurant Rate` SET Rating_1 = '$rating_1', Rating_2 = '$rating_2', Rating_3 = '$rating_3', Rating_4 = '$rating_4',
   Topic = '$topic', Comment= '$comment', Date = CURRENT_TIMESTAMP WHERE ID=$id";
@@ -29,6 +45,11 @@ if (mysqli_query($db, $query)){
 } else {
   $json = array(
     'comment' => "Please try again",
+  );
+}
+} else {
+  $json = array(
+    'comment' => "Contain Bad Words",
   );
 }
 

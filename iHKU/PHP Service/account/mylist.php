@@ -7,7 +7,7 @@ session_start();
   $json = array();
   $i = 0;
 
-  $check_query = "SELECT * FROM `Hall Rate` WHERE UserID=$id DESC";
+  $check_query = "SELECT * FROM `Hall Rate` WHERE UserID=$id";
   $result = mysqli_query($db, $check_query);
 
     while($row=mysqli_fetch_array($result))

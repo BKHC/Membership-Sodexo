@@ -269,17 +269,22 @@ export default class PostComment extends React.Component {
       }).then((response) => response.json())
       .then((data) => {
         console.log("comment uploaded");
-        AsyncStorage.setItem('PostComment', '1').then(() => {
+        if (data.comment == "Contain Bad Words"){
+          alert('評論含有不雅字句!')
+        } else
+        {
+          AsyncStorage.setItem('PostComment', '1').then(() => {
           Alert.alert(
-        'Comment Posted!',
+        '評論成功!',
         '',
         [
-          {text: data.comment, onPress: () => this.props.navigation.pop()
+          {text: "返回評論列表", onPress: () => this.props.navigation.pop()
           },
         ],
         {cancelable: false},
       );
     });
+  }
         }).catch(err => {
           console.log(err)
         })

@@ -59,14 +59,13 @@ export default class Profile extends React.Component {
           >
             <FastImage
                 style={{width: 100, height: 100,}}
-                source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/user_avatar/${this.state.userID}.png`}}
+                source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/user_avatar/21.png`}}
                 resizeMode={FastImage.resizeMode.stretch}
             />
             <Text style={{color:'white', marginTop:20, marginBottom:4, fontSize:20}}>
               {this.state.username}
             </Text>
             <Text style={{color:'white', fontSize:12, marginBottom:20}}>
-              2019 BTS Speak Yourself Concert | 12月21日約定你
             </Text>
           </View>
           <ScrollView>

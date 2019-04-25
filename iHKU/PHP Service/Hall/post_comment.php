@@ -12,16 +12,16 @@ $hallId = $_POST['hallId'];
 $userId = $_POST['userId'];
 $image_num = $_POST['image_num'];
 
-$check_query = "SELECT * FROM `Badwords`";
-$result = mysqli_query($db, $check_query);
+$badwords = array('fuck', 'shit', 'piss off', 'dick', 'asshole','ass', 'bitch', 'bastard', 'bollock', 'bugger',
+'bloody hell', 'choad','shag','wnaker','piss','twat');
 $found = 0;
-while($row=mysqli_fetch_array($result)){
-  if(stristr($comment, $row['word']) === TRUE) {
+for ($i = 0; $i < count($badwords); $i++){
+  if(stristr($comment, $badwords[$i]) !== FALSE) {
     $found = 1;
     break;
   }
 
-  if(stristr($topic, $row['word']) === TRUE) {
+  if(stristr($topic, $badwords[$i]) !== FALSE) {
     $found = 1;
     break;
   }
