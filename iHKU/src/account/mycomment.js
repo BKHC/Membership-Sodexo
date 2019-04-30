@@ -11,7 +11,7 @@ import CouLikeStatus from './like_status_course';
 import Star from '../star';
 import Face from '../face';
 
-class ImageList extends React.Component{
+class CanImageList extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -21,21 +21,15 @@ class ImageList extends React.Component{
   }
 
   _renderData = ({item}) => {
-    if (this.props.category == "0")
-      cat = "rest_comment";
-     else if (this.props.category == "1")
-      cat = "hall_comment";
-    else
-      cat = "course_comment";
 
     return (
     <View style={{flex: 1, flexDirection: 'column', marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}>
-    <TouchableWithoutFeedback onPress={() => {this.openModal(item.id)}}>
+
       <FastImage
       style= {{width: 120, height: 120}}
-      source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/${cat}/${item.Comment_ID}/${item.id}.jpg`}}
+      source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/rest_comment/${item.Comment_ID}/${item.id}.jpg`}}
       />
-    </TouchableWithoutFeedback>
+
     </View>
   )};
 
@@ -47,18 +41,12 @@ class ImageList extends React.Component{
   render(){
     var Comment_ID = this.props.Comment_ID;
     var noOfImg = this.props.noOfImg;
-    if (this.props.category == "0")
-      cat = "rest_comment";
-     else if (this.props.category == "1")
-      cat = "hall_comment";
-    else
-      cat = "course_comment";
     var rows = [];
     var images = [];
     for (var i=0; i < noOfImg; i++){
       images.push(
         {
-          url: `https://i.cs.hku.hk/~wyvying/iHKU/${cat}/${Comment_ID}/${i}.jpg`,
+          url: `https://i.cs.hku.hk/~wyvying/iHKU/rest_comment/${Comment_ID}/${i}.jpg`,
           props: {
           },
           id: i
@@ -75,6 +63,7 @@ class ImageList extends React.Component{
         renderItem={this._renderData}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
+        removeClippedSubviews={true}
           />
           <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
             <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
@@ -84,6 +73,131 @@ class ImageList extends React.Component{
 
   }
 }
+
+class HallImageList extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+     isModalOpened: false,  //Controls if modal is opened or closed
+     currentImageIndex: 0,   //Controls initial photo to show for modal
+   };
+  }
+
+  _renderData = ({item}) => {
+    return (
+    <View style={{flex: 1, flexDirection: 'column', marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}>
+    <TouchableWithoutFeedback onPress={() => {this.openModal(item.id)}}>
+      <FastImage
+      style= {{width: 120, height: 120}}
+      source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${item.Comment_ID}/${item.id}.jpg`}}
+      />
+    </TouchableWithoutFeedback>
+    </View>
+  )};
+
+  openModal(index) {
+ this.setState({isModalOpened: true, currentImageIndex: index });
+}
+
+
+  render(){
+    var Comment_ID = this.props.Comment_ID;
+    var noOfImg = this.props.noOfImg;
+    var rows = [];
+    var images = [];
+    for (var i=0; i < noOfImg; i++){
+      images.push(
+        {
+          url: `https://i.cs.hku.hk/~wyvying/iHKU/hall_comment/${Comment_ID}/${i}.jpg`,
+          props: {
+          },
+          id: i
+        }
+      );
+      rows.push(
+        {id: i, Comment_ID: Comment_ID}
+        );
+    }
+    return(
+      <View>
+      <FlatList
+        data={rows}
+        renderItem={this._renderData}
+        numColumns={2}
+        keyExtractor={(item, index) => index.toString()}
+        removeClippedSubviews={true}
+          />
+          <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
+            <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
+          </Modal>
+      </View>
+    );
+
+  }
+}
+
+class CouImageList extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+     isModalOpened: false,  //Controls if modal is opened or closed
+     currentImageIndex: 0,   //Controls initial photo to show for modal
+   };
+  }
+
+  _renderData = ({item}) => {
+    return (
+    <View style={{flex: 1, flexDirection: 'column', marginRight:10, marginTop:2, marginLeft:2, marginBottom:10}}>
+    <TouchableWithoutFeedback onPress={() => {this.openModal(item.id)}}>
+      <FastImage
+      style= {{width: 120, height: 120}}
+      source={{uri: `https://i.cs.hku.hk/~wyvying/iHKU/course_comment/${item.Comment_ID}/${item.id}.jpg`}}
+      />
+    </TouchableWithoutFeedback>
+    </View>
+  )};
+
+  openModal(index) {
+ this.setState({isModalOpened: true, currentImageIndex: index });
+}
+
+
+  render(){
+    var Comment_ID = this.props.Comment_ID;
+    var noOfImg = this.props.noOfImg;
+    var rows = [];
+    var images = [];
+    for (var i=0; i < noOfImg; i++){
+      images.push(
+        {
+          url: `https://i.cs.hku.hk/~wyvying/iHKU/course_comment/${Comment_ID}/${i}.jpg`,
+          props: {
+          },
+          id: i
+        }
+      );
+      rows.push(
+        {id: i, Comment_ID: Comment_ID}
+        );
+    }
+    return(
+      <View>
+      <FlatList
+        data={rows}
+        renderItem={this._renderData}
+        numColumns={2}
+        keyExtractor={(item, index) => index.toString()}
+        removeClippedSubviews={true}
+          />
+          <Modal visible={this.state.isModalOpened} transparent={true} onRequestClose={() => this.setState({ isModalOpened: false })}>
+            <ImageViewer imageUrls={images} index={this.state.currentImageIndex}/>
+          </Modal>
+      </View>
+    );
+
+  }
+}
+
 
 class RightMenu extends React.Component {
   constructor(props) {
@@ -301,7 +415,10 @@ export default class MyComment extends React.Component {
               {this.state.item.image_num != "0" ? (
               <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
               <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
-              <ImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />
+              {this.state.item.category == "0" ?
+              (<CanImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />) : this.state.item.category == "1" ?
+              (<HallImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />):
+              (<CouImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />)}
               </View>
             ) : (<View />) }
               </ScrollView>

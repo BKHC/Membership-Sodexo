@@ -146,6 +146,15 @@ export default class NewsComment extends React.Component {
                   {this.state.item.comment}
                 </Text>
               </View>
+              {this.state.item.image_num != "0" ? (
+              <View style={{backgroundColor:'white', width:getScreenWidth(), paddingTop:30, paddingBottom:30, paddingLeft:40, paddingRight:40, marginTop: 4}}>
+              <Text style={{color: 'rgba(255, 153, 204, 1)', marginBottom:8, fontWeight: 'bold', fontSize:16}}>圖片:</Text>
+              {this.state.item.category == "0" ?
+              (<CanImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />) : this.state.item.category == "1" ?
+              (<HallImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />):
+              (<CouImageList noOfImg={this.state.item.image_num} Comment_ID={this.state.item.Comment_ID} />)}
+              </View>
+              ) : (<View />) }
               </ScrollView>
 
           </ImageBackground>
