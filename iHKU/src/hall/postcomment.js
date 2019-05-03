@@ -259,7 +259,12 @@ export default class PostComment extends React.Component {
   }
 
 
-    fetch('https://i.cs.hku.hk/~wyvying/php/hall/post_comment.php',{
+    if (this.state.topic == "" || this.state.comment == "" || this.state.rating_1 == "0" || this.state.rating_2 == "0" ||
+    this.state.rating_3 == "0" || this.state.rating_4 == "0") {
+      alert("請確保已輸入標題，評論及給予星星。")
+    }
+    else {
+      fetch('https://i.cs.hku.hk/~wyvying/php/hall/post_comment.php',{
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -288,7 +293,7 @@ export default class PostComment extends React.Component {
         }).catch(err => {
           console.log(err)
         })
-  };
+  };}
 }
 
 // to normalize font size
